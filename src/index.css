@@ -1,0 +1,100 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden !important;
+}
+
+code {
+  font-family: "Roboto", sans-serif;
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  -ms-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+}
+
+@media screen and (max-width: 760px) {
+  #container {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .screen-size-message {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .screen-size-message {
+    /* margin-top: 150px; */
+    font-weight: bold;
+    background-image: url("../src/assets/images/background/forgotPassword2.jpg");
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem !important;
+    line-height: 2rem;
+    letter-spacing: 0.05px;
+    padding: 0 2rem;
+    text-align: center;
+    row-gap: 2rem;
+    background-color: #333333;
+    color: #fff;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.ant-table-thead tr th {
+  background: #e5e5e5 !important;
+  border-bottom: none !important;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #666666;
+}
+
+.ant-table-tbody > tr {
+  font-size: 1rem;
+  padding: 0 !important;
+  color: #666666;
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* .btn:focus, .btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+} */
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #e20b8c !important;
+}
+
+.ant-tabs-tab-btn {
+  font-size: 25px !important;
+  color: #666666 !important;
+}
+
+.ant-tabs-ink-bar-animated {
+  border-bottom: 2px solid #e20b8c !important;
+}
