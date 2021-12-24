@@ -1,10 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 // import { authConstants } from "../constants";
-import { createSlice } from "@reduxjs/toolkit";
-import { getResetCode, verifyResetCode } from "../sagas/forgotPassword";
+import { createSlice } from '@reduxjs/toolkit';
+import { getResetCode, verifyResetCode } from '../sagas/forgotPassword';
 
 export const forgotPasswordSlice = createSlice({
-  name: "forgotPassword",
+  name: 'forgotPassword',
   initialState: {
     isAdminEmail: false,
     isResetCode: false,
@@ -48,7 +48,7 @@ export const forgotPasswordSlice = createSlice({
       state.isResetCode = true;
       return state;
     },
-    [verifyResetCode.rejected]: (state, payload) => {
+    [verifyResetCode.rejected]: (state, { payload }) => {
       state.errors = payload.errors;
       state.isError = true;
       state.isResetCode = false;

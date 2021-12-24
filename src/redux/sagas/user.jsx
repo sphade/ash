@@ -1,16 +1,16 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loginUser = createAsyncThunk(
-  "login/admins",
+  'login/admins',
   async ({ email, password }, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://ash-tele-med.herokuapp.com/api/v1/auth/login/admins",
+        `https://ash-tele-med.herokuapp.com/api/v1/auth/login/admins`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             email,
@@ -20,17 +20,16 @@ export const loginUser = createAsyncThunk(
       );
       let data = await response.json();
       if (data.success === true) {
-        localStorage.setItem("token", data.data.token);
-        localStorage.setItem("tab", "Overview");
-        localStorage.setItem("user", JSON.stringify(data.data.user));
+        localStorage.setItem('token', data.data.token);
+        localStorage.setItem('tab', 'Overview');
+        localStorage.setItem('user', JSON.stringify(data.data.user));
         return data.data;
       } else {
         return thunkAPI.rejectWithValue(data);
       }
     } catch (e) {
-      console.log("Error", e.response.data);
+      console.log('Error', e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
 );
-

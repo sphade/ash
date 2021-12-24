@@ -1,10 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 // import { authConstants } from "../constants";
-import { createSlice } from "@reduxjs/toolkit";
-import { loginUser } from "../sagas/user";
+import { createSlice } from '@reduxjs/toolkit';
+import { loginUser } from '../sagas/user';
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
     userData: null,
     authenticating: false,
@@ -14,6 +14,7 @@ export const userSlice = createSlice({
   },
   reducers: {
     clearState: (state) => {
+      state.userData = null;
       state.isError = false;
       state.authenticated = false;
       state.authenticating = false;

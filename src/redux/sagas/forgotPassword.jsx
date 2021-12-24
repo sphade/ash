@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "../constants";
 // import Server from "../../hooks/Server";
+
 export const getResetCode = createAsyncThunk(
   "admin/reset-password",
   async ({ email }, thunkAPI) => {
