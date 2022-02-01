@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
-import { Header as Title } from "../Overview/Revenue";
-import { Header as Heading, TableWrapper } from "../Overview/Home";
-import { Searchbar } from "../../../Reuseable";
-import { Table } from "antd";
-import { columns, dataSource } from "../../../mock_store/user_management";
+import React, { Fragment } from 'react';
+import { Header as Title } from '../Overview/Revenue';
+import { Header as Heading, TableWrapper } from '../Overview/Home';
+import { Searchbar } from '../../../Reuseable';
+import { Table } from 'antd';
+import { columns, dataSource } from '../../../table/user_management';
 
 const Home = () => {
   return (
@@ -12,19 +12,19 @@ const Home = () => {
         <h6>User Management</h6>
       </Title>
       <Heading>
-        <div className="group">
+        <div className='group'>
           <select
             style={{
-              height: "3rem",
-              width: "150px",
-              borderRadius: "10px",
-              border: "none",
+              height: '3rem',
+              width: '150px',
+              borderRadius: '10px',
+              border: 'none',
             }}
-            class="form-select"
+            class='form-select'
           >
             <option selected>Filter</option>
-            <option value="Doctors">Doctors</option>
-            <option value="Patients">Patients</option>
+            <option value='Doctors'>Doctors</option>
+            <option value='Patients'>Patients</option>
           </select>
         </div>
         <Searchbar />

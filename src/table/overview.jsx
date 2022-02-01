@@ -1,64 +1,71 @@
-import patient from '../assets/images/icons/card-patient.svg';
-import dollar from '../assets/images/icons/card-dollar.svg';
-import consultation from '../assets/images/icons/card-consultation.svg';
-import doctor from '../assets/images/icons/card-doctor.svg';
-import bg from '../assets/images/background/card1.png';
-import bg1 from '../assets/images/background/card2.png';
+// import patient from '../assets/images/icons/card-patient.svg';
+// import dollar from '../assets/images/icons/card-dollar.svg';
+// import consultation from '../assets/images/icons/card-consultation.svg';
+// import doctor from '../assets/images/icons/card-doctor.svg';
+// import bg from '../assets/images/background/card1.png';
+// import bg1 from '../assets/images/background/card2.png';
 
-export const superAdminOverviewData = [
-  {
-    text: 'Total Patients',
-    value: 21678,
-    image: patient,
-    background: bg,
-    link: '/dashboard/patients',
-  },
-  {
-    text: 'Total Doctors',
-    value: 5678,
-    image: doctor,
-    background: bg1,
-    link: '/dashboard/doctors',
-  },
-  {
-    text: 'Total Revenue',
-    value: 1110234,
-    image: dollar,
-    background: bg,
-    link: '/dashboard/revenue',
-  },
-  {
-    text: 'Total Consultation',
-    value: 2340,
-    image: consultation,
-    background: bg1,
-    link: '/dashboard/consultations',
-  },
-];
+// export const superAdminOverviewData = [
+//   {
+//     key: 1,
+//     text: 'Total Patients',
+//     value: 21678,
+//     image: patient,
+//     background: bg,
+//     link: '/dashboard/patients',
+//   },
+//   {
+//     key: 2,
+//     text: 'Total Doctors',
+//     value: 5678,
+//     image: doctor,
+//     background: bg1,
+//     link: '/dashboard/doctors',
+//   },
+//   {
+//     key: 3,
+//     text: 'Total Revenue',
+//     value: 1110234,
+//     image: dollar,
+//     background: bg,
+//     link: '/dashboard/revenue',
+//   },
+//   {
+//     key: 4,
+//     text: 'Total Consultation',
+//     value: 2340,
+//     image: consultation,
+//     background: bg1,
+//     link: '/dashboard/consultations',
+//   },
+// ];
 
-export const overviewData = [
-  {
-    text: 'Total Patients',
-    value: 21678,
-    image: patient,
-    background: bg,
-    link: '/dashboard/patients',
-  },
-  {
-    text: 'Total Doctors',
-    value: 5678,
-    image: doctor,
-    background: bg1,
-    link: '/dashboard/doctors',
-  },
-  {
-    text: 'Total Consultation',
-    value: 2340,
-    image: consultation,
-    background: bg1,
-    link: '/dashboard/consultations',
-  },
-];
+// export const overviewData = [
+//   {
+//     key: 1,
+//     text: 'Total Patients',
+//     value: 21678,
+//     image: patient,
+//     background: bg,
+//     link: '/dashboard/patients',
+//   },
+//   {
+//     key: 2,
+//     text: 'Total Doctors',
+//     value: 5678,
+//     image: doctor,
+//     background: bg1,
+//     link: '/dashboard/doctors',
+//   },
+//   {
+//     key: 3,
+//     text: 'Total Consultation',
+//     value: 2340,
+//     image: consultation,
+//     background: bg1,
+//     link: '/dashboard/consultations',
+//   },
+// ];
 
 export const users = [
   {
@@ -67,7 +74,7 @@ export const users = [
     email: 'amosjohnson@gmail.com',
     date: '16th Sep. 2021',
     time: '13:45:56',
-    location: "No 15, London street, New Road, Lekki, Lagos, NG",
+    location: 'No 15, London street, New Road, Lekki, Lagos, NG',
     status: 'Active',
   },
   {
@@ -76,7 +83,7 @@ export const users = [
     email: 'amosjohnson@gmail.com',
     date: '16th Sep. 2021',
     time: '13:45:56',
-    location: "No 15, London street, New Road, Lekki, Lagos, NG",
+    location: 'No 15, London street, New Road, Lekki, Lagos, NG',
     status: 'Active',
   },
   {
@@ -85,7 +92,7 @@ export const users = [
     email: 'amosjohnson@gmail.com',
     date: '16th Sep. 2021',
     time: '13:45:56',
-    location: "No 15, London street, New Road, Lekki, Lagos, NG",
+    location: 'No 15, London street, New Road, Lekki, Lagos, NG',
     status: 'Active',
   },
   {
@@ -94,7 +101,7 @@ export const users = [
     email: 'amosjohnson@gmail.com',
     date: '16th Sep. 2021',
     time: '13:45:56',
-    location: "No 15, London street, New Road, Lekki, Lagos, NG",
+    location: 'No 15, London street, New Road, Lekki, Lagos, NG',
     status: 'Active',
   },
 ];

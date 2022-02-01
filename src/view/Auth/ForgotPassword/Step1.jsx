@@ -7,8 +7,8 @@ import { isEmail } from '../../../helpers/formValidator';
 import {
   clearState,
   forgotPasswordSelector,
-} from '../../../redux/reducers/forgotPassword';
-import { getResetCode } from '../../../redux/sagas/forgotPassword';
+} from '../../../redux/reducers/auth/forgotPassword';
+import { getResetCode } from '../../../redux/sagas/auth/forgotPassword';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Step1 = () => {

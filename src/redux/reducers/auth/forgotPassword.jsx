@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 // import { authConstants } from "../constants";
 import { createSlice } from '@reduxjs/toolkit';
-import { getResetCode, verifyResetCode } from '../sagas/forgotPassword';
+import { getResetCode, verifyResetCode } from '../../sagas/auth/forgotPassword';
 
 export const forgotPasswordSlice = createSlice({
   name: 'forgotPassword',
@@ -34,7 +34,7 @@ export const forgotPasswordSlice = createSlice({
       return state;
     },
     [getResetCode.rejected]: (state, { payload }) => {
-      state.errors = payload.errors;
+      state.errors = payload.errors || payload;
       state.isError = true;
       state.isAdminEmail = false;
       state.loading = false;
@@ -49,7 +49,7 @@ export const forgotPasswordSlice = createSlice({
       return state;
     },
     [verifyResetCode.rejected]: (state, { payload }) => {
-      state.errors = payload.errors;
+      state.errors = payload.errors || payload;
       state.isError = true;
       state.isResetCode = false;
       state.loading = false;

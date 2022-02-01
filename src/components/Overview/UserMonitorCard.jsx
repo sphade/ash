@@ -6,32 +6,35 @@ import locationIcon from '../../assets/images/icons/location.svg';
 import { ReactComponent as ViewUserIcon } from '../../assets/images/icons/monitor_card_back.svg';
 import { UserMonitorModal } from '../../view/Dashboard/Overview/Modals';
 
-const Index = ({ id, name, phone, email, date, time, location }) => {
+const Index = (props, { index }) => {
   const [show, setShow] = React.useState(false);
 
-  const getNewLocation = (string) => {
-    let newString = string.split(' ');
-    let country = newString.pop();
-    let state = newString.pop();
-    const newLocation = `${state} ${country}`;
-    return newLocation;
-  };
+  // const getNewLocation = (string) => {
+  //   let newString = string.split(' ');
+  //   let country = newString.pop();
+  //   let state = newString.pop();
+  //   const newLocation = `${state} ${country}`;
+  //   return newLocation;
+  // };
 
   return (
-    <Container id={id}>
+    <Container key={index}>
       <UserMonitorModal show={show} handleClose={() => setShow(false)} />
       <div className='row1'>
         <div className='group'>
           <img src={user_avatar} alt='' />
-          <h4>{name}</h4>
+          <h4>
+            {props.firstName} &nbsp;
+            {props.lastName}
+          </h4>
         </div>
         <ViewUser onClick={() => setShow(true)} />
       </div>
       <div className='box'>
-        <p>{phone}</p>
-        <p>{email}</p>
+        <p>{props.phoneNumber}</p>
+        <p>{props.email}</p>
         <p>
-          {date} || {time}
+          {props.date || '2/1/2022'} || {props.time || '09:30 pm'}
         </p>
         <Dropdown
           arrow
@@ -44,13 +47,13 @@ const Index = ({ id, name, phone, email, date, time, location }) => {
                 color: '#999999',
               }}
             >
-              {location}
+              {props.location}
             </Menu>
           }
         >
           <div className='group'>
             <img src={locationIcon} alt='' />
-            <span>{getNewLocation(location)}</span>
+            <span>Lagos, NG</span>
           </div>
         </Dropdown>
       </div>
@@ -109,8 +112,7 @@ margin: 0.8em 0;
             color: #E20B8C;
         }
       }
-    }
-
+  }
   .row1 {
     display: flex;
     justify-content: space-between;
@@ -124,7 +126,7 @@ margin: 0.8em 0;
 
     h4 {
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 23px;
       letter-spacing: 0.0015em;
       color: #666666;

@@ -9,11 +9,11 @@ import Countdown from 'react-countdown';
 import {
   // clearState,
   forgotPasswordSelector,
-} from '../../../redux/reducers/forgotPassword';
+} from '../../../redux/reducers/auth/forgotPassword';
 import {
   // getResetCode,
   verifyResetCode,
-} from '../../../redux/sagas/forgotPassword';
+} from '../../../redux/sagas/auth/forgotPassword';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Step2 = () => {

@@ -9,14 +9,19 @@ import { AuthLayout } from '../../../layout';
 import { CancelButton } from '../../../layout/AuthLayout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../../redux/sagas/user';
-import { userSelector } from '../../../redux/reducers/user';
+import { loginUser } from '../../../redux/sagas/auth/login';
+import { loginSelector, clearState } from '../../../redux/reducers/auth/login';
 
 const Index = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(clearState());
+  }, []);
   // Variables & States
   const { authenticating, authenticated, errors, isError } =
-    useSelector(userSelector);
-  const dispatch = useDispatch();
+    useSelector(loginSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
     email: 'superuser@gmail.com',
@@ -35,21 +40,12 @@ const Index = () => {
     setSubmitted(true);
     const { email, password } = user;
     if (isEmail(email) && password) {
-      // await new Promise();
       dispatch(loginUser(user));
     }
   };
 
-  const history = useHistory();
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     history.push('/dashboard');
-  //   }
-  // }, []);
-
   if (authenticated) {
     history.push('/dashboard');
-    // <Redirect to="/dashboard" />;
   }
 
   return (
@@ -96,7 +92,7 @@ const Index = () => {
                 errors.map((item) => {
                   return (
                     <p className='error-msg'>
-                      {item.Credentials || item.email}
+                      {item.Credentials || item.email || item.message || item}
                     </p>
                   );
                 })}

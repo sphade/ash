@@ -13,7 +13,7 @@ import customerA from '../../assets/images/icons/customerA.svg';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
-  const activeTab = localStorage.getItem('tab');
+  const activeTab = sessionStorage.getItem('tab');
   return (
     <Container>
       {sidebarTabs.map((tab) => {
@@ -22,7 +22,7 @@ const Sidebar = () => {
           <SidebarTabs
             id={id}
             onClick={() => {
-              localStorage.setItem('tab', name);
+              sessionStorage.setItem('tab', name);
             }}
             className={activeTab === name ? 'active' : ''}
             to={link}

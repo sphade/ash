@@ -6,15 +6,15 @@ import { ReactComponent as ChevronDown } from '../../assets/images/icons/chevron
 import avatar from '../../assets/images/avatar.png';
 import logout from '../../assets/images/icons/logout.svg';
 import { useHistory } from 'react-router-dom';
-import { clearState } from '../../redux/reducers/user';
+import { clearState } from '../../redux/reducers/auth/login';
 import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
-  const loggedInUser = JSON.parse(localStorage.getItem('user'));
+  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   const dispatch = useDispatch();
   const history = useHistory();
   const signout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     dispatch(clearState());
     history.push('/login');
   };

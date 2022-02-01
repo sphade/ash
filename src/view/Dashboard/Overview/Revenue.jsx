@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
-import { BackArrow } from "../../../layout/DashboardLayout/Content";
-import arrow_up from "../../../assets/images/icons/arrow-up.svg";
-import arrow_down from "../../../assets/images/icons/arrow-down.svg";
-import { transactions } from "../../../mock_store/overview";
-import { TransactionCard } from "../../../components/Overview";
-import { useHistory } from "react-router-dom";
-import Chart from "../../../components/Overview/Chart";
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
+import { BackArrow } from '../../../layout/DashboardLayout/Content';
+import arrow_up from '../../../assets/images/icons/arrow-up.svg';
+import arrow_down from '../../../assets/images/icons/arrow-down.svg';
+import { transactions } from '../../../table/overview';
+import { TransactionCard } from '../../../components/Overview';
+import { useHistory } from 'react-router-dom';
+import Chart from '../../../components/Overview/Chart';
 
 const Revenue = () => {
   const history = useHistory();
@@ -18,28 +18,28 @@ const Revenue = () => {
       </Header>
       <Statistics>
         <h1>₦23,234,000</h1>
-        <div className="group">
-          <div className="up">
+        <div className='group'>
+          <div className='up'>
             <h5>₦10,234,000</h5>
-            <img src={arrow_up} alt="" />
+            <img src={arrow_up} alt='' />
           </div>
-          <div className="down">
+          <div className='down'>
             <h5>₦10,234,000</h5>
-            <img src={arrow_down} alt="" />
+            <img src={arrow_down} alt='' />
           </div>
         </div>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est magna{" "}
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est magna{' '}
           <br />
           nullam venenatis, commodo.
         </p>
       </Statistics>
       <ChartWrapper>
         <header>
-          <h5 className="fw-bold">Deals</h5>
+          <h5 className='fw-bold'>Deals</h5>
           <h6>Show</h6>
         </header>
-        <div className="chart">
+        <div className='chart'>
           <Chart />
         </div>
       </ChartWrapper>
@@ -47,14 +47,14 @@ const Revenue = () => {
         <header>
           <h5>Transaction History</h5>
           <select
-            style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
-            class="form-select"
+            style={{ height: '3rem', width: '150px', borderRadius: '10px' }}
+            class='form-select'
           >
             <option selected>Filter By Date</option>
-            <option value="today">Today</option>
-            <option value="one_week">Last 7 Days</option>
-            <option value="one_month">One Month</option>
-            <option value="one_year">One Year</option>
+            <option value='today'>Today</option>
+            <option value='one_week'>Last 7 Days</option>
+            <option value='one_month'>One Month</option>
+            <option value='one_year'>One Year</option>
           </select>
         </header>
         {transactions.map((items, index) => {

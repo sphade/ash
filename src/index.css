@@ -2,12 +2,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   overflow-x: hidden !important;
 }
 
 code {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 *,
@@ -21,37 +21,28 @@ code {
   box-sizing: border-box !important;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
   #container {
     display: none;
   }
 }
-
-@media screen and (min-width: 760px) {
+.screen-size-message {
+  display: flex;
+  color:#fff;
+  font-size: 18px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+  background-image: url('../src/assets/images/background/forgotPassword2.jpg');
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
   .screen-size-message {
     display: none;
-  }
-}
-
-@media screen and (max-width: 760px) {
-  .screen-size-message {
-    /* margin-top: 150px; */
-    font-weight: bold;
-    background-image: url("../src/assets/images/background/forgotPassword2.jpg");
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem !important;
-    line-height: 2rem;
-    letter-spacing: 0.05px;
-    padding: 0 2rem;
-    text-align: center;
-    row-gap: 2rem;
-    background-color: #333333;
-    color: #fff;
   }
 }
 
@@ -97,4 +88,20 @@ p {
 
 .ant-tabs-ink-bar-animated {
   border-bottom: 2px solid #e20b8c !important;
+}
+
+.react-loading-skeleton {
+  --base-color: #e5e4e2;
+  --highlight-color: #d3d3d3 !important;
+  --animation-duration: 1.5s;
+  --animation-direction: normal;
+  --pseudo-element-display: block;
+  background-color: #c0c0c0 !important;
+  width: 100%;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }

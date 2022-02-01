@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+// import bg from '../../assets/images/background/card1.png';
+// import bg1 from '../../assets/images/background/card2.png';
 
 const Index = ({ id, image, value, text, bg, link }) => {
   const history = useHistory();

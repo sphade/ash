@@ -1,13 +1,13 @@
-import React, { Fragment, useState } from "react";
-import styled from "styled-components";
-import { promotions } from "../../../mock_store/promotion";
-import emptyIcon from "../../../assets/images/icons/empty-image.png";
-import { Button } from "../../../Reuseable";
-import { PromotionCard } from "../../../components/Overview";
-import { TableWrapper } from "../Overview/Home";
-import { Table } from "antd";
-import { columns, dataSource } from "../../../mock_store/promotion";
-import { CreatePromotionModal } from "./Modals";
+import React, { Fragment, useState } from 'react';
+import styled from 'styled-components';
+import { promotions } from '../../../table/promotion';
+import emptyIcon from '../../../assets/images/icons/empty-image.png';
+import { Button } from '../../../Reuseable';
+import { PromotionCard } from '../../../components/Overview';
+import { TableWrapper } from '../Overview/Home';
+import { Table } from 'antd';
+import { columns, dataSource } from '../../../table/promotion';
+import { CreatePromotionModal } from './Modals';
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -20,16 +20,16 @@ const Home = () => {
             <h6>Promotions</h6>
           </Title>
           <EmptyPromotion>
-            <img src={emptyIcon} alt="" />
+            <img src={emptyIcon} alt='' />
             <h4>No Promotion Created Yet</h4>
             <p>
               Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit.
             </p>
-            <div className="btn-wrapper">
+            <div className='btn-wrapper'>
               <Button
                 full
                 info
-                text="CREATE PROMOTION"
+                text='CREATE PROMOTION'
                 onClick={() => setShow(true)}
               />
             </div>
@@ -39,11 +39,11 @@ const Home = () => {
         <Container>
           <Title>
             <h6>Promotions</h6>
-            <div className="btn-wrapper">
+            <div className='btn-wrapper'>
               <Button
                 full
                 outline
-                text="CREATE PROMOTION"
+                text='CREATE PROMOTION'
                 onClick={() => setShow(true)}
               />
             </div>
@@ -64,7 +64,7 @@ const Home = () => {
               );
             })}
           </PromotionCardWrapper>
-          <h6 className="title">Other Promotions</h6>
+          <h6 className='title'>Other Promotions</h6>
           <TableWrapper>
             <Table dataSource={dataSource} columns={columns} />
           </TableWrapper>
