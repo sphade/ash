@@ -116,7 +116,7 @@ const Home = () => {
             {loggedInUser.isSuper ? (
               <OverviewCard
                 text='Total Revenue'
-                value={revenue || 0}
+                value={revenue.total || 0}
                 image={DollarIcon}
                 bg={CardBg2}
                 link='/dashboard/revenue'

@@ -67,11 +67,11 @@ export const overviewSlice = createSlice({
       return state;
     },
     [getTotalRevenue.pending]: (state) => {
-      state.revenueCountLoading = true;
+      state.revenueLoading = true;
       return state;
     },
     [getTotalRevenue.fulfilled]: (state, { payload }) => {
-      state.revenue = payload.data.total;
+      state.revenue = payload.data;
       state.revenueLoading = false;
       return state;
     },

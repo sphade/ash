@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   AreaChart,
   Area,
@@ -7,62 +7,62 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
+} from 'recharts';
 
 const data = [
   {
-    name: "1 Sep",
-    uv: 520,
-    pv: 580,
-    amt: 2000,
+    date: '1 Sep',
+    credit: 520,
+    debit: 580,
+    amount: 2000,
   },
   {
-    name: "8 Sep",
-    uv: 680,
-    pv: 730,
-    amt: 2210,
+    date: '8 Sep',
+    credit: 680,
+    debit: 730,
+    amount: 2210,
   },
   {
-    name: "16 Sep",
-    uv: 1289,
-    pv: 1190,
-    amt: 2290,
+    date: '16 Sep',
+    credit: 1289,
+    debit: 1190,
+    amount: 2290,
   },
   {
-    name: "30 Sep",
-    uv: 750,
-    pv: 715,
-    amt: 2000,
+    date: '30 Sep',
+    credit: 750,
+    debit: 715,
+    amount: 2000,
   },
   {
-    name: "1 Oct",
-    uv: 980,
-    pv: 998,
-    amt: 2181,
+    date: '1 Oct',
+    credit: 980,
+    debit: 998,
+    amount: 2181,
   },
   {
-    name: "8 Oct",
-    uv: 1300,
-    pv: 1009,
-    amt: 2500,
+    date: '8 Oct',
+    credit: 3300,
+    debit: 2009,
+    amount: 2500,
   },
   {
-    name: "16 Oct",
-    uv: 400,
-    pv: 410,
-    amt: 2500,
+    date: '16 Oct',
+    credit: 400,
+    debit: 410,
+    amount: 2500,
   },
   {
-    name: "30 Oct",
-    uv: 676,
-    pv: 600,
-    amt: 2500,
+    date: '30 Oct',
+    credit: 676,
+    debit: 600,
+    amount: 2500,
   },
 ];
 
 export default function Chart() {
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: '100%', height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
           width={730}
@@ -71,32 +71,32 @@ export default function Chart() {
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#FA0E9B" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#FA0E9B" stopOpacity={0} />
+            <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#FA0E9B' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#FA0E9B' stopOpacity={0} />
             </linearGradient>
-            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#455AFE" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#455AFE" stopOpacity={0} />
+            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#455AFE' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#455AFE' stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" />
+          <XAxis dataKey='date' />
           <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray='3 3' />
           <Tooltip />
           <Area
-            type="monotone"
-            dataKey="uv"
-            stroke="#FA0E9B"
+            type='monotone'
+            dataKey='credit'
+            stroke='#FA0E9B'
             fillOpacity={1}
-            fill="url(#colorUv)"
+            fill='url(#colorUv)'
           />
           <Area
-            type="monotone"
-            dataKey="pv"
-            stroke="#455AFE"
+            type='monotone'
+            dataKey='debit'
+            stroke='#455AFE'
             fillOpacity={1}
-            fill="url(#colorPv)"
+            fill='url(#colorPv)'
           />
         </AreaChart>
       </ResponsiveContainer>

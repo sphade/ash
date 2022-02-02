@@ -3,73 +3,116 @@ import styled from 'styled-components';
 import { BackArrow } from '../../../layout/DashboardLayout/Content';
 import arrow_up from '../../../assets/images/icons/arrow-up.svg';
 import arrow_down from '../../../assets/images/icons/arrow-down.svg';
-import { transactions } from '../../../table/overview';
 import { TransactionCard } from '../../../components/Overview';
 import { useHistory } from 'react-router-dom';
 import Chart from '../../../components/Overview/Chart';
+import { getTotalRevenue } from '../../../redux/sagas/dashboard/overview';
+import { getTransactions } from '../../../redux/sagas/dashboard/transactions';
+import { useSelector, useDispatch } from 'react-redux';
+import { overviewSelector } from '../../../redux/reducers/dashboard/overview';
+import { transactionsSelector } from '../../../redux/reducers/dashboard/transactions';
+import Skeleton from 'react-loading-skeleton';
 
 const Revenue = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getTotalRevenue());
+    dispatch(getTransactions());
+  }, [dispatch]);
+
+  const { revenue, revenueLoading } = useSelector(overviewSelector);
+  const { transactions, transactionsLoading } =
+    useSelector(transactionsSelector);
   return (
     <Fragment>
       <Header>
-        <BackArrow onClick={() => history.goBack()} />
-        <h6>Total Revenue</h6>
+        {revenueLoading ? (
+          <>
+            <Skeleton width={120} height={40} />
+            <Skeleton width={40} height={40} />
+          </>
+        ) : (
+          <>
+            <BackArrow onClick={() => history.goBack()} />
+            <h6>Total Revenue</h6>
+          </>
+        )}
       </Header>
       <Statistics>
-        <h1>₦23,234,000</h1>
+        {revenueLoading ? (
+          <Skeleton width={200} height={50} />
+        ) : (
+          <h1>₦{revenue.total ? revenue.total.toLocaleString() : 0}</h1>
+        )}
         <div className='group'>
-          <div className='up'>
-            <h5>₦10,234,000</h5>
-            <img src={arrow_up} alt='' />
-          </div>
-          <div className='down'>
-            <h5>₦10,234,000</h5>
-            <img src={arrow_down} alt='' />
-          </div>
+          {revenueLoading ? (
+            <>
+              <Skeleton width={200} height={40} />
+              <Skeleton width={200} height={40} />
+            </>
+          ) : (
+            <>
+              <div className='up'>
+                <h5>₦{revenue.credit ? revenue.credit.toLocaleString() : 0}</h5>
+                <img src={arrow_up} alt='' />
+              </div>
+              <div className='down'>
+                <h5>₦{revenue.debit ? revenue.debit.toLocaleString() : 0}</h5>
+                <img src={arrow_down} alt='' />
+              </div>
+            </>
+          )}
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est magna{' '}
-          <br />
-          nullam venenatis, commodo.
-        </p>
+        {revenueLoading ? (
+          <Skeleton width={400} height={60} />
+        ) : (
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est magna{' '}
+            <br />
+            nullam venenatis, commodo.
+          </p>
+        )}
       </Statistics>
-      <ChartWrapper>
-        <header>
-          <h5 className='fw-bold'>Deals</h5>
-          <h6>Show</h6>
-        </header>
-        <div className='chart'>
-          <Chart />
-        </div>
-      </ChartWrapper>
-      <TransactionWrapper>
-        <header>
-          <h5>Transaction History</h5>
-          <select
-            style={{ height: '3rem', width: '150px', borderRadius: '10px' }}
-            class='form-select'
-          >
-            <option selected>Filter By Date</option>
-            <option value='today'>Today</option>
-            <option value='one_week'>Last 7 Days</option>
-            <option value='one_month'>One Month</option>
-            <option value='one_year'>One Year</option>
-          </select>
-        </header>
-        {transactions.map((items, index) => {
-          const { type, description, date, amount } = items;
-          return (
-            <TransactionCard
-              type={type}
-              id={index}
-              date={date}
-              description={description}
-              amount={amount}
-            />
-          );
-        })}
-      </TransactionWrapper>
+      {transactionsLoading ? (
+        <>
+        <Skeleton width={'100%'} height={500} />
+        <br />
+        </>
+      ) : (
+        <ChartWrapper>
+          <header>
+            <h5 className='fw-bold'>Deals</h5>
+            <h6>Show</h6>
+          </header>
+          <div className='chart'>
+            <Chart />
+          </div>
+        </ChartWrapper>
+      )}
+      {transactionsLoading ? (
+        <Skeleton width={'100%'} height={500} />
+      ) : (
+        <TransactionWrapper>
+          <header>
+            <h5>Transaction History</h5>
+            <select
+              style={{ height: '3rem', width: '150px', borderRadius: '10px' }}
+              class='form-select'
+            >
+              <option selected>Filter By Date</option>
+              <option value='today'>Today</option>
+              <option value='one_week'>Last 7 Days</option>
+              <option value='one_month'>One Month</option>
+              <option value='one_year'>One Year</option>
+            </select>
+          </header>
+          {transactions.map((item, index) => {
+            return <TransactionCard key={index} {...item} />;
+          })}
+        </TransactionWrapper>
+      )}
     </Fragment>
   );
 };
@@ -157,14 +200,23 @@ const ChartWrapper = styled.div`
 const TransactionWrapper = styled.div`
   margin: 1.5rem 0;
   width: 100%;
-  height: 80%;
+  height: 533px;
   background: #fff;
+  overflow-y: scroll;
   padding: 1.5rem 2rem;
+  border-radius: 7px;
 
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .transactions {
+    margin-top: 1.5rem;
+    height: 500px;
+    width: 100%;
+    overflow-y: scroll;
   }
 
   h5 {

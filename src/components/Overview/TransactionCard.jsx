@@ -1,19 +1,22 @@
-import React from "react";
-import styled from "styled-components";
-import credit from "../../assets/images/icons/credit.svg";
-import debit from "../../assets/images/icons/debit.svg";
+import React from 'react';
+import styled from 'styled-components';
+import credit from '../../assets/images/icons/credit.svg';
+import debit from '../../assets/images/icons/debit.svg';
 
-const TransactionCard = ({ description, date, amount, type }) => {
+const TransactionCard = (props, { index }) => {
   return (
-    <Container color={type === "debit" ? "color" : ""}>
-      <div className="group">
-        <img src={type !== "credit" ? credit : debit} alt="" />
-        <div className="row">
-          <h3>{description}</h3>
-          <span>{date}</span>
+    <Container key={index} color={!props.inflow ? 'color' : ''}>
+      <div className='group'>
+        <img src={props.inflow ? credit : debit} alt='' />
+        <div className='row'>
+          <h3>
+            {props.inflow ? 'Credit transaction' : 'Debit transaction'} -{' '}
+            {props.title}
+          </h3>
+          <span>{new Date(props.createdAt).toLocaleDateString()}</span>
         </div>
       </div>
-      <h2>{amount}</h2>
+      <h2>{props.amount}</h2>
     </Container>
   );
 };
@@ -54,7 +57,7 @@ const Container = styled.div`
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    color: ${(props) => (props.color ? "#E20B8C" : "#455AFE")};
+    color: ${(props) => (props.color ? '#E20B8C' : '#455AFE')};
   }
 
   span {
