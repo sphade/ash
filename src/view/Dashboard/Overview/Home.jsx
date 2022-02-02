@@ -104,7 +104,7 @@ const Home = () => {
               value={doctorCount || 0}
               image={DoctorIcon}
               bg={CardBg2}
-              link='/dashboard/patients'
+              link='/dashboard/doctors'
             />
             <OverviewCard
               text='Total Consultations'
@@ -142,7 +142,6 @@ const Home = () => {
       </Header>
       {usersLoading ? (
         <MonitorCardWrapper>
-          <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
