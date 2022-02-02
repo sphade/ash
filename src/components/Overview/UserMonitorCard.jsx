@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import user_avatar from '../../assets/images/icons/monitor_avatar.png';
 import locationIcon from '../../assets/images/icons/location.svg';
 import { ReactComponent as ViewUserIcon } from '../../assets/images/icons/monitor_card_back.svg';
-import { UserMonitorModal } from '../../view/Dashboard/Overview/Modals';
+import { toggleShowModal } from '../../redux/reducers/dashboard/overview';
+import { useDispatch } from 'react-redux';
 
 const Index = (props, { index }) => {
-  const [show, setShow] = React.useState(false);
-
+  const dispatch = useDispatch();
   // const getNewLocation = (string) => {
   //   let newString = string.split(' ');
   //   let country = newString.pop();
@@ -16,10 +16,12 @@ const Index = (props, { index }) => {
   //   const newLocation = `${state} ${country}`;
   //   return newLocation;
   // };
-
+  const handleViewUser = () => {
+    sessionStorage.setItem('requestMonitorUser', JSON.stringify(props));
+    dispatch(toggleShowModal());
+  };
   return (
     <Container key={index}>
-      <UserMonitorModal show={show} handleClose={() => setShow(false)} />
       <div className='row1'>
         <div className='group'>
           <img src={user_avatar} alt='' />
@@ -28,7 +30,7 @@ const Index = (props, { index }) => {
             {props.lastName}
           </h4>
         </div>
-        <ViewUser onClick={() => setShow(true)} />
+        <ViewUser onClick={handleViewUser} />
       </div>
       <div className='box'>
         <p>{props.phoneNumber}</p>
@@ -75,12 +77,13 @@ const ViewUser = styled(ViewUserIcon)`
 `;
 
 const Container = styled.div`
-  width: 340px;
-  min-width:340px;
+  // width: 400px;
+  // min-width:400px;
   height: 240px;
   background: #ffffff;
   border-radius: 10px;
   padding:1rem 1.5rem;
+  margin-right:1rem !important;
 
   .box{
       margin-top:1rem;

@@ -5,7 +5,7 @@ import {
   getAppointmentCount,
   getTotalRevenue,
   getUsers,
-  getReferrals
+  getReferrals,
 } from '../../sagas/dashboard/overview';
 
 export const overviewSlice = createSlice({
@@ -25,10 +25,15 @@ export const overviewSlice = createSlice({
     users: [],
     referralsLoading: false,
     referrals: [],
+    showUserModal: false,
   },
   reducers: {
     toggleActiveTab: (state, { payload }) => {
       state.activeTab = payload;
+      return state;
+    },
+    toggleShowModal: (state) => {
+      state.showUserModal = !state.showUserModal;
       return state;
     },
   },
@@ -91,6 +96,6 @@ export const overviewSlice = createSlice({
   },
 });
 
-export const { toggleActiveTab } = overviewSlice.actions;
+export const { toggleActiveTab, toggleShowModal } = overviewSlice.actions;
 
 export const overviewSelector = (state) => state.overview;

@@ -1,62 +1,65 @@
-import React from "react";
-import styled from "styled-components";
-import { Modal, Collapse } from "antd";
-import { ReactComponent as Close } from "../../../assets/images/icons/cancel.svg";
-import usmAvatar from "../../../assets/images/icons/usm_avatar.png";
-import star from "../../../assets/images/icons/star.svg";
-import starOutline from "../../../assets/images/icons/star-outline.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { Modal, Collapse } from 'antd';
+import { ReactComponent as Close } from '../../../assets/images/icons/cancel.svg';
+import usmAvatar from '../../../assets/images/icons/usm_avatar.png';
+import star from '../../../assets/images/icons/star.svg';
+import starOutline from '../../../assets/images/icons/star-outline.svg';
 
 const { Panel } = Collapse;
 
-export const UserMonitorModal = ({ show, handleClose }) => {
+export const UserMonitorModal = (props) => {
+  const selectedUser = JSON.parse(sessionStorage.getItem('requestMonitorUser'));
   return (
     <Modal
-      visible={show}
+      visible={props.show}
       width={565}
       footer={null}
       closable={false}
       centered={true}
     >
-      <CloseButton onClick={handleClose} />
-      <Container>
-        <div className="header_info">
-          <img src={usmAvatar} alt="" />
-          <div className="group">
-            <h2>Amos Johnson</h2>
-            <h4>Patient</h4>
+      <CloseButton onClick={props.handleClose} />
+      {selectedUser && (
+        <Container>
+          <div className='header_info'>
+            <img src={usmAvatar} alt='' />
+            <div className='group'>
+              <h2>
+                {selectedUser.firstName || null} {selectedUser.lastName || null}
+              </h2>
+              <h4 style={{ textTransform: 'capitalize' }}>
+                {selectedUser.role}
+              </h4>
+            </div>
           </div>
-        </div>
-        <div className="content">
-          <div className="group">
-            <h4>Phone Number</h4>
-            <h5>+234 812 345 6789</h5>
+          <div className='content'>
+            <div className='group'>
+              <h4>Phone Number</h4>
+              <h5>{selectedUser.phoneNumber}</h5>
+            </div>
+            <div className='group'>
+              <h4>Email</h4>
+              <h5>{selectedUser.email}</h5>
+            </div>
+            <div className='group'>
+              <h4>Sign Up Date</h4>
+              <h5>18th Oct. 2021</h5>
+            </div>
+            <div className='group'>
+              <h4>Time</h4>
+              <h5>15:24:35</h5>
+            </div>
+            <div className='group'>
+              <h4>Location</h4>
+              <h5>Lagos, NG</h5>
+            </div>
+            <div className='group'>
+              <h4>Activity Status</h4>
+              <h5 className='active'>Active</h5>
+            </div>
           </div>
-          <div className="group">
-            <h4>Email</h4>
-            <h5>amosjohnson@gmail.com</h5>
-          </div>
-          <div className="group">
-            <h4>Sign Up Date</h4>
-            <h5>18th Oct. 2021</h5>
-          </div>
-          <div className="group">
-            <h4>Time</h4>
-            <h5>15:24:35</h5>
-          </div>
-          <div className="group">
-            <h4>Location</h4>
-            <h5>+234 812 345 6789</h5>
-          </div>
-          <div className="group">
-            <h4>Phone Number</h4>
-            <h5>Lagos, NG</h5>
-          </div>
-          <div className="group">
-            <h4>Activity Status</h4>
-            <h5 className="active">Active</h5>
-          </div>
-        </div>
-      </Container>
+        </Container>
+      )}
     </Modal>
   );
 };
@@ -71,69 +74,69 @@ export const PatientInfoModal = ({ show, handleClose }) => {
       centered={true}
     >
       <CloseButton onClick={handleClose} />
-      <Container subscription="Premium">
-        <div className="header_info">
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+      <Container subscription='Premium'>
+        <div className='header_info'>
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h2>Amos Johnson</h2>
             <h4>Patient</h4>
           </div>
         </div>
-        <div className="content">
-          <div className="group">
+        <div className='content'>
+          <div className='group'>
             <h4>Phone Number</h4>
             <h5>+234 812 345 6789</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Email</h4>
             <h5>amosjohnson@gmail.com</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Sign Up Date</h4>
             <h5>18th Oct. 2021</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Visits</h4>
             <h5>235</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Subscription</h4>
-            <h5 className="subscription">Premium</h5>
+            <h5 className='subscription'>Premium</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Requests</h4>
             <h5>31</h5>
           </div>
         </div>
-        <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
+        <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
         <Collapse
           bordered={false}
-          defaultActiveKey={["1"]}
-          className="site-collapse-custom-collapse"
-          expandIconPosition={"right"}
+          defaultActiveKey={['1']}
+          className='site-collapse-custom-collapse'
+          expandIconPosition={'right'}
         >
           <CustomPanel
-            header="PRELIMINARY FORM"
-            key="1"
-            className="site-collapse-custom-panel"
+            header='PRELIMINARY FORM'
+            key='1'
+            className='site-collapse-custom-panel'
           >
-            <div className="content">
+            <div className='content'>
               <h5>Fullname</h5>
               <p>Omole John</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Date Of Birth</h5>
               <p>19/10/2020</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Sex</h5>
               <p>Male</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Height</h5>
               <p>6.10m</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Allergies</h5>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
@@ -142,28 +145,28 @@ export const PatientInfoModal = ({ show, handleClose }) => {
             </div>
           </CustomPanel>
           <CustomPanel
-            header="CONSULTATION"
-            extra="20/12/2020"
-            key="2"
-            className="site-collapse-custom-panel"
+            header='CONSULTATION'
+            extra='20/12/2020'
+            key='2'
+            className='site-collapse-custom-panel'
           >
-            <div className="content">
+            <div className='content'>
               <h5>Fullname</h5>
               <p>Omole John</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Date Of Birth</h5>
               <p>19/10/2020</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Sex</h5>
               <p>Male</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Height</h5>
               <p>6.10m</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Allergies</h5>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
@@ -172,28 +175,28 @@ export const PatientInfoModal = ({ show, handleClose }) => {
             </div>
           </CustomPanel>
           <CustomPanel
-            header="CONSULTATION"
-            extra="20/12/2020"
-            key="3"
-            className="site-collapse-custom-panel"
+            header='CONSULTATION'
+            extra='20/12/2020'
+            key='3'
+            className='site-collapse-custom-panel'
           >
-            <div className="content">
+            <div className='content'>
               <h5>Fullname</h5>
               <p>Omole John</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Date Of Birth</h5>
               <p>19/10/2020</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Sex</h5>
               <p>Male</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Height</h5>
               <p>6.10m</p>
             </div>
-            <div className="content">
+            <div className='content'>
               <h5>Allergies</h5>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
@@ -218,56 +221,56 @@ export const DoctorInfoModal = ({ show, handleClose }) => {
       centered={true}
     >
       <CloseButton onClick={handleClose} />
-      <Container subscription="Premium">
-        <div className="header_info">
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+      <Container subscription='Premium'>
+        <div className='header_info'>
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h2>Dr Amos Johnson</h2>
             <h4>Doctor</h4>
           </div>
         </div>
-        <div className="content">
-          <div className="group">
+        <div className='content'>
+          <div className='group'>
             <h4>Phone Number</h4>
             <h5>+234 812 345 6789</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Email</h4>
             <h5>amosjohnson@gmail.com</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Sign Up Date</h4>
             <h5>18th Oct. 2021</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Consultations</h4>
             <h5>28</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Rating</h4>
             {/* <h5 className="subscription">Premium</h5> */}
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Availability</h4>
             <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Verification Status</h4>
             <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
           </div>
         </div>
-        <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
+        <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
         <h4>Patient Review</h4>
         <PatientReview>
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h5>Jenna Ikri</h5>
-            <div className="rating-group">
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={starOutline} alt="" />
-              <img src={starOutline} alt="" />
+            <div className='rating-group'>
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={starOutline} alt='' />
+              <img src={starOutline} alt='' />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
@@ -278,15 +281,15 @@ export const DoctorInfoModal = ({ show, handleClose }) => {
           </div>
         </PatientReview>
         <PatientReview>
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h5>Jenna Ikri</h5>
-            <div className="rating-group">
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={starOutline} alt="" />
-              <img src={starOutline} alt="" />
+            <div className='rating-group'>
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={starOutline} alt='' />
+              <img src={starOutline} alt='' />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
@@ -297,15 +300,15 @@ export const DoctorInfoModal = ({ show, handleClose }) => {
           </div>
         </PatientReview>
         <PatientReview>
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h5>Jenna Ikri</h5>
-            <div className="rating-group">
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={star} alt="" />
-              <img src={starOutline} alt="" />
-              <img src={starOutline} alt="" />
+            <div className='rating-group'>
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={star} alt='' />
+              <img src={starOutline} alt='' />
+              <img src={starOutline} alt='' />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
@@ -330,73 +333,73 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
       centered={true}
     >
       <CloseButton onClick={handleClose} />
-      <Container subscription="Premium">
-        <div className="header_info">
-          <img src={usmAvatar} alt="" />
-          <div className="group">
+      <Container subscription='Premium'>
+        <div className='header_info'>
+          <img src={usmAvatar} alt='' />
+          <div className='group'>
             <h2>Amos Johnson</h2>
             <h4>Patient</h4>
           </div>
         </div>
-        <div className="content">
-          <div className="group">
+        <div className='content'>
+          <div className='group'>
             <h4>Phone Number</h4>
             <h5>+234 812 345 6789</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Email</h4>
             <h5>amosjohnson@gmail.com</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Date</h4>
             <h5>18th Oct. 2021</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Time</h4>
             <h5>15:24:35</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Doctor Type</h4>
             <h5>Dermatologist</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Amount</h4>
             <h5>#25,000</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Status</h4>
-            <h5 className="subscription">Completed</h5>
+            <h5 className='subscription'>Completed</h5>
           </div>
         </div>
-        <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
+        <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
         <h4>Patient Review</h4>
-        <div className="content">
-          <div className="group">
+        <div className='content'>
+          <div className='group'>
             <h4>Doctor's Name</h4>
-            <div className="info-group">
-              <img src={usmAvatar} alt="" />
+            <div className='info-group'>
+              <img src={usmAvatar} alt='' />
               <h5>Dr Amos Doe</h5>
             </div>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Duration</h4>
             <h5>45mins</h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Diagnosis</h4>
             <h5>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
               adipiscing placerat auctor eu quisque.
             </h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Doctor's Comment</h4>
             <h5>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
               adipiscing placerat auctor eu quisque.
             </h5>
           </div>
-          <div className="group">
+          <div className='group'>
             <h4>Prescription</h4>
             <h5>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
@@ -418,13 +421,13 @@ const Container = styled.div`
       text-align: left;
       letter-spacing: 0.004em;
       color: ${(props) =>
-        props.subscription === "Premium"
-          ? "#E20B8C !important"
-          : props.subscription === "Standard"
-          ? "#455AFE !important"
-          : props.subscription === "Unlimited"
-          ? "#19B729 !important"
-          : ""};
+        props.subscription === 'Premium'
+          ? '#E20B8C !important'
+          : props.subscription === 'Standard'
+          ? '#455AFE !important'
+          : props.subscription === 'Unlimited'
+          ? '#19B729 !important'
+          : ''};
     }
     .group {
       display: flex;
@@ -456,6 +459,7 @@ const Container = styled.div`
         padding: 0;
         color: #999999;
         margin-right: 2rem;
+        text-transform: capitalize;
       }
       h5 {
         flex: 1;

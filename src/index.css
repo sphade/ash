@@ -28,7 +28,7 @@ code {
 }
 .screen-size-message {
   display: flex;
-  color:#fff;
+  color: #fff;
   font-size: 18px;
   flex-direction: column;
   align-items: center;
@@ -104,4 +104,19 @@ p {
   position: relative;
   overflow: hidden;
   z-index: 1;
+}
+
+.slick-prev {
+  left: 0 !important;
+  z-index: 910000 !important;
+}
+.slick-next {
+  right: 1% !important;
+  z-index: 910000 !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #455afe !important;
+  font-size: 2rem !important;
 }

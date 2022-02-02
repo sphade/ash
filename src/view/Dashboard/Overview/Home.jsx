@@ -19,6 +19,7 @@ import Skeleton from 'react-loading-skeleton';
 import {
   overviewSelector,
   toggleActiveTab,
+  toggleShowModal,
 } from '../../../redux/reducers/dashboard/overview';
 import {
   PatientIcon,
@@ -27,10 +28,18 @@ import {
   ConsultationIcon,
 } from '../../../assets/images/icons/overview';
 import { CardBg1, CardBg2 } from '../../../assets/images/background';
+import { UserMonitorModal } from './Modals';
+import Slider from 'react-slick';
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+  };
   React.useEffect(() => {
     dispatch(getAppointmentCount());
     dispatch(getDoctorCount());
@@ -55,10 +64,16 @@ const Home = () => {
     referralsLoading,
     referrals,
     activeTab,
+    showUserModal,
   } = useSelector(overviewSelector);
+
   const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   return (
     <Container>
+      <UserMonitorModal
+        show={showUserModal}
+        handleClose={() => dispatch(toggleShowModal())}
+      />
       {doctorCountLoading || patientCountLoading || appointmentCountLoading ? (
         <Skeleton width='120px' height='35px' />
       ) : (
@@ -125,21 +140,21 @@ const Home = () => {
           </>
         )}
       </Header>
-      <MonitorCardWrapper>
-        {usersLoading ? (
-          <>
-            <Skeleton width={340} height={240} />
-            <Skeleton width={340} height={240} />
-            <Skeleton width={340} height={240} />
-            <Skeleton width={340} height={240} />
-            <Skeleton width={340} height={240} />
-          </>
-        ) : (
-          users.map((item, index) => {
+      {usersLoading ? (
+        <MonitorCardWrapper>
+          <Skeleton width={340} height={240} />
+          <Skeleton width={340} height={240} />
+          <Skeleton width={340} height={240} />
+          <Skeleton width={340} height={240} />
+          <Skeleton width={340} height={240} />
+        </MonitorCardWrapper>
+      ) : (
+        <Slider {...settings}>
+          {users.map((item, index) => {
             return <UserMonitorCard key={index} {...item} />;
-          })
-        )}
-      </MonitorCardWrapper>
+          })}
+        </Slider>
+      )}
       <div className='tab-group'>
         {referralsLoading ? (
           <>
@@ -163,7 +178,7 @@ const Home = () => {
 
       {activeTab === 'Referral' && (
         <>
-          <Header style={{ marginTop: '0 !important' }}>
+          <Header>
             <div className='group'>
               {referralsLoading ? (
                 <>
@@ -241,7 +256,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 40px 0 30px;
+  margin: 40px 0 16px;
 
   .group {
     display: flex;
@@ -273,11 +288,12 @@ export const MonitorCardWrapper = styled.div`
   // grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   padding-bottom: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   // ::-webkit-scrollbar {
-  //   width: 0;  /* Remove scrollbar space */
+  //   width: 0; /* Remove scrollbar space */
   //   background: transparent;
+  // }
 `;
 
 export const TableWrapper = styled.div`

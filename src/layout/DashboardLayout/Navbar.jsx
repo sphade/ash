@@ -8,6 +8,7 @@ import logout from '../../assets/images/icons/logout.svg';
 import { useHistory } from 'react-router-dom';
 import { clearState } from '../../redux/reducers/auth/login';
 import { useDispatch } from 'react-redux';
+import logo from '../../assets/Logo.svg';
 
 const Navbar = () => {
   const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
@@ -32,9 +33,7 @@ const Navbar = () => {
   );
   return (
     <Container>
-      <Logo>
-        <h2>Logo</h2>
-      </Logo>
+      <Logo src={logo} />
       <NavMenu>
         <NotificationIcon />
         <Avatar src={avatar} alt='Avatar' />
@@ -74,9 +73,7 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  color: #666666;
-`;
+const Logo = styled.img``;
 
 const NavMenu = styled.div`
   display: flex;
