@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loginSlice } from './reducers/auth/login';
-import { forgotPasswordSlice } from './reducers/auth/forgotPassword';
 import { loadState } from './sessionStorage';
-import { overviewSlice } from './reducers/dashboard/overview';
-import { transactionsSlice } from './reducers/dashboard/transactions';
-import { doctorsSlice } from './reducers/dashboard/doctors';
-import { consultationsSlice } from './reducers/dashboard/consultations';
+import { loginSlice, forgotPasswordSlice } from './reducers/auth';
+import {
+  overviewSlice,
+  patientsSlice,
+  transactionsSlice,
+  doctorsSlice,
+  consultationsSlice,
+} from './reducers/dashboard';
 
 const persistedState = loadState();
 export default configureStore({
@@ -16,6 +18,7 @@ export default configureStore({
     transactions: transactionsSlice.reducer,
     doctors: doctorsSlice.reducer,
     consultations: consultationsSlice.reducer,
+    patients: patientsSlice.reducer,
   },
   persistedState,
 });

@@ -7,7 +7,7 @@ export const getPatients = createAsyncThunk(
   'admin/patients/all',
   async (thunkAPI) => {
     try {
-      const response = await fetch(`${API}patients`, {
+      const response = await fetch(`${API}admin/patients`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

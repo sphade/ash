@@ -8,114 +8,27 @@ const menu = (handleShowView) => (
     <Menu.Item onClick={handleShowView}>View</Menu.Item>
   </Menu>
 );
-export const dataSource = [
-  {
-    key: '1',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Premium',
-  },
-  {
-    key: '2',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 15,
-    subscription: 'Unlimited',
-  },
-  {
-    key: '3',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Premium',
-  },
-  {
-    key: '4',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Premium',
-  },
-  {
-    key: '5',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 16,
-    subscription: 'Premium',
-  },
-  {
-    key: '6',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Standard',
-  },
-  {
-    key: '7',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Unlimited',
-  },
-  {
-    key: '8',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Standard',
-  },
-  {
-    key: '9',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Unlimited',
-  },
-  {
-    key: '10',
-    name: 'Mike Johnson',
-    phone: '+234 812 345 6789',
-    email: 'amosjohnson@gmail.com',
-    date: '16th Sep. 2021',
-    visit: 13,
-    subscription: 'Standard',
-  },
-];
 
 export const columns = [
   {
     title: 'S/N',
-    dataIndex: 'key',
-    key: 'key',
+    render: (item, record, index) => index + 1,
   },
   {
     title: 'NAME',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'firstName',
+    key: 'firstName',
+    render: (text, row) => (
+      <Space>
+        {text}
+        {row.lastName}
+      </Space>
+    ),
   },
   {
     title: 'PHONE NUMBER',
-    dataIndex: 'phone',
-    key: 'phone',
+    dataIndex: 'phoneNumber',
+    key: 'phoneNumber',
   },
   {
     title: 'EMAIL ADDRESS',
@@ -124,8 +37,13 @@ export const columns = [
   },
   {
     title: 'SIGN UP DATE',
-    dataIndex: 'date',
-    key: 'date',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    render: (text) => (
+      <Space>
+        {text !== null ? new Date(text).toLocaleDateString() : '--------'}
+      </Space>
+    ),
   },
   {
     title: 'VISITs',

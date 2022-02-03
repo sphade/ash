@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { OverviewCard, UserMonitorCard } from '../../../components/Overview';
 import { columns } from '../../../table/overview';
 import { columns as consultationsColumns } from '../../../table/consultations';
-import { Searchbar } from '../../../Reuseable';
+import { Searchbar, SelectField } from '../../../Reuseable';
 import {
   getAppointmentCount,
   getDoctorCount,
@@ -186,16 +186,14 @@ const Home = () => {
                 </>
               ) : (
                 <>
-                  <select
-                    style={{ border: 'none', height: '3rem', width: '150px' }}
-                    class='form-select'
-                  >
-                    <option selected>Filter</option>
-                    <option value='today'>Today</option>
-                    <option value='one_week'>Last 7 Days</option>
-                    <option value='one_month'>One Month</option>
-                    <option value='one_year'>One Year</option>
-                  </select>
+                  <SelectField
+                    placeholder='Filter'
+                    data={[
+                      { value: 'this week', name: 'This Week' },
+                      { value: 'last week', name: 'Last Week' },
+                      { value: 'one month', name: 'One Month' },
+                    ]}
+                  />
                   <Searchbar />
                 </>
               )}

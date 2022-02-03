@@ -91,8 +91,8 @@ p {
 }
 
 .react-loading-skeleton {
-  --base-color: #e5e4e2;
-  --highlight-color: #d3d3d3 !important;
+  --base-color: #b9bbb6;
+  --highlight-color: #b9bbb6 !important;
   --animation-duration: 1.5s;
   --animation-direction: normal;
   --pseudo-element-display: block;
@@ -119,4 +119,10 @@ p {
 .slick-next:before {
   color: #455afe !important;
   font-size: 2rem !important;
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+  position: relative;
+  padding: 8px 16px !important;
+  overflow-wrap: break-word;
 }

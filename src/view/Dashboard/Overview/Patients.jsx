@@ -3,40 +3,70 @@ import { useHistory } from 'react-router-dom';
 import { BackArrow } from '../../../layout/DashboardLayout/Content';
 import { Header as Title } from './Revenue';
 import { Header as Heading, TableWrapper } from './Home';
-import { Searchbar } from '../../../Reuseable';
+import { Searchbar, SelectField } from '../../../Reuseable';
 import { Table } from 'antd';
-import { columns, dataSource } from '../../../table/patients';
+import { columns } from '../../../table/patients';
+import { useDispatch, useSelector } from 'react-redux';
+import { patientsSelector } from '../../../redux/reducers/dashboard/patients';
+import { getPatients } from '../../../redux/sagas/dashboard/patients';
+import Skeleton from 'react-loading-skeleton';
 
 const Patients = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getPatients());
+  }, [dispatch]);
+  const { patients, patientsLoading } = useSelector(patientsSelector);
+
   return (
     <Fragment>
       <Title>
-        <BackArrow onClick={() => history.goBack()} />
-        <h6>Total Patients</h6>
+        {patientsLoading ? (
+          <>
+            <Skeleton width={150} height={40} />
+            <Skeleton width={150} height={40} />
+          </>
+        ) : (
+          <>
+            <BackArrow onClick={() => history.goBack()} />
+            <h6>Total Patients</h6>
+          </>
+        )}
       </Title>
       <Heading>
-        <div className='group'>
-          <select
-            style={{
-              height: '3rem',
-              width: '150px',
-              borderRadius: '10px',
-              border: 'none',
-            }}
-            class='form-select'
-          >
-            <option selected>Filter Role</option>
-            <option value='Premium'>Premium</option>
-            <option value='Standard'>Standard</option>
-            <option value='Unlimited'>Unlimited</option>
-          </select>
-        </div>
-        <Searchbar />
+        {patientsLoading ? (
+          <>
+            <Skeleton width={150} height={40} />
+            <Skeleton width={350} height={40} />
+          </>
+        ) : (
+          <>
+            <div className='group'>
+              <SelectField
+                placeholder='Filter'
+                data={[
+                  { value: 'Premium', name: 'Premium' },
+                  { value: 'Standard', name: 'Standard' },
+                  { value: 'Unlimited', name: 'Unlimited' },
+                ]}
+              />
+            </div>
+            <Searchbar />
+          </>
+        )}
       </Heading>
-      <TableWrapper>
-        <Table dataSource={dataSource} columns={columns} />
-      </TableWrapper>
+      {patientsLoading ? (
+        <>
+          <Skeleton width={'100%'} height={500} />
+          <br />
+        </>
+      ) : (
+        <TableWrapper>
+          <Table dataSource={patients} columns={columns} />
+        </TableWrapper>
+      )}
     </Fragment>
   );
 };
