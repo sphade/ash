@@ -3,30 +3,33 @@ import { useHistory } from 'react-router-dom';
 import { BackArrow } from '../../../layout/DashboardLayout/Content';
 import { Header as Title } from './Revenue';
 import { Header as Heading, TableWrapper } from './Home';
-import { Searchbar } from '../../../Reuseable';
+import { Searchbar, SelectField } from '../../../Reuseable';
 import { Space, Table, Dropdown, Menu } from 'antd';
-import { Star, MoreButton,StarOutline } from '../../../table/doctors';
+// import { columns } from '../../../table/patients';
 import { useDispatch, useSelector } from 'react-redux';
-import { doctorsSelector,handleToggleModal, } from '../../../redux/reducers/dashboard/doctors';
-import { getDoctors } from '../../../redux/sagas/dashboard/doctors';
+import {
+  handleToggleModal,
+  patientsSelector,
+} from '../../../redux/reducers/dashboard/patients';
+import { getPatients } from '../../../redux/sagas/dashboard/patients';
 import Skeleton from 'react-loading-skeleton';
-import { DoctorInfoModal } from './Modals';
+import { PatientInfoModal } from './Modals';
+import { MoreButton } from '../../../table/patients';
 
-const Doctors = () => {
+const Patients = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(getDoctors());
+    dispatch(getPatients());
   }, [dispatch]);
+  const { patients, patientsLoading } = useSelector(patientsSelector);
 
-  const { doctors, doctorsLoading } = useSelector(doctorsSelector);
-
-  const menu = (data) => (
+ const menu = (data) => (
     <Menu>
       <Menu.Item
         onClick={() => {
-          sessionStorage.setItem('selectedDoctor', JSON.stringify(data));
+          sessionStorage.setItem('selectedPatient', JSON.stringify(data));
           dispatch(handleToggleModal());
         }}
       >
@@ -46,7 +49,6 @@ const Doctors = () => {
       key: 'firstName',
       render: (text, row) => (
         <Space>
-          Dr.
           {text}
           {row.lastName}
         </Space>
@@ -73,30 +75,14 @@ const Doctors = () => {
       ),
     },
     {
-      title: 'CONSULTS',
-      dataIndex: 'appointmentCount',
-      key: 'appointmentCount',
-      render: (text) => <Space>{!text ? '------' : text}</Space>,
+      title: 'VISITs',
+      dataIndex: 'visit',
+      key: 'visit',
     },
     {
-      title: 'RATING',
-      dataIndex: 'avgRating',
-      key: 'avgRating',
-      render: (text = 0) => (
-        <Space>
-          {Array.from({ length: text }, (index) => {
-            return <Star key={index} />;
-          })}
-          {Array.from({ length: parseInt(5 - text) }, (index) => {
-            return <StarOutline key={index} />;
-          })}
-        </Space>
-      ),
-    },
-    {
-      title: 'STATUS',
-      dataIndex: 'isVerified',
-      key: 'isVerified',
+      title: 'SUBSCRIPTION',
+      dataIndex: 'subscription',
+      key: 'subscription',
       render: (text) => (
         <Space
           style={{
@@ -110,24 +96,24 @@ const Doctors = () => {
             textTransform: 'capitalize',
             borderRadius: '5px',
             color:
-              text === 'accepted'
+              text === 'Premium'
+                ? '#FA0E9B'
+                : text === 'Standard'
                 ? '#19B729'
-                : text === 'pending'
-                ? '#FFAD33'
-                : text === 'rejected'
-                ? '#FF8282'
+                : text === 'Unlimited'
+                ? '#455AFE'
                 : '',
             background:
-              text === 'accepted'
+              text === 'Premium'
+                ? 'rgba(250, 14, 155, 0.05)'
+                : text === 'Standard'
                 ? 'rgba(25, 183, 41, 0.1)'
-                : text === 'pending'
-                ? 'rgba(255, 173, 51, 0.1)'
-                : text === 'rejected'
-                ? 'rgba(255, 130, 130, 0.1)'
+                : text === 'Unlimited'
+                ? 'rgba(69, 90, 254, 0.05)'
                 : '',
           }}
         >
-          {text === 'accepted' ? 'Verified' : text}
+          {text}
         </Space>
       ),
     },
@@ -145,9 +131,9 @@ const Doctors = () => {
   ];
   return (
     <Fragment>
-      <DoctorInfoModal />
+      <PatientInfoModal />
       <Title>
-        {doctorsLoading ? (
+        {patientsLoading ? (
           <>
             <Skeleton width={150} height={40} />
             <Skeleton width={150} height={40} />
@@ -155,12 +141,12 @@ const Doctors = () => {
         ) : (
           <>
             <BackArrow onClick={() => history.goBack()} />
-            <h6>Total Doctors</h6>
+            <h6>Total Patients</h6>
           </>
         )}
       </Title>
       <Heading>
-        {doctorsLoading ? (
+        {patientsLoading ? (
           <>
             <Skeleton width={150} height={40} />
             <Skeleton width={350} height={40} />
@@ -168,37 +154,32 @@ const Doctors = () => {
         ) : (
           <>
             <div className='group'>
-              <select
-                style={{
-                  height: '3rem',
-                  width: '150px',
-                  borderRadius: '10px',
-                  border: 'none',
-                }}
-                class='form-select'
-              >
-                <option selected>Filter Role</option>
-                <option value='Verified'>Verified</option>
-                <option value='Pending'>Pending</option>
-                <option value='Rejected'>Rejected</option>
-              </select>
+              <SelectField
+                placeholder='Filter'
+                data={[
+                  { value: 'Premium', name: 'Premium' },
+                  { value: 'Standard', name: 'Standard' },
+                  { value: 'Unlimited', name: 'Unlimited' },
+                ]}
+              />
             </div>
             <Searchbar />
           </>
         )}
       </Heading>
-      {doctorsLoading ? (
+      {patientsLoading ? (
         <>
           <Skeleton width={'100%'} height={500} />
           <br />
         </>
       ) : (
         <TableWrapper>
-          <Table dataSource={doctors} columns={columns} />
+          <Table dataSource={patients} columns={columns} />
         </TableWrapper>
       )}
     </Fragment>
   );
 };
 
-export default Doctors;
+export default Patients;
+

@@ -1,12 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Modal, Collapse } from 'antd';
+import { Modal } from 'antd';
 import { ReactComponent as Close } from '../../../assets/images/icons/cancel.svg';
 import usmAvatar from '../../../assets/images/icons/usm_avatar.png';
 import star from '../../../assets/images/icons/star.svg';
 import starOutline from '../../../assets/images/icons/star-outline.svg';
-
-const { Panel } = Collapse;
+import {
+  ConsultationAccordion,
+  PreliminaryAccordion,
+} from '../../../components/Overview/Accordion';
+import { consultationData, patientData } from '../../../table/patients';
+import {
+  handleToggleModal,
+  patientsSelector,
+} from '../../../redux/reducers/dashboard/patients';
+import { useDispatch, useSelector } from 'react-redux';
+import { PatientReview } from '../../../components/Overview';
+import {
+  doctorsSelector,
+  handleToggleModal as handleToggleDoctorModal,
+} from '../../../redux/reducers/dashboard/doctors';
+import {
+  consultationsSelector,
+  handleToggleModal as handleToggleConsultationModal,
+} from '../../../redux/reducers/dashboard/consultations';
 
 export const UserMonitorModal = (props) => {
   const selectedUser = JSON.parse(sessionStorage.getItem('requestMonitorUser'));
@@ -64,32 +81,38 @@ export const UserMonitorModal = (props) => {
   );
 };
 
-export const PatientInfoModal = ({ show, handleClose }) => {
+export const PatientInfoModal = () => {
+  const dispatch = useDispatch();
+  const { patientModal } = useSelector(patientsSelector);
+  const patient = JSON.parse(sessionStorage.getItem('selectedPatient'));
   return (
     <Modal
-      visible={show}
+      visible={patientModal}
       width={585}
       footer={null}
       closable={false}
       centered={true}
     >
-      <CloseButton onClick={handleClose} />
+      <CloseButton onClick={() => dispatch(handleToggleModal())} />
       <Container subscription='Premium'>
         <div className='header_info'>
           <img src={usmAvatar} alt='' />
           <div className='group'>
-            <h2>Amos Johnson</h2>
-            <h4>Patient</h4>
+            <h2>
+              {patient && patient.firstName}&nbsp;
+              {patient && patient.lastName}
+            </h2>
+            <h4 style={{ marginTop: '10px' }}>Patient</h4>
           </div>
         </div>
         <div className='content'>
           <div className='group'>
             <h4>Phone Number</h4>
-            <h5>+234 812 345 6789</h5>
+            <h5>{patient && patient.phoneNumber}</h5>
           </div>
           <div className='group'>
             <h4>Email</h4>
-            <h5>amosjohnson@gmail.com</h5>
+            <h5>{patient && patient.email}</h5>
           </div>
           <div className='group'>
             <h4>Sign Up Date</h4>
@@ -109,134 +132,48 @@ export const PatientInfoModal = ({ show, handleClose }) => {
           </div>
         </div>
         <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
-        <Collapse
-          bordered={false}
-          defaultActiveKey={['1']}
-          className='site-collapse-custom-collapse'
-          expandIconPosition={'right'}
-        >
-          <CustomPanel
-            header='PRELIMINARY FORM'
-            key='1'
-            className='site-collapse-custom-panel'
-          >
-            <div className='content'>
-              <h5>Fullname</h5>
-              <p>Omole John</p>
-            </div>
-            <div className='content'>
-              <h5>Date Of Birth</h5>
-              <p>19/10/2020</p>
-            </div>
-            <div className='content'>
-              <h5>Sex</h5>
-              <p>Male</p>
-            </div>
-            <div className='content'>
-              <h5>Height</h5>
-              <p>6.10m</p>
-            </div>
-            <div className='content'>
-              <h5>Allergies</h5>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
-                nulla adipiscing placerat auctor eu quisque.
-              </p>
-            </div>
-          </CustomPanel>
-          <CustomPanel
-            header='CONSULTATION'
-            extra='20/12/2020'
-            key='2'
-            className='site-collapse-custom-panel'
-          >
-            <div className='content'>
-              <h5>Fullname</h5>
-              <p>Omole John</p>
-            </div>
-            <div className='content'>
-              <h5>Date Of Birth</h5>
-              <p>19/10/2020</p>
-            </div>
-            <div className='content'>
-              <h5>Sex</h5>
-              <p>Male</p>
-            </div>
-            <div className='content'>
-              <h5>Height</h5>
-              <p>6.10m</p>
-            </div>
-            <div className='content'>
-              <h5>Allergies</h5>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
-                nulla adipiscing placerat auctor eu quisque.
-              </p>
-            </div>
-          </CustomPanel>
-          <CustomPanel
-            header='CONSULTATION'
-            extra='20/12/2020'
-            key='3'
-            className='site-collapse-custom-panel'
-          >
-            <div className='content'>
-              <h5>Fullname</h5>
-              <p>Omole John</p>
-            </div>
-            <div className='content'>
-              <h5>Date Of Birth</h5>
-              <p>19/10/2020</p>
-            </div>
-            <div className='content'>
-              <h5>Sex</h5>
-              <p>Male</p>
-            </div>
-            <div className='content'>
-              <h5>Height</h5>
-              <p>6.10m</p>
-            </div>
-            <div className='content'>
-              <h5>Allergies</h5>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
-                nulla adipiscing placerat auctor eu quisque.
-              </p>
-            </div>
-          </CustomPanel>
-        </Collapse>
-        ,
+        <PreliminaryAccordion {...patientData} />
+        <ConsultationAccordion {...consultationData} />
+        <ConsultationAccordion {...consultationData} />
+        <ConsultationAccordion {...consultationData} />
       </Container>
     </Modal>
   );
 };
 
-export const DoctorInfoModal = ({ show, handleClose }) => {
+export const DoctorInfoModal = ({ rating = 3 }) => {
+  const dispatch = useDispatch();
+  const { doctorModal } = useSelector(doctorsSelector);
+  const doctor = JSON.parse(sessionStorage.getItem('selectedDoctor'));
   return (
     <Modal
-      visible={show}
+      visible={doctorModal}
       width={585}
       footer={null}
       closable={false}
       centered={true}
     >
-      <CloseButton onClick={handleClose} />
+      <CloseButton onClick={() => dispatch(handleToggleDoctorModal())} />
       <Container subscription='Premium'>
         <div className='header_info'>
           <img src={usmAvatar} alt='' />
           <div className='group'>
-            <h2>Dr Amos Johnson</h2>
-            <h4>Doctor</h4>
+            <h2>
+              Dr&nbsp;
+              {doctor && doctor.firstName}&nbsp;
+              {doctor && doctor.lastName}
+            </h2>
+            <h4 style={{ marginTop: '10px' }}>Doctor</h4>
           </div>
         </div>
         <div className='content'>
           <div className='group'>
             <h4>Phone Number</h4>
-            <h5>+234 812 345 6789</h5>
+            <h5>{doctor && doctor.phoneNumber}</h5>
           </div>
           <div className='group'>
             <h4>Email</h4>
-            <h5>amosjohnson@gmail.com</h5>
+            <h5>{doctor && doctor.email}</h5>
           </div>
           <div className='group'>
             <h4>Sign Up Date</h4>
@@ -248,7 +185,14 @@ export const DoctorInfoModal = ({ show, handleClose }) => {
           </div>
           <div className='group'>
             <h4>Rating</h4>
-            {/* <h5 className="subscription">Premium</h5> */}
+            <div className='rating-group'>
+              {Array.from({ length: rating }, (index) => {
+                return <img key={index} src={star} alt='' />;
+              })}
+              {Array.from({ length: parseInt(5 - rating) }, (index) => {
+                return <img key={index} src={starOutline} alt='' />;
+              })}
+            </div>
           </div>
           <div className='group'>
             <h4>Availability</h4>
@@ -261,106 +205,75 @@ export const DoctorInfoModal = ({ show, handleClose }) => {
         </div>
         <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
         <h4>Patient Review</h4>
-        <PatientReview>
-          <img src={usmAvatar} alt='' />
-          <div className='group'>
-            <h5>Jenna Ikri</h5>
-            <div className='rating-group'>
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={starOutline} alt='' />
-              <img src={starOutline} alt='' />
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
-              ultrices cursus ac scelerisque varius eget. Augue egestas ac, mi
-              non ullamcorper aliquet. Congue condimentum morbi amet, lorem
-              ornare.
-            </p>
-          </div>
-        </PatientReview>
-        <PatientReview>
-          <img src={usmAvatar} alt='' />
-          <div className='group'>
-            <h5>Jenna Ikri</h5>
-            <div className='rating-group'>
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={starOutline} alt='' />
-              <img src={starOutline} alt='' />
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
-              ultrices cursus ac scelerisque varius eget. Augue egestas ac, mi
-              non ullamcorper aliquet. Congue condimentum morbi amet, lorem
-              ornare.
-            </p>
-          </div>
-        </PatientReview>
-        <PatientReview>
-          <img src={usmAvatar} alt='' />
-          <div className='group'>
-            <h5>Jenna Ikri</h5>
-            <div className='rating-group'>
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={star} alt='' />
-              <img src={starOutline} alt='' />
-              <img src={starOutline} alt='' />
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Imperdiet
-              ultrices cursus ac scelerisque varius eget. Augue egestas ac, mi
-              non ullamcorper aliquet. Congue condimentum morbi amet, lorem
-              ornare.
-            </p>
-          </div>
-        </PatientReview>
+        {Array.from({ length: 3 }, (index) => {
+          return <PatientReview key={index} />;
+        })}
       </Container>
     </Modal>
   );
 };
 
 export const ConsultationInfoModal = ({ show, handleClose }) => {
+  const dispatch = useDispatch();
+  const { consultationModal } = useSelector(consultationsSelector);
+  const consultation = JSON.parse(
+    sessionStorage.getItem('selectedConsultation')
+  );
   return (
     <Modal
-      visible={show}
+      visible={consultationModal}
       width={585}
       footer={null}
       closable={false}
       centered={true}
     >
-      <CloseButton onClick={handleClose} />
+      <CloseButton onClick={() => dispatch(handleToggleConsultationModal())} />
       <Container subscription='Premium'>
         <div className='header_info'>
           <img src={usmAvatar} alt='' />
           <div className='group'>
-            <h2>Amos Johnson</h2>
-            <h4>Patient</h4>
+            <h2>
+              {consultation && (
+                <>
+                  {consultation.patient.firstName} &nbsp;
+                  {consultation.patient.lastName}
+                </>
+              )}
+            </h2>
+            <h4 style={{ marginTop: '10px' }}>Patient</h4>
           </div>
         </div>
         <div className='content'>
           <div className='group'>
             <h4>Phone Number</h4>
-            <h5>+234 812 345 6789</h5>
+            <h5>{consultation && consultation.patient.phoneNumber}</h5>
           </div>
           <div className='group'>
             <h4>Email</h4>
-            <h5>amosjohnson@gmail.com</h5>
+            <h5>{consultation && consultation.patient.email}</h5>
           </div>
           <div className='group'>
             <h4>Date</h4>
-            <h5>18th Oct. 2021</h5>
+            <h5>
+              {consultation &&
+                new Date(consultation.createdAt).toLocaleDateString()}
+            </h5>
           </div>
           <div className='group'>
             <h4>Time</h4>
-            <h5>15:24:35</h5>
+            <h5>
+              {consultation &&
+                new Date(consultation.createdAt).toLocaleTimeString()}
+            </h5>
           </div>
           <div className='group'>
             <h4>Doctor Type</h4>
-            <h5>Dermatologist</h5>
+            <h5>
+              {consultation &&
+                consultation.doctor.specializations.map((item) => {
+                  return item.title;
+                })}
+            </h5>
           </div>
           <div className='group'>
             <h4>Amount</h4>
@@ -368,22 +281,33 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           </div>
           <div className='group'>
             <h4>Status</h4>
-            <h5 className='subscription'>Completed</h5>
+            <h5 className='subscription'>
+              {consultation && consultation.state.status}
+            </h5>
           </div>
         </div>
         <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
-        <h4>Patient Review</h4>
+        {/* <h4>Patient Review</h4> */}
         <div className='content'>
           <div className='group'>
             <h4>Doctor's Name</h4>
             <div className='info-group'>
               <img src={usmAvatar} alt='' />
-              <h5>Dr Amos Doe</h5>
+              <h5>
+                {' '}
+                {consultation && (
+                  <>
+                    Dr. &nbsp;
+                    {consultation.doctor.firstName} &nbsp;
+                    {consultation.doctor.lastName}
+                  </>
+                )}
+              </h5>
             </div>
           </div>
           <div className='group'>
             <h4>Duration</h4>
-            <h5>45mins</h5>
+            <h5>30 mins</h5>
           </div>
           <div className='group'>
             <h4>Diagnosis</h4>
@@ -418,6 +342,7 @@ const Container = styled.div`
   padding: 3rem 2rem;
   .content {
     .subscription {
+      text-transform: capitalize;
       text-align: left;
       letter-spacing: 0.004em;
       color: ${(props) =>
@@ -437,10 +362,20 @@ const Container = styled.div`
       font-size: 1rem;
       margin: 0.75em 0 0.75rem;
 
+      .rating-group {
+        display: flex;
+        flex: 1;
+        gap: 0.5em;
+        img {
+          width: 14px;
+          height: 14px;
+        }
+      }
+
       .info-group {
         display: flex;
         align-items: center;
-
+        flex: 1;
         img {
           width: 40px;
           height: 40px;
@@ -515,93 +450,48 @@ const CloseButton = styled(Close)`
   }
 `;
 
-const CustomPanel = styled(Panel)`
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.001em;
-  // border: none !important;
-  color: #666666 !important;
+// const PatientReview = styled.div`
+//   display: flex;
+//   gap: 2em;
+//   align-items: flex-start;
+//   width: 100%;
+//   margin: 1em 0;
+//   img {
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//   }
 
-  .ant-collapse-header {
-    color: #e20b8c !important;
-  }
-
-  .ant-collapse > .ant-collapse-item > .ant-collapse-header,
-  .ant-collapse-extra {
-    float: none;
-    margin-right: 12em;
-    color: #666666 !important;
-  }
-
-  .ant-collapse > .ant-collapse-item > .ant-collapse-header,
-  .ant-collapse-arrow svg {
-    color: #666666 !important;
-  }
-
-  .content {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 0.5em;
-
-    p {
-      margin: 0;
-      padding: 0;
-      flex: 1;
-      color: #999999;
-      font-size: 14px;
-    }
-
-    h5 {
-      flex: 0.5;
-      color: #000;
-      font-size: 14px;
-    }
-  }
-`;
-
-const PatientReview = styled.div`
-  display: flex;
-  gap: 2em;
-  align-items: flex-start;
-  width: 100%;
-  margin: 1em 0;
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  .group {
-    border-bottom: 1px solid #666;
-    padding-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5em;
-    .rating-group {
-      display: flex;
-      gap: 0.5em;
-      img {
-        width: 14px;
-        height: 14px;
-      }
-    }
-    h5 {
-      font-weight: bold;
-      font-size: 14px;
-      line-height: 16px;
-      letter-spacing: 0.001em;
-      color: #666666;
-      margin: 0;
-      padding: 0;
-    }
-    p {
-      margin: 0;
-      padding: 0;
-      font-size: 12px;
-      line-height: 14px;
-      letter-spacing: 0.004em;
-      color: #666666;
-    }
-  }
-`;
+//   .group {
+//     border-bottom: 1px solid #666;
+//     padding-bottom: 1rem;
+//     display: flex;
+//     flex-direction: column;
+//     row-gap: 0.5em;
+//     .rating-group {
+//       display: flex;
+//       gap: 0.5em;
+//       img {
+//         width: 14px;
+//         height: 14px;
+//       }
+//     }
+//     h5 {
+//       font-weight: bold;
+//       font-size: 14px;
+//       line-height: 16px;
+//       letter-spacing: 0.001em;
+//       color: #666666;
+//       margin: 0;
+//       padding: 0;
+//     }
+//     p {
+//       margin: 0;
+//       padding: 0;
+//       font-size: 12px;
+//       line-height: 14px;
+//       letter-spacing: 0.004em;
+//       color: #666666;
+//     }
+//   }
+// `;

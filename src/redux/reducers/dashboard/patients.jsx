@@ -6,8 +6,14 @@ export const patientsSlice = createSlice({
   initialState: {
     patientsLoading: false,
     patients: [],
+    patientModal: false,
   },
-  reducers: {},
+  reducers: {
+    handleToggleModal: (state) => {
+      state.patientModal = !state.patientModal;
+      return state;
+    },
+  },
   extraReducers: {
     [getPatients.pending]: (state) => {
       state.patientsLoading = true;
@@ -21,6 +27,6 @@ export const patientsSlice = createSlice({
   },
 });
 
-// export const {} = patientsSlice.actions;
+export const { handleToggleModal } = patientsSlice.actions;
 
 export const patientsSelector = (state) => state.patients;

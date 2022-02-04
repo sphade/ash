@@ -6,6 +6,22 @@ import { Table } from 'antd';
 import { columns, dataSource } from '../../../table/user_management';
 
 const Home = () => {
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        'selectedRows: ',
+        selectedRows
+      );
+    },
+    onSelect: (record, selected, selectedRows) => {
+      console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+      console.log(selected, selectedRows, changeRows);
+    },
+  };
+  // const [checkStrictly, setCheckStrictly] = React.useState(false);
   return (
     <Fragment>
       <Title>
@@ -30,7 +46,11 @@ const Home = () => {
         <Searchbar />
       </Heading>
       <TableWrapper>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table
+          dataSource={dataSource}
+          rowSelection={{ ...rowSelection }}
+          columns={columns}
+        />
       </TableWrapper>
     </Fragment>
   );

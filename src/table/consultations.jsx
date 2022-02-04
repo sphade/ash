@@ -99,75 +99,94 @@ export const dataSource = [
 export const columns = [
   {
     title: 'S/N',
-    dataIndex: 'key',
-    key: 'key',
+    render: (item, record, index) => index + 1,
   },
   {
     title: 'NAME',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'patient',
+    key: 'patient',
+    render: (text) => (
+      <Space>
+        {text.firstName}
+        {text.lastName}
+      </Space>
+    ),
   },
   {
     title: 'DOCTOR',
     dataIndex: 'doctor',
     key: 'doctor',
+    render: (text) => (
+      <Space>
+        Dr.
+        {text.firstName}
+        {text.lastName}
+      </Space>
+    ),
   },
   {
     title: 'DOCTOR TYPE',
-    dataIndex: 'type',
-    key: 'type',
+    dataIndex: 'doctor',
+    key: 'doctor',
+    render: (text) => (
+      <Space>
+        {text.specializations.map((item) => {
+          return item.title;
+        })}
+      </Space>
+    ),
   },
   {
     title: 'DURATION',
-    dataIndex: 'duration',
-    key: 'duration',
+    render: () => <Space>30 minutes</Space>,
   },
   {
     title: 'DATE',
-    dataIndex: 'date',
-    key: 'date',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    render: (text) => <Space>{new Date(text).toLocaleDateString()}</Space>,
   },
   {
     title: 'STATUS',
-    dataIndex: 'status',
-    key: 'status',
-    render: (text) => (
-      <Space
-        style={{
-          width: '90px',
-          fontSize: 13,
-          padding: '0.5em 1em',
-          margin: '0.5em',
-          display: 'flex',
-          justifyContent: 'center',
-          textAlign: 'center',
-          textTransform: 'capitalize',
-          borderRadius: '5px',
-          color:
-            text === 'completed'
-              ? '#19B729'
-              : text === 'pending'
-              ? '#FFAD33'
-              : text === 'cancelled'
-              ? '#FF8282'
-              : text === 'scheduled'
-              ? '#455AFE'
-              : '',
-          background:
-            text === 'completed'
-              ? 'rgba(25, 183, 41, 0.1)'
-              : text === 'pending'
-              ? 'rgba(255, 173, 51, 0.1)'
-              : text === 'cancelled'
-              ? 'rgba(255, 130, 130, 0.1)'
-              : text === 'scheduled'
-              ? 'rgba(69, 90, 254, 0.1)'
-              : '',
-        }}
-      >
-        {text === 'accepted' ? 'Verified' : text}
-      </Space>
-    ),
+    // dataIndex: 'state',
+    // key: 'state',
+    // render: (text) => (
+    //   <Space
+    //     style={{
+    //       width: '90px',
+    //       fontSize: 13,
+    //       padding: '0.5em 1em',
+    //       margin: '0.5em',
+    //       display: 'flex',
+    //       justifyContent: 'center',
+    //       textAlign: 'center',
+    //       textTransform: 'capitalize',
+    //       borderRadius: '5px',
+    //       color:
+    //         text === 'completed'
+    //           ? '#19B729'
+    //           : text === 'pending'
+    //           ? '#FFAD33'
+    //           : text === 'cancelled'
+    //           ? '#FF8282'
+    //           : text === 'scheduled'
+    //           ? '#455AFE'
+    //           : '',
+    //       background:
+    //         text === 'completed'
+    //           ? 'rgba(25, 183, 41, 0.1)'
+    //           : text === 'pending'
+    //           ? 'rgba(255, 173, 51, 0.1)'
+    //           : text === 'cancelled'
+    //           ? 'rgba(255, 130, 130, 0.1)'
+    //           : text === 'scheduled'
+    //           ? 'rgba(69, 90, 254, 0.1)'
+    //           : '',
+    //     }}
+    //   >
+    //     {text === 'accepted' ? 'Verified' : text}
+    //   </Space>
+    // ),
   },
   {
     title: 'Action',
@@ -180,7 +199,7 @@ export const columns = [
   },
 ];
 
-const MoreButton = styled(More)`
+export const MoreButton = styled(More)`
   cursor: pointer;
   width: 1.5em;
   height: 1.5em;

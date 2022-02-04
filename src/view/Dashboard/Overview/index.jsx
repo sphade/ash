@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { DashboardLayout } from '../../../layout';
 import Home from './Home';
 import Doctors from './Doctors';
-import Patients from './Patients';
+import Patients from './Patient';
 import Revenue from './Revenue';
 import UserMonitor from './UserMonitor';
 import Consultations from './Consultation';

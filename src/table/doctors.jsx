@@ -112,7 +112,7 @@ export const columns = [
   },
 ];
 
-const MoreButton = styled(More)`
+export const MoreButton = styled(More)`
   cursor: pointer;
   width: 1.2em;
   height: 1.2em;
@@ -122,12 +122,12 @@ const MoreButton = styled(More)`
   }
 `;
 
-const Star = styled(StarIcon)`
+export const Star = styled(StarIcon)`
   width: 12.5px;
   height: 12.5px;
 `;
 
-const StarOutline = styled(StarOutlineIcon)`
+export const StarOutline = styled(StarOutlineIcon)`
   width: 12.5px;
   height: 12.5px;
 `;

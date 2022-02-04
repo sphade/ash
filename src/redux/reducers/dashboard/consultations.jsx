@@ -6,8 +6,14 @@ export const consultationsSlice = createSlice({
   initialState: {
     consultationsLoading: false,
     consultations: [],
+    consultationModal: false,
   },
-  reducers: {},
+  reducers: {
+    handleToggleModal: (state) => {
+      state.consultationModal = !state.consultationModal;
+      return state;
+    },
+  },
   extraReducers: {
     [getConsultations.pending]: (state) => {
       state.consultationsLoading = true;
@@ -21,6 +27,6 @@ export const consultationsSlice = createSlice({
   },
 });
 
-// export const {} = consultationsSlice.actions;
+export const { handleToggleModal } = consultationsSlice.actions;
 
 export const consultationsSelector = (state) => state.consultations;

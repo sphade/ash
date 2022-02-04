@@ -3,9 +3,15 @@ import styled from 'styled-components';
 import { ReactComponent as More } from '../assets/images/icons/dot.svg';
 import { Space, Dropdown, Menu } from 'antd';
 
-const menu = (handleShowView) => (
+const menu = (data) => (
   <Menu>
-    <Menu.Item onClick={handleShowView}>View</Menu.Item>
+    <Menu.Item
+      onClick={() => {
+        sessionStorage.setItem('selectedPatient', JSON.stringify(data));
+      }}
+    >
+      View
+    </Menu.Item>
   </Menu>
 );
 
@@ -91,9 +97,9 @@ export const columns = [
   {
     title: 'Action',
     key: 'action',
-    render: () => (
+    render: (item, record) => (
       <Space>
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu(record)}>
           <MoreButton />
         </Dropdown>
       </Space>
@@ -101,7 +107,7 @@ export const columns = [
   },
 ];
 
-const MoreButton = styled(More)`
+export const MoreButton = styled(More)`
   cursor: pointer;
   width: 1.5em;
   height: 1.5em;
@@ -110,3 +116,30 @@ const MoreButton = styled(More)`
     transform: scale(1.2);
   }
 `;
+
+export const patientData = {
+  fullname: 'Ooklie Chris',
+  dateOfBirth: '19/09/2010',
+  sex: 'Male',
+  height: '6.10m',
+  weight: '160kg',
+  maritalStatus: 'Single',
+  genotype: 'AA',
+  bloodGroup: 'AB+',
+  allergies:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
+  preExistingConditions:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
+};
+
+export const consultationData = {
+  date: '25/01/2022',
+  patientName: 'Ooklie Chris',
+  doctorName: 'Dr John Doe',
+  diagnosis:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
+  comment:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
+  prescription:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
+};

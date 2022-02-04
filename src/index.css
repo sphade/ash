@@ -91,8 +91,8 @@ p {
 }
 
 .react-loading-skeleton {
-  --base-color: #b9bbb6;
-  --highlight-color: #b9bbb6 !important;
+  --base-color: #c0c0c0;
+  --highlight-color: #c0c0c0 !important;
   --animation-duration: 1.5s;
   --animation-direction: normal;
   --pseudo-element-display: block;
