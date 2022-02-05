@@ -11,7 +11,7 @@ import {
 export const overviewSlice = createSlice({
   name: 'overview',
   initialState: {
-    activeTab: 'Referral',
+    activeTab: 'Consultations',
     doctorCountLoading: false,
     doctorCount: 0,
     patientCountLoading: false,

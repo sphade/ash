@@ -161,7 +161,7 @@ const Home = () => {
             <Skeleton width={150} height={40} />
           </>
         ) : (
-          ['Referral', 'Consultations'].map((item, index) => {
+          ['Consultations', 'Referral'].map((item, index) => {
             return (
               <Tab
                 key={index}
@@ -203,7 +203,10 @@ const Home = () => {
             {referralsLoading ? (
               <Skeleton width={'100%'} height={330} />
             ) : (
-              <Table dataSource={referrals} columns={columns} />
+              <Table
+                dataSource={referrals}
+                columns={columns}
+              />
             )}
           </TableWrapper>
         </>
@@ -253,7 +256,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 40px 0 16px;
+  margin: 24px 0 16px;
 
   .group {
     display: flex;

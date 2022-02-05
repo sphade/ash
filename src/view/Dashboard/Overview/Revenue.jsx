@@ -123,7 +123,7 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   column-gap: 2.5em;
-  margin-bottom: 4em;
+  margin-bottom: 2em;
 
   h6 {
     margin: 0;

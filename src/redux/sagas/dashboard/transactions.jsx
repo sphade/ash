@@ -15,7 +15,7 @@ export const getTransactions = createAsyncThunk(
       });
       let data = await response.json();
       if (response.status === 200) {
-        console.log(data.data);
+        // console.log(data.data);
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);

@@ -143,6 +143,7 @@ const Doctors = () => {
       ),
     },
   ];
+  
   return (
     <Fragment>
       <DoctorInfoModal />
