@@ -2,31 +2,32 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
 
 const token = sessionStorage.getItem('token');
-//TODO: Update Endpoints
-
-export const getConsultations = createAsyncThunk(
-  'admin/consultations/all',
-  async (thunkAPI) => {
+export const changeAdminPassword = createAsyncThunk(
+  'change/password/admins',
+  async ({ oldPassword, newPassword }, thunkAPI) => {
     try {
-      const response = await fetch(`${API}consultations`, {
-        method: 'GET',
+      const response = await fetch(`${API}admin/me/password`, {
+        method: 'PATCH',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: 'Bearer ' + token,
         },
+        body: JSON.stringify({
+          oldPassword,
+          newPassword,
+        }),
       });
       let data = await response.json();
-      if (response.status === 200) {
-        // console.log(data.data);
+      if (data.success === true) {
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-    } catch (err) {
+    } catch (e) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: 'Failed to establish internet connection!',
         },
       ]);
     }

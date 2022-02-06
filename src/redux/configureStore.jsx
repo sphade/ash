@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loadState } from './sessionStorage';
-import { loginSlice, forgotPasswordSlice } from './reducers/auth';
+import { loginSlice, forgotPasswordSlice, manageSlice } from './reducers/auth';
 import {
   overviewSlice,
   patientsSlice,
@@ -13,6 +13,7 @@ const persistedState = loadState();
 export default configureStore({
   reducer: {
     login: loginSlice.reducer,
+    manage: manageSlice.reducer,
     forgotPassword: forgotPasswordSlice.reducer,
     overview: overviewSlice.reducer,
     transactions: transactionsSlice.reducer,

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API, token } from '../../constants';
+import { API } from '../../constants';
 
 //TODO: Update Endpoints
-
+const token = sessionStorage.getItem('token');
 export const getDoctors = createAsyncThunk(
   'admin/doctors/all',
   async (thunkAPI) => {

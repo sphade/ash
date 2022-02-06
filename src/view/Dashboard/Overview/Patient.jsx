@@ -25,7 +25,7 @@ const Patients = () => {
   }, [dispatch]);
   const { patients, patientsLoading } = useSelector(patientsSelector);
 
- const menu = (data) => (
+  const menu = (data) => (
     <Menu>
       <Menu.Item
         onClick={() => {
@@ -69,15 +69,14 @@ const Patients = () => {
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (text) => (
-        <Space>
-          {text !== null ? new Date(text).toLocaleDateString() : '--------'}
-        </Space>
+        <Space>{text ? new Date(text).toLocaleDateString() : '--------'}</Space>
       ),
     },
     {
       title: 'VISITs',
       dataIndex: 'visit',
       key: 'visit',
+      render: (text) => <Space>{text ? text : '--------'}</Space>,
     },
     {
       title: 'SUBSCRIPTION',
@@ -113,7 +112,7 @@ const Patients = () => {
                 : '',
           }}
         >
-          {text}
+          {text ? text : '-------'}
         </Space>
       ),
     },
@@ -182,4 +181,3 @@ const Patients = () => {
 };
 
 export default Patients;
-

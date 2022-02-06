@@ -106,6 +106,29 @@ p {
   z-index: 1;
 }
 
+p.error-msg {
+  text-align: left !important;
+  margin: 0px;
+  padding: 0;
+  margin-top: 0.5em;
+  font-size: 13px;
+  letter-spacing: 0.13px;
+  color: #ff5e5e;
+  opacity: 1;
+}
+
+p.success {
+  text-align: left !important;
+  margin: 0px;
+  padding: 0;
+  margin-top: 0.5em;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.13px;
+  color: green;
+  opacity: 1;
+}
+
 .slick-prev {
   left: 0 !important;
   z-index: 910000 !important;

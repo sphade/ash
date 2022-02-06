@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API, token } from '../../constants';
+import { API } from '../../constants';
+
+const token = sessionStorage.getItem('token');
 
 export const getDoctorCount = createAsyncThunk(
   'admin/doctor',

@@ -47,7 +47,7 @@ export const columns = [
     key: 'createdAt',
     render: (text) => (
       <Space>
-        {text !== null ? new Date(text).toLocaleDateString() : '--------'}
+        {text ? new Date(text).toLocaleDateString() : '--------'}
       </Space>
     ),
   },
