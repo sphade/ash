@@ -44,7 +44,7 @@ export const UserMonitorModal = (props) => {
               <h2>
                 {selectedUser.firstName || null} {selectedUser.lastName || null}
               </h2>
-              <h4 style={{ textTransform: 'capitalize' }}>
+              <h4 style={{ textTransform: 'capitalize', marginTop: '10px' }}>
                 {selectedUser.role}
               </h4>
             </div>
