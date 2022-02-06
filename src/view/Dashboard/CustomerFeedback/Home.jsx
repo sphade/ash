@@ -21,7 +21,7 @@ const Home = () => {
               borderRadius: '10px',
               border: 'none',
             }}
-            class='form-select'
+            className='form-select'
           >
             <option selected>Filter Status</option>
           </select>
@@ -32,7 +32,7 @@ const Home = () => {
               borderRadius: '10px',
               border: 'none',
             }}
-            class='form-select'
+            className='form-select'
           >
             <option selected>Filter By Date</option>
             <option value='today'>Today</option>
@@ -48,7 +48,7 @@ const Home = () => {
           const { id, image, name, email, feedback, date } = item;
           return (
             <FeedbackCard
-              id={id}
+              key={id}
               image={image}
               name={name}
               email={email}

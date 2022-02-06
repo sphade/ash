@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 // import throttle from "lodash/throttle";
-// import { saveState } from "./redux/localStorage";
+// import { saveState } from "./redux/sessionStorage";
 
 // store.subscribe(
 //   throttle(() => {

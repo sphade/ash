@@ -18,9 +18,9 @@ export const loginUser = createAsyncThunk(
       });
       let data = await response.json();
       if (data.success === true) {
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('tab', 'Overview');
-        localStorage.setItem('user', JSON.stringify(data.data.user));
+        sessionStorage.setItem('token', data.data.token);
+        sessionStorage.setItem('tab', 'Overview');
+        sessionStorage.setItem('user', JSON.stringify(data.data.user));
         return data.data;
       } else {
         return thunkAPI.rejectWithValue(data);

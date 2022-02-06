@@ -90,14 +90,14 @@ const menu = (data) => (
   <Menu>
     <Menu.Item
       onClick={() => {
-        // localStorage.setItem('selectedUser', JSON.stringify(data));
+        // sessionStorage.setItem('selectedUser', JSON.stringify(data));
       }} //
     >
       Disable
     </Menu.Item>
     <Menu.Item
       onClick={() => {
-        // localStorage.setItem('selectedUser', JSON.stringify(data));
+        // sessionStorage.setItem('selectedUser', JSON.stringify(data));
       }}
     >
       Reset Password

@@ -40,14 +40,17 @@ const Home = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
+  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   React.useEffect(() => {
     dispatch(getAppointmentCount());
     dispatch(getDoctorCount());
     dispatch(getPatientCount());
-    dispatch(getTotalRevenue());
+    if (loggedInUser.isSuper) {
+      dispatch(getTotalRevenue());
+    }
     dispatch(getUsers());
     dispatch(getReferrals());
-  }, [dispatch]);
+  }, [dispatch, loggedInUser.isSuper]);
 
   const {
     doctorCountLoading,
@@ -57,7 +60,6 @@ const Home = () => {
     patientCount,
     appointmentCount,
     appointments,
-    revenueLoading,
     revenue,
     usersLoading,
     users,
@@ -67,7 +69,9 @@ const Home = () => {
     showUserModal,
   } = useSelector(overviewSelector);
 
-  const loggedInUser = JSON.parse(localStorage.getItem('user'));
+  const loading =
+    doctorCountLoading && patientCountLoading && appointmentCountLoading;
+
   return (
     <Container>
       <UserMonitorModal
@@ -80,15 +84,12 @@ const Home = () => {
         <h1>Dashboard</h1>
       )}
       <CardWrapper isSuperAdmin={loggedInUser.isSuper}>
-        {doctorCountLoading ||
-        patientCountLoading ||
-        appointmentCountLoading ||
-        revenueLoading ? (
+        {loading ? (
           <>
             <Skeleton height={150} />
             <Skeleton height={150} />
             <Skeleton height={150} />
-            <Skeleton height={150} />
+            {loggedInUser.isSuper ? <Skeleton height={150} /> : ''}
           </>
         ) : (
           <>
@@ -221,7 +222,7 @@ const Home = () => {
                 <>
                   <select
                     style={{ border: 'none', height: '3rem', width: '150px' }}
-                    class='form-select'
+                    className='form-select'
                   >
                     <option selected>Filter</option>
                     <option value='today'>Today</option>

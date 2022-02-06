@@ -28,7 +28,7 @@ const Consultations = () => {
     <Menu>
       <Menu.Item
         onClick={() => {
-          localStorage.setItem('selectedConsultation', JSON.stringify(data));
+          sessionStorage.setItem('selectedConsultation', JSON.stringify(data));
           dispatch(handleToggleModal());
         }}
       >
@@ -173,7 +173,7 @@ const Consultations = () => {
                   borderRadius: '10px',
                   border: 'none',
                 }}
-                class='form-select'
+                className='form-select'
               >
                 <option selected>Filter Role</option>
                 <option value='Verified'>Verified</option>

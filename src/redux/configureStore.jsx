@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loadState } from './localStorage';
 import { loginSlice, forgotPasswordSlice, manageSlice } from './reducers/auth';
 import {
   overviewSlice,
@@ -9,7 +8,6 @@ import {
   consultationsSlice,
 } from './reducers/dashboard';
 
-const persistedState = loadState();
 export default configureStore({
   reducer: {
     login: loginSlice.reducer,
@@ -21,5 +19,4 @@ export default configureStore({
     consultations: consultationsSlice.reducer,
     patients: patientsSlice.reducer,
   },
-  persistedState,
 });

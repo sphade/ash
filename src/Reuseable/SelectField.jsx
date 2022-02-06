@@ -5,8 +5,13 @@ const Selectfield = (props) => {
   return (
     <Container full={props.full ? props.full : undefined}>
       <div className='group'>
-        <select onChange={props.onValueChange} name={props.name} id={props.id}>
-          <option>{props.placeholder}</option>
+        <select
+          defaultValue={props.placeholder}
+          onChange={props.onValueChange}
+          name={props.name}
+          id={props.id}
+        >
+          {/* <option>{props.placeholder}</option> */}
           {props.data.map((item, index) => {
             return (
               <option key={index} value={item.value || item.uid}>

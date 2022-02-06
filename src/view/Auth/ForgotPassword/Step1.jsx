@@ -68,10 +68,10 @@ const Step1 = () => {
           )}
           {isError &&
             errors &&
-            errors.map((error) => {
+            errors.map((error, index) => {
               const { user, email, message, server } = error;
               return (
-                <p className='error-msg'>
+                <p key={index} className='error-msg'>
                   {user || email || message || server}
                 </p>
               );

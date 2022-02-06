@@ -15,7 +15,7 @@ import { loginSelector, clearState } from '../../../redux/reducers/auth/login';
 const Index = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const token = sessionStorage.getItem('token');
   React.useEffect(() => {
     dispatch(clearState());
   }, []);
@@ -42,7 +42,7 @@ const Index = () => {
     }
   };
 
-  if (authenticated) {
+  if (authenticated && token !== null) {
     history.push('/dashboard');
   }
 
@@ -87,9 +87,9 @@ const Index = () => {
               )}
               {isError &&
                 errors &&
-                errors.map((item) => {
+                errors.map((item, index) => {
                   return (
-                    <p className='error-msg'>
+                    <p key={index} className='error-msg'>
                       {item.Credentials || item.email || item.message || item}
                     </p>
                   );

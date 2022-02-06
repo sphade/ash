@@ -54,7 +54,7 @@ const Home = () => {
                 item;
               return (
                 <PromotionCard
-                  id={id}
+                  key={id}
                   code={code}
                   start_date={start_date}
                   end_date={end_date}

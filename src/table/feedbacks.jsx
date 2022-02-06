@@ -52,7 +52,7 @@ export const feedbacks = [
     image: image4,
   },
   {
-    id: 1,
+    id: 6,
     name: "Amos Johnson",
     email: "amosjohnson@gmail.com",
     feedback:

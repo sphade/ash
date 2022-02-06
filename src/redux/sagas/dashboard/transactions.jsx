@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 export const getTransactions = createAsyncThunk(
   'admin/transactions/all',
   async (thunkAPI) => {

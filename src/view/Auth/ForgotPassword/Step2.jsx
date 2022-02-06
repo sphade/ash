@@ -119,10 +119,10 @@ const Step2 = () => {
           <Countdown date={Date.now() + 300000} renderer={renderer} />
           {isError &&
             errors &&
-            errors.map((error) => {
+            errors.map((error, index) => {
               const { user, email, message, server } = error;
               return (
-                <p style={{ textAlign: 'center' }} className='error-msg'>
+                <p key={index} style={{ textAlign: 'center' }} className='error-msg'>
                   {user || email || message || server || 'Invalid Token'}
                 </p>
               );

@@ -91,9 +91,9 @@ const Home = () => {
               </div>
               {changePasswordError &&
                 changePasswordErrors &&
-                changePasswordErrors.map((item) => {
+                changePasswordErrors.map((item, index) => {
                   return (
-                    <p className='error-msg'>
+                    <p key={index} className='error-msg'>
                       {item.Credentials || item.email || item.message || item}
                     </p>
                   );

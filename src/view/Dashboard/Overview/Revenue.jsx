@@ -77,8 +77,8 @@ const Revenue = () => {
       </Statistics>
       {transactionsLoading ? (
         <>
-        <Skeleton width={'100%'} height={500} />
-        <br />
+          <Skeleton width={'100%'} height={500} />
+          <br />
         </>
       ) : (
         <ChartWrapper>
@@ -99,7 +99,7 @@ const Revenue = () => {
             <h5>Transaction History</h5>
             <select
               style={{ height: '3rem', width: '150px', borderRadius: '10px' }}
-              class='form-select'
+              className='form-select'
             >
               <option selected>Filter By Date</option>
               <option value='today'>Today</option>

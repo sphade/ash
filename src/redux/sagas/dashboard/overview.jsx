@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
 
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 export const getDoctorCount = createAsyncThunk(
   'admin/doctor',
@@ -159,7 +159,6 @@ export const getReferrals = createAsyncThunk(
       });
       let data = await response.json();
       if (response.status === 200) {
-        console.log(data.data);
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);

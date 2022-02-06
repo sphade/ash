@@ -29,7 +29,7 @@ const Patients = () => {
     <Menu>
       <Menu.Item
         onClick={() => {
-          localStorage.setItem('selectedPatient', JSON.stringify(data));
+          sessionStorage.setItem('selectedPatient', JSON.stringify(data));
           dispatch(handleToggleModal());
         }}
       >

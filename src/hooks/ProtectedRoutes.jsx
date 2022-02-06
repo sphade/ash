@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 const Index = ({ component: Component, ...rest }) => {
   let isExpired = false;
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (token) {
     let decodedToken = jwt.decode(token, { complete: true });
     let dateNow = +new Date() / 1000;

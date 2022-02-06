@@ -27,7 +27,7 @@ const UserMonitor = () => {
   const { usersLoading, users, showUserModal } = useSelector(overviewSelector);
 
   const handleViewUser = (data) => {
-    localStorage.setItem('requestMonitorUser', JSON.stringify(data));
+    sessionStorage.setItem('requestMonitorUser', JSON.stringify(data));
     dispatch(toggleShowModal());
   };
 

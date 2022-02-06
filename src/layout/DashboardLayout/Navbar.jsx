@@ -11,11 +11,11 @@ import { useDispatch } from 'react-redux';
 import logo from '../../assets/Logo.svg';
 
 const Navbar = () => {
-  const loggedInUser = JSON.parse(localStorage.getItem('user'));
+  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   const dispatch = useDispatch();
   const history = useHistory();
   const signout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     dispatch(clearState());
     history.push('/login');
   };
