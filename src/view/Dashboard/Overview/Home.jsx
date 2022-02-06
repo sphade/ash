@@ -67,7 +67,7 @@ const Home = () => {
     showUserModal,
   } = useSelector(overviewSelector);
 
-  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const loggedInUser = JSON.parse(localStorage.getItem('user'));
   return (
     <Container>
       <UserMonitorModal
@@ -203,10 +203,7 @@ const Home = () => {
             {referralsLoading ? (
               <Skeleton width={'100%'} height={330} />
             ) : (
-              <Table
-                dataSource={referrals}
-                columns={columns}
-              />
+              <Table dataSource={referrals} columns={columns} />
             )}
           </TableWrapper>
         </>

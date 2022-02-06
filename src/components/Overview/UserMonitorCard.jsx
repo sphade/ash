@@ -17,7 +17,7 @@ const Index = (props, { index }) => {
   //   return newLocation;
   // };
   const handleViewUser = () => {
-    sessionStorage.setItem('requestMonitorUser', JSON.stringify(props));
+    localStorage.setItem('requestMonitorUser', JSON.stringify(props));
     dispatch(toggleShowModal());
   };
   return (

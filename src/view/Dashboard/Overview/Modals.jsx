@@ -26,7 +26,7 @@ import {
 } from '../../../redux/reducers/dashboard/consultations';
 
 export const UserMonitorModal = (props) => {
-  const selectedUser = JSON.parse(sessionStorage.getItem('requestMonitorUser'));
+  const selectedUser = JSON.parse(localStorage.getItem('requestMonitorUser'));
   return (
     <Modal
       visible={props.show}
@@ -84,7 +84,7 @@ export const UserMonitorModal = (props) => {
 export const PatientInfoModal = () => {
   const dispatch = useDispatch();
   const { patientModal } = useSelector(patientsSelector);
-  const patient = JSON.parse(sessionStorage.getItem('selectedPatient'));
+  const patient = JSON.parse(localStorage.getItem('selectedPatient'));
   return (
     <Modal
       visible={patientModal}
@@ -144,7 +144,7 @@ export const PatientInfoModal = () => {
 export const DoctorInfoModal = ({ rating = 3 }) => {
   const dispatch = useDispatch();
   const { doctorModal } = useSelector(doctorsSelector);
-  const doctor = JSON.parse(sessionStorage.getItem('selectedDoctor'));
+  const doctor = JSON.parse(localStorage.getItem('selectedDoctor'));
   return (
     <Modal
       visible={doctorModal}
@@ -216,9 +216,7 @@ export const DoctorInfoModal = ({ rating = 3 }) => {
 export const ConsultationInfoModal = ({ show, handleClose }) => {
   const dispatch = useDispatch();
   const { consultationModal } = useSelector(consultationsSelector);
-  const consultation = JSON.parse(
-    sessionStorage.getItem('selectedConsultation')
-  );
+  const consultation = JSON.parse(localStorage.getItem('selectedConsultation'));
   return (
     <Modal
       visible={consultationModal}

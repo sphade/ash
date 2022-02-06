@@ -7,7 +7,7 @@ const menu = (data) => (
   <Menu>
     <Menu.Item
       onClick={() => {
-        sessionStorage.setItem('selectedPatient', JSON.stringify(data));
+        localStorage.setItem('selectedPatient', JSON.stringify(data));
       }}
     >
       View
@@ -46,9 +46,7 @@ export const columns = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     render: (text) => (
-      <Space>
-        {text ? new Date(text).toLocaleDateString() : '--------'}
-      </Space>
+      <Space>{text ? new Date(text).toLocaleDateString() : '--------'}</Space>
     ),
   },
   {

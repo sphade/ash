@@ -26,7 +26,7 @@ const Step4 = () => {
     const { email, password } = user;
     if (isEmail(email) && password) {
       setLoading(true);
-      sessionStorage.setItem('isAuthorised', true);
+      localStorage.setItem('isAuthorised', true);
       await new Promise((res) => setTimeout(res, 3000));
       history.push('/');
     }

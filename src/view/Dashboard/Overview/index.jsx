@@ -10,7 +10,7 @@ import UserMonitor from './UserMonitor';
 import Consultations from './Consultation';
 
 const Index = () => {
-  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const loggedInUser = JSON.parse(localStorage.getItem('user'));
   return (
     <DashboardLayout
       children={

@@ -24,10 +24,8 @@ const Index = () => {
     useSelector(loginSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
-    email: 'superuser@gmail.com',
-    password: 'Password1$',
-    // email: '',
-    // password: '',
+    email: '',
+    password: '',
   });
   // Functions
   const handleChange = (e) => {

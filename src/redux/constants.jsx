@@ -10,4 +10,4 @@
 
 export const API = 'https://ash-tele-med.herokuapp.com/api/v1/';
 
-export const token = sessionStorage.getItem('token');
+export const token = localStorage.getItem('token');

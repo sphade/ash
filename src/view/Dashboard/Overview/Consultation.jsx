@@ -28,7 +28,7 @@ const Consultations = () => {
     <Menu>
       <Menu.Item
         onClick={() => {
-          sessionStorage.setItem('selectedConsultation', JSON.stringify(data));
+          localStorage.setItem('selectedConsultation', JSON.stringify(data));
           dispatch(handleToggleModal());
         }}
       >

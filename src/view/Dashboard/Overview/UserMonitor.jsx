@@ -24,14 +24,10 @@ const UserMonitor = () => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const {
-    usersLoading,
-    users,
-    showUserModal
-  } = useSelector(overviewSelector);
-  
+  const { usersLoading, users, showUserModal } = useSelector(overviewSelector);
+
   const handleViewUser = (data) => {
-    sessionStorage.setItem('requestMonitorUser', JSON.stringify(data));
+    localStorage.setItem('requestMonitorUser', JSON.stringify(data));
     dispatch(toggleShowModal());
   };
 
@@ -87,7 +83,10 @@ const UserMonitor = () => {
   ];
   return (
     <Fragment>
-      <UserMonitorModal show={showUserModal} handleClose={() => dispatch(toggleShowModal())}/>
+      <UserMonitorModal
+        show={showUserModal}
+        handleClose={() => dispatch(toggleShowModal())}
+      />
       <Title>
         {usersLoading ? (
           <Skeleton width='150px' height='35px' />

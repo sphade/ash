@@ -5,9 +5,12 @@ import { Header as Title } from './Revenue';
 import { Header as Heading, TableWrapper } from './Home';
 import { Searchbar } from '../../../Reuseable';
 import { Space, Table, Dropdown, Menu } from 'antd';
-import { Star, MoreButton,StarOutline } from '../../../table/doctors';
+import { Star, MoreButton, StarOutline } from '../../../table/doctors';
 import { useDispatch, useSelector } from 'react-redux';
-import { doctorsSelector,handleToggleModal, } from '../../../redux/reducers/dashboard/doctors';
+import {
+  doctorsSelector,
+  handleToggleModal,
+} from '../../../redux/reducers/dashboard/doctors';
 import { getDoctors } from '../../../redux/sagas/dashboard/doctors';
 import Skeleton from 'react-loading-skeleton';
 import { DoctorInfoModal } from './Modals';
@@ -26,7 +29,7 @@ const Doctors = () => {
     <Menu>
       <Menu.Item
         onClick={() => {
-          sessionStorage.setItem('selectedDoctor', JSON.stringify(data));
+          localStorage.setItem('selectedDoctor', JSON.stringify(data));
           dispatch(handleToggleModal());
         }}
       >
@@ -143,7 +146,7 @@ const Doctors = () => {
       ),
     },
   ];
-  
+
   return (
     <Fragment>
       <DoctorInfoModal />

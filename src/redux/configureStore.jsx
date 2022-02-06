@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loadState } from './sessionStorage';
+import { loadState } from './localStorage';
 import { loginSlice, forgotPasswordSlice, manageSlice } from './reducers/auth';
 import {
   overviewSlice,
