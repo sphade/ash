@@ -42,19 +42,16 @@ const Home = () => {
   };
   const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   const isSuperAdmin = loggedInUser.isSuper;
+
   React.useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token !== null || undefined) {
-      dispatch(getAppointmentCount());
-      dispatch(getDoctorCount());
-      dispatch(getPatientCount());
-      if (isSuperAdmin) {
-        dispatch(getTotalRevenue());
-      }
-      dispatch(getUsers());
-      dispatch(getReferrals());
+    dispatch(getAppointmentCount());
+    dispatch(getDoctorCount());
+    dispatch(getPatientCount());
+    if (isSuperAdmin) {
+      dispatch(getTotalRevenue());
     }
-    console.log(token);
+    dispatch(getUsers());
+    dispatch(getReferrals());
   }, [dispatch, isSuperAdmin]);
 
   const {
