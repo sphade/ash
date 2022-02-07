@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
-const token = sessionStorage.getItem('token');
+
 export const getTransactions = createAsyncThunk(
   'admin/transactions/all',
   async (thunkAPI) => {
@@ -10,7 +10,7 @@ export const getTransactions = createAsyncThunk(
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       });
       let data = await response.json();

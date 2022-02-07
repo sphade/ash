@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
 
-const token = sessionStorage.getItem('token');
 export const changeAdminPassword = createAsyncThunk(
   'change/password/admins',
   async ({ oldPassword, newPassword }, thunkAPI) => {
@@ -11,7 +10,7 @@ export const changeAdminPassword = createAsyncThunk(
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
         body: JSON.stringify({
           oldPassword,

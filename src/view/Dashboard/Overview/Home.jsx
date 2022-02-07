@@ -41,16 +41,21 @@ const Home = () => {
     slidesToScroll: 3,
   };
   const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const isSuperAdmin = loggedInUser.isSuper;
   React.useEffect(() => {
-    dispatch(getAppointmentCount());
-    dispatch(getDoctorCount());
-    dispatch(getPatientCount());
-    if (loggedInUser.isSuper) {
-      dispatch(getTotalRevenue());
+    const token = sessionStorage.getItem('token');
+    if (token !== null || undefined) {
+      dispatch(getAppointmentCount());
+      dispatch(getDoctorCount());
+      dispatch(getPatientCount());
+      if (isSuperAdmin) {
+        dispatch(getTotalRevenue());
+      }
+      dispatch(getUsers());
+      dispatch(getReferrals());
     }
-    dispatch(getUsers());
-    dispatch(getReferrals());
-  }, [dispatch, loggedInUser.isSuper]);
+    console.log(token);
+  }, [dispatch, isSuperAdmin]);
 
   const {
     doctorCountLoading,
@@ -83,13 +88,13 @@ const Home = () => {
       ) : (
         <h1>Dashboard</h1>
       )}
-      <CardWrapper isSuperAdmin={loggedInUser.isSuper}>
+      <CardWrapper isSuperAdmin={isSuperAdmin}>
         {loading ? (
           <>
             <Skeleton height={150} />
             <Skeleton height={150} />
             <Skeleton height={150} />
-            {loggedInUser.isSuper ? <Skeleton height={150} /> : ''}
+            {isSuperAdmin ? <Skeleton height={150} /> : ''}
           </>
         ) : (
           <>
@@ -114,7 +119,7 @@ const Home = () => {
               bg={CardBg1}
               link='/dashboard/consultations'
             />
-            {loggedInUser.isSuper ? (
+            {isSuperAdmin ? (
               <OverviewCard
                 text='Total Revenue'
                 value={revenue.total || 0}

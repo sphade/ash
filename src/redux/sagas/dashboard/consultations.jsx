@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../constants';
 
-const token = sessionStorage.getItem('token');
 //TODO: Update Endpoints
 
 export const getConsultations = createAsyncThunk(
@@ -13,7 +12,7 @@ export const getConsultations = createAsyncThunk(
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       });
       let data = await response.json();

@@ -24,8 +24,8 @@ const Index = () => {
     useSelector(loginSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
-    email: '',
-    password: '',
+    email: 'abfatahi.iaf@gmail.com',
+    password: 'Forloop70!',
   });
   // Functions
   const handleChange = (e) => {
@@ -43,6 +43,7 @@ const Index = () => {
   };
 
   if (authenticated && token !== null) {
+    console.log(token);
     history.push('/dashboard');
   }
 
