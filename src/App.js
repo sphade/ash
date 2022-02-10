@@ -1,6 +1,6 @@
 import React from 'react';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { FaInfoCircle } from 'react-icons/fa';
 import {
@@ -10,7 +10,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { ProtectedRoute } from './hooks';
-import { ForgotPassword, Login, PageNotFound } from './view/Auth';
+import { ForgotPassword, Login, Register, PageNotFound } from './view/Auth';
 import {
   AccountSettings,
   CustomerFeedback,
@@ -31,6 +31,7 @@ function App() {
             <Redirect to='/dashboard' />
           </Route>
           <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
           <Route path='/forgot-password' component={ForgotPassword} />
 
           {/* Dashboard Routes */}

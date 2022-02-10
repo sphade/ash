@@ -14,9 +14,10 @@ const Container = styled.div`
     .icon {
       position: absolute;
       right: 0;
-      // transform: translateY(100%);
+      top: 0.9em;
+      // transform: translateY(70%);
       margin-right: 1em;
-      width: 1rem;
+      // width: 1rem;
       cursor: pointer;
       color: grey;
     }
