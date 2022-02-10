@@ -24,7 +24,7 @@ export const getResetCode = createAsyncThunk(
     } catch (e) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed to establish internet connection!',
+          message: 'Failed to establish connection!',
         },
       ]);
     }
@@ -55,7 +55,7 @@ export const verifyResetCode = createAsyncThunk(
     } catch (e) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed to establish internet connection!',
+          message: 'Failed to establish connection!',
         },
       ]);
     }
