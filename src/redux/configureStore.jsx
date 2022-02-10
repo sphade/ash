@@ -1,5 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loginSlice, forgotPasswordSlice, manageSlice } from './reducers/auth';
+import {
+  loginSlice,
+  forgotPasswordSlice,
+  manageSlice,
+  registerSlice,
+} from './reducers/auth';
 import {
   overviewSlice,
   patientsSlice,
@@ -11,6 +16,7 @@ import {
 export default configureStore({
   reducer: {
     login: loginSlice.reducer,
+    register: registerSlice.reducer,
     manage: manageSlice.reducer,
     forgotPassword: forgotPasswordSlice.reducer,
     overview: overviewSlice.reducer,

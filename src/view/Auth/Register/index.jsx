@@ -8,7 +8,10 @@ import { CancelButton } from '../../../layout/AuthLayout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/sagas/auth/login';
-import { loginSelector, clearState } from '../../../redux/reducers/auth/login';
+import {
+  registerSelector,
+  clearState,
+} from '../../../redux/reducers/auth/register';
 
 const Index = () => {
   const history = useHistory();
@@ -19,7 +22,7 @@ const Index = () => {
   }, []);
   // Variables & States
   const { authenticating, authenticated, errors, isError } =
-    useSelector(loginSelector);
+    useSelector(registerSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
     firstName: '',
