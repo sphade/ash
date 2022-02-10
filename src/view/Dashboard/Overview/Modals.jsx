@@ -141,7 +141,7 @@ export const PatientInfoModal = () => {
   );
 };
 
-export const DoctorInfoModal = ({ rating = 3 }) => {
+export const DoctorInfoModal = () => {
   const dispatch = useDispatch();
   const { doctorModal } = useSelector(doctorsSelector);
   const doctor = JSON.parse(sessionStorage.getItem('selectedDoctor'));
@@ -154,61 +154,80 @@ export const DoctorInfoModal = ({ rating = 3 }) => {
       centered={true}
     >
       <CloseButton onClick={() => dispatch(handleToggleDoctorModal())} />
-      <Container subscription='Premium'>
-        <div className='header_info'>
-          <img src={usmAvatar} alt='' />
-          <div className='group'>
-            <h2>
-              Dr&nbsp;
-              {doctor && doctor.firstName}&nbsp;
-              {doctor && doctor.lastName}
-            </h2>
-            <h4 style={{ marginTop: '10px' }}>Doctor</h4>
-          </div>
-        </div>
-        <div className='content'>
-          <div className='group'>
-            <h4>Phone Number</h4>
-            <h5>{doctor && doctor.phoneNumber}</h5>
-          </div>
-          <div className='group'>
-            <h4>Email</h4>
-            <h5>{doctor && doctor.email}</h5>
-          </div>
-          <div className='group'>
-            <h4>Sign Up Date</h4>
-            <h5>18th Oct. 2021</h5>
-          </div>
-          <div className='group'>
-            <h4>Consultations</h4>
-            <h5>28</h5>
-          </div>
-          <div className='group'>
-            <h4>Rating</h4>
-            <div className='rating-group'>
-              {Array.from({ length: rating }, (index) => {
-                return <img key={index} src={star} alt='' />;
-              })}
-              {Array.from({ length: parseInt(5 - rating) }, (index) => {
-                return <img key={index} src={starOutline} alt='' />;
-              })}
+      {doctor ? (
+        <Container subscription='Premium'>
+          <div className='header_info'>
+            <img src={usmAvatar} alt='' />
+            <div className='group'>
+              <h2>
+                Dr&nbsp;
+                {doctor && doctor.firstName}&nbsp;
+                {doctor && doctor.lastName}
+              </h2>
+              <h4 style={{ marginTop: '10px' }}>Doctor</h4>
             </div>
           </div>
-          <div className='group'>
-            <h4>Availability</h4>
-            <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
+          <div className='content'>
+            <div className='group'>
+              <h4>Phone Number</h4>
+              <h5>{doctor && doctor.phoneNumber}</h5>
+            </div>
+            <div className='group'>
+              <h4>Email</h4>
+              <h5>{doctor && doctor.email}</h5>
+            </div>
+            <div className='group'>
+              <h4>Sign Up Date</h4>
+              <h5>
+                {doctor && new Date(doctor.createdAt).toLocaleDateString()}
+              </h5>
+            </div>
+            <div className='group'>
+              <h4>Consultations</h4>
+              <h5>{doctor && doctor.appointmentCount}</h5>
+            </div>
+            <div className='group'>
+              <h4>Rating</h4>
+              <div className='rating-group'>
+                {Array.from({ length: doctor.avgRating }, (index) => {
+                  return <img key={index} src={star} alt='' />;
+                })}
+                {Array.from(
+                  { length: parseInt(5 - doctor.avgRating) },
+                  (index) => {
+                    return <img key={index} src={starOutline} alt='' />;
+                  }
+                )}
+              </div>
+            </div>
+            <div className='group'>
+              <h4>Availability</h4>
+              <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
+            </div>
+            <div className='group'>
+              <h4>Verification Status</h4>
+              <h5>
+                {doctor && doctor.isVerified === 'accepted' ? (
+                  <div className='verified'>Verified</div>
+                ) : doctor.isVerified === 'pending' ? (
+                  <div className='pending'>Pending</div>
+                ) : doctor.isVerified === 'rejected' ? (
+                  <div className='rejected'>Rejected</div>
+                ) : (
+                  ''
+                )}
+              </h5>
+            </div>
           </div>
-          <div className='group'>
-            <h4>Verification Status</h4>
-            <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
-          </div>
-        </div>
-        <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
-        <h4>Patient Review</h4>
-        {Array.from({ length: 3 }, (index) => {
-          return <PatientReview key={index} />;
-        })}
-      </Container>
+          <hr style={{ height: '0.1px', margin: '1.5em 0' }} />
+          <h4>Patient Review</h4>
+          {Array.from({ length: 3 }, (index) => {
+            return <PatientReview key={index} />;
+          })}
+        </Container>
+      ) : (
+        ''
+      )}
     </Modal>
   );
 };
@@ -354,6 +373,49 @@ const Container = styled.div`
           ? '#19B729 !important'
           : ''};
     }
+
+    .verified {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      padding: 5px 14px;
+      background: rgba(25, 183, 41, 0.1);
+      border-radius: 5px;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.004em;
+      color: #19b729;
+    }
+
+    .pending {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      padding: 5px 14px;
+      background: rgba(255, 173, 51, 0.1);
+      border-radius: 5px;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.004em;
+      color: #ffad33;
+    }
+
+    .rejected {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      padding: 5px 14px;
+      background: rgba(255, 130, 130, 0.1);
+      border-radius: 5px;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.004em;
+      color: #ff8282;
+    }
+
     .group {
       display: flex;
       font-style: normal;
