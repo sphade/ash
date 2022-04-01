@@ -107,8 +107,8 @@ export const columns = [
     key: 'patient',
     render: (text) => (
       <Space>
-        {text.firstName}
-        {text.lastName}
+        {text && text.firstName}
+        {text && text.lastName}
       </Space>
     ),
   },
@@ -119,8 +119,8 @@ export const columns = [
     render: (text) => (
       <Space>
         Dr.
-        {text.firstName}
-        {text.lastName}
+        {text && text.firstName}
+        {text && text.lastName}
       </Space>
     ),
   },
@@ -130,7 +130,7 @@ export const columns = [
     key: 'doctor',
     render: (text) => (
       <Space>
-        {text.specializations.map((item) => {
+        {text && text.specializations.map((item) => {
           return item.title;
         })}
       </Space>

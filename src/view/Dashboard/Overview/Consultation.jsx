@@ -48,8 +48,8 @@ const Consultations = () => {
       key: 'patient',
       render: (text) => (
         <Space>
-          {text.firstName}
-          {text.lastName}
+          {text && text.firstName}
+          {text &&  text.lastName}
         </Space>
       ),
     },
@@ -60,8 +60,8 @@ const Consultations = () => {
       render: (text) => (
         <Space>
           Dr.
-          {text.firstName}
-          {text.lastName}
+          {text && text.firstName}
+          {text && text.lastName}
         </Space>
       ),
     },
@@ -71,7 +71,7 @@ const Consultations = () => {
       key: 'doctor',
       render: (text) => (
         <Space>
-          {text.specializations.map((item) => {
+          {text && text.specializations.map((item) => {
             return item.title;
           })}
         </Space>

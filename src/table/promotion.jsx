@@ -150,7 +150,7 @@ export const columns = [
     title: "DESCRIPTION",
     dataIndex: "description",
     key: "description",
-    render: (text) => <p>{text.substring(0, 50) + "..."}</p>,
+    render: (text) => <p>{text && text.substring(0, 50) + "..."}</p>,
   },
   {
     title: "START DATE",
