@@ -1,13 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Selectfield = (props) => {
   return (
     <Container full={props.full ? props.full : undefined}>
-      <div className='group'>
+      <div className="group">
         <select
           defaultValue={props.placeholder}
-          onChange={props.onValueChange}
+          onChange={(e) => {
+            props.setUserType(e.target.value)
+           
+          }}
           name={props.name}
           id={props.id}
         >
@@ -29,7 +32,7 @@ export default Selectfield;
 
 const Container = styled.div`
   position: relative;
-  width: ${({ full }) => (full ? '100%' : '150px')};
+  width: ${({ full }) => (full ? "100%" : "150px")};
 
   .group {
     display: flex;
@@ -75,7 +78,7 @@ const Container = styled.div`
   }
 
   .group::after {
-    content: '▼';
+    content: "▼";
     font-size: 1rem;
     right: 15px;
     position: absolute;

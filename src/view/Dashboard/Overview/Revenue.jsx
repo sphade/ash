@@ -1,19 +1,20 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import { BackArrow } from '../../../layout/DashboardLayout/Content';
-import arrow_up from '../../../assets/images/icons/arrow-up.svg';
-import arrow_down from '../../../assets/images/icons/arrow-down.svg';
-import { TransactionCard } from '../../../components/Overview';
-import { useHistory } from 'react-router-dom';
-import Chart from '../../../components/Overview/Chart';
-import { getTotalRevenue } from '../../../redux/sagas/dashboard/overview';
-import { getTransactions } from '../../../redux/sagas/dashboard/transactions';
-import { useSelector, useDispatch } from 'react-redux';
-import { overviewSelector } from '../../../redux/reducers/dashboard/overview';
-import { transactionsSelector } from '../../../redux/reducers/dashboard/transactions';
-import Skeleton from 'react-loading-skeleton';
+import React, { Fragment } from "react";
+import styled from "styled-components";
+import { BackArrow } from "../../../layout/DashboardLayout/Content";
+import arrow_up from "../../../assets/images/icons/arrow-up.svg";
+import arrow_down from "../../../assets/images/icons/arrow-down.svg";
+import { TransactionCard } from "../../../components/Overview";
+import { useHistory } from "react-router-dom";
+import Chart from "../../../components/Overview/Chart";
+import { getTotalRevenue } from "../../../redux/sagas/dashboard/overview";
+import { getTransactions } from "../../../redux/sagas/dashboard/transactions";
+import { useSelector, useDispatch } from "react-redux";
+import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
+import { transactionsSelector } from "../../../redux/reducers/dashboard/transactions";
+import Skeleton from "react-loading-skeleton";
 
 const Revenue = () => {
+  const [select, setSelect] = React.useState("lawal");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,7 +47,7 @@ const Revenue = () => {
         ) : (
           <h1>₦{revenue.total ? revenue.total.toLocaleString() : 0}</h1>
         )}
-        <div className='group'>
+        <div className="group">
           {revenueLoading ? (
             <>
               <Skeleton width={200} height={40} />
@@ -54,13 +55,13 @@ const Revenue = () => {
             </>
           ) : (
             <>
-              <div className='up'>
+              <div className="up">
                 <h5>₦{revenue.credit ? revenue.credit.toLocaleString() : 0}</h5>
-                <img src={arrow_up} alt='' />
+                <img src={arrow_up} alt="" />
               </div>
-              <div className='down'>
+              <div className="down">
                 <h5>₦{revenue.debit ? revenue.debit.toLocaleString() : 0}</h5>
-                <img src={arrow_down} alt='' />
+                <img src={arrow_down} alt="" />
               </div>
             </>
           )}
@@ -68,44 +69,44 @@ const Revenue = () => {
         {revenueLoading ? (
           <Skeleton width={400} height={60} />
         ) : (
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est magna{' '}
-            <br />
-            nullam venenatis, commodo.
-          </p>
+          <p>Total revenue including income and expenditure</p>
         )}
       </Statistics>
       {transactionsLoading ? (
         <>
-          <Skeleton width={'100%'} height={500} />
+          <Skeleton width={"100%"} height={500} />
           <br />
         </>
       ) : (
         <ChartWrapper>
           <header>
-            <h5 className='fw-bold'>Deals</h5>
+            <h5 className="fw-bold">Deals</h5>
             <h6>Show</h6>
           </header>
-          <div className='chart'>
-            <Chart />
+          <div className="chart">
+            <Chart data={transactions} />
           </div>
         </ChartWrapper>
       )}
       {transactionsLoading ? (
-        <Skeleton width={'100%'} height={500} />
+        <Skeleton width={"100%"} height={500} />
       ) : (
         <TransactionWrapper>
           <header>
             <h5>Transaction History</h5>
             <select
-              style={{ height: '3rem', width: '150px', borderRadius: '10px' }}
-              className='form-select'
+              style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
+              className="form-select"
+              onChange={(e) => {
+                setSelect(e.target.value);
+                console.log(e.target.value);
+              }}
             >
-              <option selected>Filter By Date</option>
-              <option value='today'>Today</option>
-              <option value='one_week'>Last 7 Days</option>
-              <option value='one_month'>One Month</option>
-              <option value='one_year'>One Year</option>
+              <option>Filter By Date</option>
+              <option value="today">Today</option>
+              <option value="one_week">Last 7 Days</option>
+              <option value="one_month">One Month</option>
+              <option value="one_year">One Year</option>
             </select>
           </header>
           {transactions.map((item, index) => {

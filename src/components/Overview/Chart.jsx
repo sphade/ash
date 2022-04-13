@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AreaChart,
   Area,
@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const data = [
   {
@@ -17,7 +17,7 @@ const data = [
     amount: 2000,
   },
   {
-    date: '8 Sep',
+    date: 5,
     credit: 680,
     debit: 730,
     amount: 2210,
@@ -60,9 +60,10 @@ const data = [
   },
 ];
 
-export default function Chart() {
+export default function Chart({  }) {
+  // const [data, setData] = React.useState(transactions);
   return (
-    <div style={{ width: '100%', height: 300 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
           width={730}
@@ -71,32 +72,32 @@ export default function Chart() {
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>
-            <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#FA0E9B' stopOpacity={0.8} />
-              <stop offset='95%' stopColor='#FA0E9B' stopOpacity={0} />
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#FA0E9B" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#FA0E9B" stopOpacity={0} />
             </linearGradient>
-            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#455AFE' stopOpacity={0.8} />
-              <stop offset='95%' stopColor='#455AFE' stopOpacity={0} />
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#455AFE" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#455AFE" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey='date' />
+          <XAxis dataKey="date" />
           <YAxis />
-          <CartesianGrid strokeDasharray='3 3' />
+          <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Area
-            type='monotone'
-            dataKey='credit'
-            stroke='#FA0E9B'
+            type="monotone"
+            dataKey="credit"
+            stroke="#FA0E9B"
             fillOpacity={1}
-            fill='url(#colorUv)'
+            fill="url(#colorUv)"
           />
           <Area
-            type='monotone'
-            dataKey='debit'
-            stroke='#455AFE'
+            type="monotone"
+            dataKey="debit"
+            stroke="#455AFE"
             fillOpacity={1}
-            fill='url(#colorPv)'
+            fill="url(#colorPv)"
           />
         </AreaChart>
       </ResponsiveContainer>

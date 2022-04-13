@@ -116,7 +116,7 @@ export const PatientInfoModal = () => {
           </div>
           <div className='group'>
             <h4>Sign Up Date</h4>
-            <h5>18th Oct. 2021</h5>
+            <h5>{patient && new Date(patient.profile.createdAt).toLocaleDateString()}</h5>
           </div>
           <div className='group'>
             <h4>Visits</h4>

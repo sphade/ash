@@ -1,45 +1,60 @@
-import React, { Fragment } from 'react';
-import { Table, Space } from 'antd';
-import { useHistory } from 'react-router-dom';
-import { BackArrow } from '../../../layout/DashboardLayout/Content';
-import { Header as Title } from './Revenue';
-import { Header as Heading, TableWrapper } from './Home';
-import { Searchbar, SelectField } from '../../../Reuseable';
+import React, { Fragment, useState } from "react";
+import { Table, Space } from "antd";
+import { useHistory } from "react-router-dom";
+import { BackArrow } from "../../../layout/DashboardLayout/Content";
+import { Header as Title } from "./Revenue";
+import { Header as Heading, TableWrapper } from "./Home";
+import { Searchbar, SelectField } from "../../../Reuseable";
 // import { columns } from '../../../table/user_monitor';
-import Skeleton from 'react-loading-skeleton';
+import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
   toggleShowModal,
-} from '../../../redux/reducers/dashboard/overview';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../../../redux/sagas/dashboard/overview';
-import { ViewButton } from '../../../table/user_monitor';
-import { UserMonitorModal } from './Modals';
+} from "../../../redux/reducers/dashboard/overview";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../../redux/sagas/dashboard/overview";
+import { ViewButton } from "../../../table/user_monitor";
+import { UserMonitorModal } from "./Modals";
+import { getUsersData } from "../../../api/userApi";
+import { useQuery } from "react-query";
 
 const UserMonitor = () => {
+  const [page, setPage] = useState("1");
+  const [userType, setUserType] = useState("doctor");
+  const [search, setSearch] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
+  const {
+    isLoading: usersLoading,
 
-  React.useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    data: users,
+  } = useQuery(
+    ["users", page, userType, search],
+    () => getUsersData(page, userType, search),
+    {
+      staleTime: 5000,
+    }
+  );
+  // React.useEffect(() => {
+  //   dispatch(getUsers());
+  // }, [dispatch]);
 
-  const { usersLoading, users, showUserModal } = useSelector(overviewSelector);
+  const {  showUserModal } = useSelector(overviewSelector);
 
   const handleViewUser = (data) => {
-    sessionStorage.setItem('requestMonitorUser', JSON.stringify(data));
+    sessionStorage.setItem("requestMonitorUser", JSON.stringify(data));
     dispatch(toggleShowModal());
   };
-
+  
   const columns = [
     {
-      title: 'S/N',
+      title: "S/N",
       render: (item, record, index) => index + 1,
     },
     {
-      title: 'NAME',
-      dataIndex: 'firstName',
-      key: 'firstName',
+      title: "NAME",
+      dataIndex: "firstName",
+      key: "firstName",
       render: (text, record) => (
         <Space>
           {text}
@@ -48,34 +63,34 @@ const UserMonitor = () => {
       ),
     },
     {
-      title: 'PHONE NUMBER',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: "PHONE NUMBER",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
-      title: 'EMAIL ADDRESS',
-      dataIndex: 'email',
-      key: 'email',
+      title: "EMAIL ADDRESS",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'SIGNUP DATE',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: "SIGNUP DATE",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => (
-        <Space>{text ? new Date(text).toLocaleDateString() : '------'}</Space>
+        <Space>{text ? new Date(text).toLocaleDateString() : "------"}</Space>
       ),
     },
     {
-      title: 'TIME',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: "TIME",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => (
-        <Space>{text ? new Date(text).toLocaleTimeString() : '------'}</Space>
+        <Space>{text ? new Date(text).toLocaleTimeString() : "------"}</Space>
       ),
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <ViewButton onClick={() => handleViewUser(record)} />
       ),
@@ -89,7 +104,7 @@ const UserMonitor = () => {
       />
       <Title>
         {usersLoading ? (
-          <Skeleton width='150px' height='35px' />
+          <Skeleton width="150px" height="35px" />
         ) : (
           <>
             <BackArrow onClick={() => history.goBack()} />
@@ -100,29 +115,31 @@ const UserMonitor = () => {
       <Heading>
         {usersLoading ? (
           <>
-            <div className='group'>
-              <Skeleton width='120px' height='35px' />
-              <Skeleton width='120px' height='35px' />
+            <div className="group">
+              <Skeleton width="120px" height="35px" />
+              <Skeleton width="120px" height="35px" />
             </div>
-            <Skeleton width='300px' height='35px' />
+            <Skeleton width="300px" height="35px" />
           </>
         ) : (
           <>
-            <div className='group'>
+            <div className="group">
               <SelectField
-                placeholder='Filter'
+                placeholder="Filter"
                 data={[
-                  { value: 'Doctor', name: 'Doctor' },
-                  { value: 'Patient', name: 'Patient' },
+                  { value: "Doctor", name: "Doctor" },
+                  { value: "Patient", name: "Patient" },
                 ]}
+                  setUserType={setUserType}
+                  userType={userType}
               />
               <SelectField
-                placeholder='Filter'
+                placeholder="Filter"
                 data={[
-                  { value: 'today', name: 'Today' },
-                  { value: '7_days', name: '7 days' },
-                  { value: 'one_month', name: 'One Month' },
-                  { value: 'one_year', name: 'One Year' },
+                  { value: "today", name: "Today" },
+                  { value: "7_days", name: "7 days" },
+                  { value: "one_month", name: "One Month" },
+                  { value: "one_year", name: "One Year" },
                 ]}
               />
             </div>
@@ -132,7 +149,7 @@ const UserMonitor = () => {
       </Heading>
       <TableWrapper>
         {usersLoading ? (
-          <Skeleton width={'100%'} height={330} />
+          <Skeleton width={"100%"} height={330} />
         ) : (
           <Table dataSource={users} columns={columns} />
         )}

@@ -1,16 +1,16 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API } from '../../constants';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { API } from "../../constants";
 
 export const getDoctorCount = createAsyncThunk(
-  'admin/doctor',
+  "admin/doctor",
   async (thunkAPI) => {
     try {
       const response = await fetch(`${API}admin/doctors/count`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       // console.log(response.status);
@@ -23,7 +23,7 @@ export const getDoctorCount = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: "Failed! To establish connection. ",
         },
       ]);
     }
@@ -31,15 +31,15 @@ export const getDoctorCount = createAsyncThunk(
 );
 
 export const getPatientCount = createAsyncThunk(
-  'admin/patient',
+  "admin/patient",
   async (thunkAPI) => {
     try {
       const response = await fetch(`${API}admin/patients/count`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       // console.log(response.status);
@@ -52,7 +52,7 @@ export const getPatientCount = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: "Failed! To establish connection. ",
         },
       ]);
     }
@@ -60,15 +60,15 @@ export const getPatientCount = createAsyncThunk(
 );
 
 export const getAppointmentCount = createAsyncThunk(
-  'admin/appointment',
+  "admin/appointment",
   async (thunkAPI) => {
     try {
       const response = await fetch(`${API}consultations`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       // console.log(response.status);
@@ -81,7 +81,7 @@ export const getAppointmentCount = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: "Failed! To establish connection. ",
         },
       ]);
     }
@@ -89,15 +89,15 @@ export const getAppointmentCount = createAsyncThunk(
 );
 
 export const getTotalRevenue = createAsyncThunk(
-  'admin/revenue',
+  "admin/revenue",
   async (thunkAPI) => {
     try {
       const response = await fetch(`${API}transactions/stats`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       // console.log(response.status);
@@ -110,26 +110,26 @@ export const getTotalRevenue = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: "Failed! To establish connection. ",
         },
       ]);
     }
   }
 );
 
-export const getUsers = createAsyncThunk('admin/users', async (thunkAPI) => {
+export const getUsers = createAsyncThunk("admin/users", async (thunkAPI) => {
   try {
     const response = await fetch(`${API}users`, {
-      method: 'GET',
+      method: "GET",
+
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
     let data = await response.json();
     if (response.status === 200) {
-      // console.log(data.data);
       return data;
     } else {
       return thunkAPI.rejectWithValue(data);
@@ -137,22 +137,22 @@ export const getUsers = createAsyncThunk('admin/users', async (thunkAPI) => {
   } catch (err) {
     return thunkAPI.rejectWithValue([
       {
-        message: 'Failed! To establish connection. ',
+        message: "Failed! To establish connection. ",
       },
     ]);
   }
 });
 
 export const getReferrals = createAsyncThunk(
-  'admin/referrals',
+  "admin/referrals",
   async (thunkAPI) => {
     try {
       const response = await fetch(`${API}referrals`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
       let data = await response.json();
@@ -164,7 +164,7 @@ export const getReferrals = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed! To establish connection. ',
+          message: "Failed! To establish connection. ",
         },
       ]);
     }

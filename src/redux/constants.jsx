@@ -9,5 +9,6 @@
 // };
 
 export const API = 'https://ash-tele-med.herokuapp.com/api/v1/';
+// export const API = "http://localhost:4000/api/v1/";
 
-export const token = sessionStorage.getItem('token');
+export const token = sessionStorage.getItem("token");

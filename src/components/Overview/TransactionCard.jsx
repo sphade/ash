@@ -13,7 +13,7 @@ const TransactionCard = (props, { index }) => {
             {props.inflow ? 'Credit transaction' : 'Debit transaction'} -{' '}
             {props.title}
           </h3>
-          <span>{new Date(props.createdAt).toLocaleDateString()}</span>
+          <span>{new Date(props.transactionDate).toLocaleDateString()}</span>
         </div>
       </div>
       <h2>{props.amount}</h2>

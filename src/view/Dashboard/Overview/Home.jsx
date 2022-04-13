@@ -1,12 +1,12 @@
-import React from 'react';
-import { Table } from 'antd';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { OverviewCard, UserMonitorCard } from '../../../components/Overview';
-import { columns } from '../../../table/overview';
-import { columns as consultationsColumns } from '../../../table/consultations';
-import { Searchbar, SelectField } from '../../../Reuseable';
+import React from "react";
+import { Table } from "antd";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { OverviewCard, UserMonitorCard } from "../../../components/Overview";
+import { columns } from "../../../table/overview";
+import { columns as consultationsColumns } from "../../../table/consultations";
+import { Searchbar, SelectField } from "../../../Reuseable";
 import {
   getAppointmentCount,
   getDoctorCount,
@@ -14,24 +14,31 @@ import {
   getTotalRevenue,
   getUsers,
   getReferrals,
-} from '../../../redux/sagas/dashboard/overview';
-import Skeleton from 'react-loading-skeleton';
+} from "../../../redux/sagas/dashboard/overview";
+import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
   toggleActiveTab,
   toggleShowModal,
-} from '../../../redux/reducers/dashboard/overview';
+} from "../../../redux/reducers/dashboard/overview";
 import {
   PatientIcon,
   DoctorIcon,
   DollarIcon,
   ConsultationIcon,
-} from '../../../assets/images/icons/overview';
-import { CardBg1, CardBg2 } from '../../../assets/images/background';
-import { UserMonitorModal } from './Modals';
-import Slider from 'react-slick';
+} from "../../../assets/images/icons/overview";
+import { CardBg1, CardBg2 } from "../../../assets/images/background";
+import { UserMonitorModal } from "./Modals";
+import Slider from "react-slick";
+import { useQuery } from "react-query";
+import { getAppointmentData } from "../../../api/appointmentApi";
 
 const Home = () => {
+  const {
+    isLoading: appointmentCountLoading,
+
+    data: appointments,
+  } = useQuery("appointments", getAppointmentData);
   const dispatch = useDispatch();
   const settings = {
     dots: true,
@@ -40,7 +47,7 @@ const Home = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   const isSuperAdmin = loggedInUser.isSuper;
 
   React.useEffect(() => {
@@ -57,11 +64,11 @@ const Home = () => {
   const {
     doctorCountLoading,
     patientCountLoading,
-    appointmentCountLoading,
+    // appointmentCountLoading,
     doctorCount,
     patientCount,
     appointmentCount,
-    appointments,
+    // appointments,
     revenue,
     usersLoading,
     users,
@@ -81,7 +88,7 @@ const Home = () => {
         handleClose={() => dispatch(toggleShowModal())}
       />
       {doctorCountLoading || patientCountLoading || appointmentCountLoading ? (
-        <Skeleton width='120px' height='35px' />
+        <Skeleton width="120px" height="35px" />
       ) : (
         <h1>Dashboard</h1>
       )}
@@ -91,41 +98,41 @@ const Home = () => {
             <Skeleton height={150} />
             <Skeleton height={150} />
             <Skeleton height={150} />
-            {isSuperAdmin ? <Skeleton height={150} /> : ''}
+            {isSuperAdmin ? <Skeleton height={150} /> : ""}
           </>
         ) : (
           <>
             <OverviewCard
-              text='Total Patients'
+              text="Total Patients"
               value={patientCount || 0}
               image={PatientIcon}
               bg={CardBg1}
-              link='/dashboard/patients'
+              link="/dashboard/patients"
             />
             <OverviewCard
-              text='Total Doctors'
+              text="Total Doctors"
               value={doctorCount || 0}
               image={DoctorIcon}
               bg={CardBg2}
-              link='/dashboard/doctors'
+              link="/dashboard/doctors"
             />
             <OverviewCard
-              text='Total Consultations'
+              text="Total Consultations"
               value={appointmentCount || 0}
               image={ConsultationIcon}
               bg={CardBg1}
-              link='/dashboard/consultations'
+              link="/dashboard/consultations"
             />
             {isSuperAdmin ? (
               <OverviewCard
-                text='Total Revenue'
+                text="Total Revenue"
                 value={revenue.total || 0}
                 image={DollarIcon}
                 bg={CardBg2}
-                link='/dashboard/revenue'
+                link="/dashboard/revenue"
               />
             ) : (
-              ''
+              ""
             )}
           </>
         )}
@@ -139,7 +146,7 @@ const Home = () => {
         ) : (
           <>
             <h1>User Monitor</h1>
-            <LinkR to='/dashboard/user-monitor'>View All</LinkR>
+            <LinkR to="/dashboard/user-monitor">View All</LinkR>
           </>
         )}
       </Header>
@@ -157,18 +164,18 @@ const Home = () => {
           })}
         </Slider>
       )}
-      <div className='tab-group'>
+      <div className="tab-group">
         {referralsLoading ? (
           <>
             <Skeleton width={150} height={40} />
             <Skeleton width={150} height={40} />
           </>
         ) : (
-          ['Consultations', 'Referral'].map((item, index) => {
+          ["Consultations", "Referral"].map((item, index) => {
             return (
               <Tab
                 key={index}
-                className={activeTab === item ? 'active' : ''}
+                className={activeTab === item ? "active" : ""}
                 onClick={() => dispatch(toggleActiveTab(item))}
               >
                 {item}
@@ -178,10 +185,10 @@ const Home = () => {
         )}
       </div>
 
-      {activeTab === 'Referral' && (
+      {activeTab === "Referral" && (
         <>
           <Header>
-            <div className='group'>
+            <div className="group">
               {referralsLoading ? (
                 <>
                   <Skeleton width={180} height={40} />
@@ -190,11 +197,11 @@ const Home = () => {
               ) : (
                 <>
                   <SelectField
-                    placeholder='Filter'
+                    placeholder="Filter"
                     data={[
-                      { value: 'this week', name: 'This Week' },
-                      { value: 'last week', name: 'Last Week' },
-                      { value: 'one month', name: 'One Month' },
+                      { value: "this week", name: "This Week" },
+                      { value: "last week", name: "Last Week" },
+                      { value: "one month", name: "One Month" },
                     ]}
                   />
                   <Searchbar />
@@ -204,17 +211,17 @@ const Home = () => {
           </Header>
           <TableWrapper>
             {referralsLoading ? (
-              <Skeleton width={'100%'} height={330} />
+              <Skeleton width={"100%"} height={330} />
             ) : (
               <Table dataSource={referrals} columns={columns} />
             )}
           </TableWrapper>
         </>
       )}
-      {activeTab === 'Consultations' && (
+      {activeTab === "Consultations" && (
         <>
           <Header>
-            <div className='group'>
+            <div className="group">
               {appointmentCountLoading ? (
                 <>
                   <Skeleton width={180} height={40} />
@@ -223,14 +230,14 @@ const Home = () => {
               ) : (
                 <>
                   <select
-                    style={{ border: 'none', height: '3rem', width: '150px' }}
-                    className='form-select'
+                    style={{ border: "none", height: "3rem", width: "150px" }}
+                    className="form-select"
                   >
                     <option selected>Filter</option>
-                    <option value='today'>Today</option>
-                    <option value='one_week'>Last 7 Days</option>
-                    <option value='one_month'>One Month</option>
-                    <option value='one_year'>One Year</option>
+                    <option value="today">Today</option>
+                    <option value="one_week">Last 7 Days</option>
+                    <option value="one_month">One Month</option>
+                    <option value="one_year">One Year</option>
                   </select>
                   <Searchbar />
                 </>
@@ -239,7 +246,7 @@ const Home = () => {
           </Header>
           <TableWrapper>
             {appointmentCountLoading ? (
-              <Skeleton width={'100%'} height={330} />
+              <Skeleton width={"100%"} height={330} />
             ) : (
               <Table dataSource={appointments} columns={consultationsColumns} />
             )}
@@ -279,7 +286,7 @@ export const CardWrapper = styled.div`
   margin-top: 1.2rem;
   display: grid;
   grid-template-columns: ${({ isSuperAdmin }) =>
-    isSuperAdmin ? '1fr 1fr 1fr 1fr' : '1fr 1fr 1fr'};
+    isSuperAdmin ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr"};
   gap: 1.5rem;
 `;
 
