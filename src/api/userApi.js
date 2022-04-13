@@ -10,5 +10,5 @@ export const getUsersData = async (page, userType, search) => {
   return res;
 };
 
-export const getUser = (placeHolder) =>
+export const getUser = () =>
   api.get(`/users`).then((res) => res.data.data);

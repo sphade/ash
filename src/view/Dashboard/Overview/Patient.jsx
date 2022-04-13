@@ -19,7 +19,7 @@ import { useQuery } from "react-query";
 import { getPatientData } from "../../../api/patientApi";
 
 const Patients = () => {
-  const [userType, setUserType] = useState("standard");
+  const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState("1");
 

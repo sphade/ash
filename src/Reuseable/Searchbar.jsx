@@ -12,7 +12,12 @@ const Searchbar = ({ setSearch }) => {
           setSearch(state);
         }}
       >
-        <SearchIcon className="icon" />
+        <SearchIcon
+          onClick={() => {
+            setSearch(state);
+          }}
+          className="icon"
+        />
         <input
           type="text"
           placeholder="Search for keyword"

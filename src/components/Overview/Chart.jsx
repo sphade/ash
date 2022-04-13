@@ -11,7 +11,7 @@ import {
 
 const data = [
   {
-    date: '1 Sep',
+    date: "1 Sep",
     credit: 520,
     debit: 580,
     amount: 2000,
@@ -23,52 +23,55 @@ const data = [
     amount: 2210,
   },
   {
-    date: '16 Sep',
+    date: "16 Sep",
     credit: 1289,
     debit: 1190,
     amount: 2290,
   },
   {
-    date: '30 Sep',
+    date: "30 Sep",
     credit: 750,
     debit: 715,
     amount: 2000,
   },
   {
-    date: '1 Oct',
+    date: "1 Oct",
     credit: 980,
     debit: 998,
     amount: 2181,
   },
   {
-    date: '8 Oct',
+    date: "8 Oct",
     credit: 3300,
     debit: 2009,
     amount: 2500,
   },
   {
-    date: '16 Oct',
+    date: "16 Oct",
     credit: 400,
     debit: 410,
     amount: 2500,
   },
   {
-    date: '30 Oct',
+    date: "30 Oct",
     credit: 676,
     debit: 600,
     amount: 2500,
   },
 ];
 
-export default function Chart({  }) {
-  // const [data, setData] = React.useState(transactions);
+export default function Chart({ data }) {
+  const RedifinedData = data.map(({ transactionDate: date, ...rest }) => ({
+    date,
+    ...rest,
+  }));
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
           width={730}
           height={250}
-          data={data}
+          data={RedifinedData}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>

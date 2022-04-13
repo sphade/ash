@@ -39,13 +39,13 @@ const UserMonitor = () => {
   //   dispatch(getUsers());
   // }, [dispatch]);
 
-  const {  showUserModal } = useSelector(overviewSelector);
+  const { showUserModal } = useSelector(overviewSelector);
 
   const handleViewUser = (data) => {
     sessionStorage.setItem("requestMonitorUser", JSON.stringify(data));
     dispatch(toggleShowModal());
   };
-  
+
   const columns = [
     {
       title: "S/N",
@@ -113,39 +113,29 @@ const UserMonitor = () => {
         )}
       </Title>
       <Heading>
-        {usersLoading ? (
-          <>
-            <div className="group">
-              <Skeleton width="120px" height="35px" />
-              <Skeleton width="120px" height="35px" />
-            </div>
-            <Skeleton width="300px" height="35px" />
-          </>
-        ) : (
-          <>
-            <div className="group">
-              <SelectField
-                placeholder="Filter"
-                data={[
-                  { value: "Doctor", name: "Doctor" },
-                  { value: "Patient", name: "Patient" },
-                ]}
-                  setUserType={setUserType}
-                  userType={userType}
-              />
-              <SelectField
-                placeholder="Filter"
-                data={[
-                  { value: "today", name: "Today" },
-                  { value: "7_days", name: "7 days" },
-                  { value: "one_month", name: "One Month" },
-                  { value: "one_year", name: "One Year" },
-                ]}
-              />
-            </div>
-            <Searchbar />
-          </>
-        )}
+        <>
+          <div className="group">
+            <SelectField
+              placeholder="Filter"
+              data={[
+                { value: "doctor", name: "Doctor" },
+                { value: "patient", name: "Patient" },
+              ]}
+              setUserType={setUserType}
+              userType={userType}
+            />
+            <SelectField
+              placeholder="Filter"
+              data={[
+                { value: "today", name: "Today" },
+                { value: "7_days", name: "7 days" },
+                { value: "one_month", name: "One Month" },
+                { value: "one_year", name: "One Year" },
+              ]}
+            />
+          </div>
+          <Searchbar setSearch={setSearch}/>
+        </>
       </Heading>
       <TableWrapper>
         {usersLoading ? (

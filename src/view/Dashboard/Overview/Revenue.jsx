@@ -12,11 +12,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
 import { transactionsSelector } from "../../../redux/reducers/dashboard/transactions";
 import Skeleton from "react-loading-skeleton";
+import { getTransactionData } from "../../../api/transactionApi";
+import { useQuery } from "react-query";
 
 const Revenue = () => {
-  const [select, setSelect] = React.useState("lawal");
+  const [select, setSelect] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();
+  // const {
+  //   isLoading:transactionDataLoading,
+
+  //   data: transactionData,
+  // } = useQuery("transactionData", getTransactionData, {
+  //   staleTime: 5000,
+  // });
 
   React.useEffect(() => {
     dispatch(getTotalRevenue());
@@ -24,8 +33,11 @@ const Revenue = () => {
   }, [dispatch]);
 
   const { revenue, revenueLoading } = useSelector(overviewSelector);
+
   const { transactions, transactionsLoading } =
     useSelector(transactionsSelector);
+
+  
   return (
     <Fragment>
       <Header>
@@ -99,7 +111,6 @@ const Revenue = () => {
               className="form-select"
               onChange={(e) => {
                 setSelect(e.target.value);
-                console.log(e.target.value);
               }}
             >
               <option>Filter By Date</option>
