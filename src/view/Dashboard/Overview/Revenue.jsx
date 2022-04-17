@@ -14,18 +14,25 @@ import { transactionsSelector } from "../../../redux/reducers/dashboard/transact
 import Skeleton from "react-loading-skeleton";
 import { getTransactionData } from "../../../api/transactionApi";
 import { useQuery } from "react-query";
+import { month, today, week, year } from "../../../utils/dates";
 
 const Revenue = () => {
+
   const [select, setSelect] = React.useState("");
+  const [userType, setUserType] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();
-  // const {
-  //   isLoading:transactionDataLoading,
+  const {
+    isLoading: transactionsLoading,
 
-  //   data: transactionData,
-  // } = useQuery("transactionData", getTransactionData, {
-  //   staleTime: 5000,
-  // });
+    data: transactions,
+  } = useQuery(
+    ["transactionData", userType],
+    () => getTransactionData(userType),
+    {
+      staleTime: 5000,
+    }
+  );
 
   React.useEffect(() => {
     dispatch(getTotalRevenue());
@@ -34,10 +41,9 @@ const Revenue = () => {
 
   const { revenue, revenueLoading } = useSelector(overviewSelector);
 
-  const { transactions, transactionsLoading } =
-    useSelector(transactionsSelector);
+  // const { transactions, transactionsLoading } =
+  //   useSelector(transactionsSelector);
 
-  
   return (
     <Fragment>
       <Header>
@@ -110,14 +116,14 @@ const Revenue = () => {
               style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
               className="form-select"
               onChange={(e) => {
-                setSelect(e.target.value);
+                setUserType(e.target.value);
               }}
             >
-              <option>Filter By Date</option>
-              <option value="today">Today</option>
-              <option value="one_week">Last 7 Days</option>
-              <option value="one_month">One Month</option>
-              <option value="one_year">One Year</option>
+              <option value="">Filter By Date</option>
+              <option value={today.toLocaleDateString()}>Today</option>
+              <option value={week.toLocaleDateString()}>Last 7 Days</option>
+              <option value={month.toLocaleDateString()}>One Month</option>
+              <option value={year.toLocaleDateString()}>One Year</option>
             </select>
           </header>
           {transactions.map((item, index) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,14 +31,23 @@ import { CardBg1, CardBg2 } from "../../../assets/images/background";
 import { UserMonitorModal } from "./Modals";
 import Slider from "react-slick";
 import { useQuery } from "react-query";
-import { getAppointmentData } from "../../../api/appointmentApi";
+import {
+  getAppointmentData,
+  getAppointmentFilterData,
+} from "../../../api/appointmentApi";
+import { month, today, week, year } from "../../../utils/dates";
 
 const Home = () => {
+  const [filterdate, setFilterdate] = useState("");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
 
     data: appointments,
-  } = useQuery("appointments", getAppointmentData);
+  } = useQuery(["appointments", search, page], () =>
+    getAppointmentData(search, page)
+  );
   const dispatch = useDispatch();
   const settings = {
     dots: true,
@@ -49,7 +58,6 @@ const Home = () => {
   };
   const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   const isSuperAdmin = loggedInUser.isSuper;
-
   React.useEffect(() => {
     dispatch(getAppointmentCount());
     dispatch(getDoctorCount());
@@ -78,6 +86,7 @@ const Home = () => {
     showUserModal,
   } = useSelector(overviewSelector);
 
+ 
   const loading =
     doctorCountLoading && patientCountLoading && appointmentCountLoading;
 
@@ -87,11 +96,9 @@ const Home = () => {
         show={showUserModal}
         handleClose={() => dispatch(toggleShowModal())}
       />
-      {doctorCountLoading || patientCountLoading || appointmentCountLoading ? (
-        <Skeleton width="120px" height="35px" />
-      ) : (
-        <h1>Dashboard</h1>
-      )}
+
+      <h1>Dashboard</h1>
+
       <CardWrapper isSuperAdmin={isSuperAdmin}>
         {loading ? (
           <>
@@ -199,9 +206,9 @@ const Home = () => {
                   <SelectField
                     placeholder="Filter"
                     data={[
-                      { value: "this week", name: "This Week" },
+                      { value: week.toLocaleDateString(), name: "This Week" },
                       { value: "last week", name: "Last Week" },
-                      { value: "one month", name: "One Month" },
+                      { value: month.toLocaleDateString(), name: "One Month" },
                     ]}
                   />
                   <Searchbar />
@@ -222,34 +229,34 @@ const Home = () => {
         <>
           <Header>
             <div className="group">
-              {appointmentCountLoading ? (
-                <>
-                  <Skeleton width={180} height={40} />
-                  <Skeleton width={250} height={40} />
-                </>
-              ) : (
-                <>
-                  <select
-                    style={{ border: "none", height: "3rem", width: "150px" }}
-                    className="form-select"
-                  >
-                    <option selected>Filter</option>
-                    <option value="today">Today</option>
-                    <option value="one_week">Last 7 Days</option>
-                    <option value="one_month">One Month</option>
-                    <option value="one_year">One Year</option>
-                  </select>
-                  <Searchbar />
-                </>
-              )}
+              <>
+                <select
+                  style={{ border: "none", height: "3rem", width: "150px" }}
+                  className="form-select"
+                >
+                  <option selected>Filter</option>
+                  <option value="today">Today</option>
+                  <option value="one_week">Last 7 Days</option>
+                  <option value="one_month">One Month</option>
+                  <option value="one_year">One Year</option>
+                </select>
+                <Searchbar setSearch={setSearch} />
+              </>
             </div>
           </Header>
           <TableWrapper>
-            {appointmentCountLoading ? (
-              <Skeleton width={"100%"} height={330} />
-            ) : (
-              <Table dataSource={appointments} columns={consultationsColumns} />
-            )}
+            <Table
+              loading={appointmentCountLoading}
+              dataSource={appointments}
+              columns={consultationsColumns}
+              pagination={{
+                pageSize: 10,
+                total: appointmentCount  ,
+                onChange: (page) => {
+                  setPage(page);
+                },
+              }}
+            />
           </TableWrapper>
         </>
       )}

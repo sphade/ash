@@ -1,12 +1,9 @@
 import { api } from "./instance";
 
-export const getTransactionData = async () => {
-  const { data } = await api.get(`/transactions?page=${1}&limit=${200}`);
-  const res = data;
-  console.log(
-    "🚀 ~ file: transactionApi.js ~ line 8 ~ getTransactionData ~ res",
-    res
-  );
+export const getTransactionData = async (userType) => {
+  const { data } = await api.get(`/transactions?startDate=${userType}`);
+  const res = data.data.transactions;
+  
 
   return res;
 };

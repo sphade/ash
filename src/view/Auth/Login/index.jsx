@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
-import { Checkbox } from 'antd';
-import { Link } from 'react-router-dom';
-import bg from '../../../assets/images/background/login.jpg';
-import { InputField, Button } from '../../../Reuseable';
-import { isEmail } from '../../../helpers/formValidator';
-import { AuthLayout } from '../../../layout';
-import { CancelButton } from '../../../layout/AuthLayout';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../../redux/sagas/auth/login';
-import { loginSelector, clearState } from '../../../redux/reducers/auth/login';
+import React, { useState } from "react";
+import { Checkbox } from "antd";
+import { Link } from "react-router-dom";
+import bg from "../../../assets/images/background/login.jpg";
+import { InputField, Button } from "../../../Reuseable";
+import { isEmail } from "../../../helpers/formValidator";
+import { AuthLayout } from "../../../layout";
+import { CancelButton } from "../../../layout/AuthLayout";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../redux/sagas/auth/login";
+import { loginSelector, clearState } from "../../../redux/reducers/auth/login";
 
 const Index = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem("token");
   React.useEffect(() => {
     dispatch(clearState());
   }, []);
@@ -24,8 +24,8 @@ const Index = () => {
     useSelector(loginSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
-    email: 'abfatahi.iaf@gmail.com',
-    password: 'Forloop70!',
+    email: "abfatahi.iaf@gmail.com",
+    password: "Forloop70!",
   });
   // Functions
   const handleChange = (e) => {
@@ -44,7 +44,7 @@ const Index = () => {
 
   if (authenticated && token !== null) {
     console.log(token);
-    history.push('/dashboard');
+    history.push("/dashboard");
   }
 
   return (
@@ -52,62 +52,62 @@ const Index = () => {
       bgImage={bg}
       content={
         <>
-          <a href='https://www.ashbiomedical.com/'>
+          <a href="https://www.ashbiomedical.com/">
             <CancelButton />
           </a>
           <form onSubmit={handleSubmit}>
             <h3>Login</h3>
             <h4>
-              Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit.
+              Welcome, <br /> how are you feeling today?
             </h4>
-            <div className='input_field_wrapper'>
-              <h6 className='label'>Email Address</h6>
+            <div className="input_field_wrapper">
+              <h6 className="label">Email Address</h6>
               <InputField
-                fieldname='email'
+                fieldname="email"
                 onTextChange={handleChange}
                 value={user.email}
-                placeholder='Email'
+                placeholder="Email"
               />
               {submitted && !user.email && (
-                <p className='error-msg'>Email field cannot be blank</p>
+                <p className="error-msg">Email field cannot be blank</p>
               )}
               {submitted && user.email && !isEmail(user.email) && (
-                <p className='error-msg'>Invalid email address</p>
+                <p className="error-msg">Invalid email address</p>
               )}
             </div>
-            <div className='input_field_wrapper'>
-              <h6 className='label'>Password</h6>
+            <div className="input_field_wrapper">
+              <h6 className="label">Password</h6>
               <InputField
-                fieldname='password'
+                fieldname="password"
                 onTextChange={handleChange}
-                inputType='password'
-                placeholder='Password'
+                inputType="password"
+                placeholder="Password"
               />
               {submitted && !user.password && (
-                <p className='error-msg'>Password field cannot be blank</p>
+                <p className="error-msg">Password field cannot be blank</p>
               )}
               {isError &&
                 errors &&
                 errors.map((item, index) => {
                   return (
-                    <p key={index} className='error-msg'>
+                    <p key={index} className="error-msg">
                       {item.Credentials || item.email || item.message || item}
                     </p>
                   );
                 })}
             </div>
-            <div className='others_wrapper'>
-              <Checkbox style={{ cursor: 'pointer' }}>
+            <div className="others_wrapper">
+              <Checkbox style={{ cursor: "pointer" }}>
                 &nbsp;&nbsp;&nbsp;Remember me
               </Checkbox>
               <Link
-                to='/forgot-password/step-1'
-                style={{ textDecoration: 'none', color: '#333333' }}
+                to="/forgot-password/step-1"
+                style={{ textDecoration: "none", color: "#333333" }}
               >
                 forgot password?
               </Link>
             </div>
-            <Button loading={authenticating} primary full text='LOGIN' />
+            <Button loading={authenticating} primary full text="LOGIN" />
           </form>
         </>
       }

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Dropdown, Menu } from 'antd';
-import styled from 'styled-components';
-import user_avatar from '../../assets/images/icons/monitor_avatar.png';
-import locationIcon from '../../assets/images/icons/location.svg';
-import { ReactComponent as ViewUserIcon } from '../../assets/images/icons/monitor_card_back.svg';
-import { toggleShowModal } from '../../redux/reducers/dashboard/overview';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { Dropdown, Menu } from "antd";
+import styled from "styled-components";
+import user_avatar from "../../assets/images/icons/monitor_avatar.png";
+import locationIcon from "../../assets/images/icons/location.svg";
+import { ReactComponent as ViewUserIcon } from "../../assets/images/icons/monitor_card_back.svg";
+import { toggleShowModal } from "../../redux/reducers/dashboard/overview";
+import { useDispatch } from "react-redux";
 
 const Index = (props, { index }) => {
   const dispatch = useDispatch();
@@ -17,14 +17,18 @@ const Index = (props, { index }) => {
   //   return newLocation;
   // };
   const handleViewUser = () => {
-    sessionStorage.setItem('requestMonitorUser', JSON.stringify(props));
+    sessionStorage.setItem("requestMonitorUser", JSON.stringify(props));
     dispatch(toggleShowModal());
   };
   return (
     <Container key={index}>
-      <div className='row1'>
-        <div className='group'>
-          <img src={user_avatar} alt='' />
+      <div className="row1">
+        <div className="group">
+          <img
+            className="Avatar_img"
+            src={props.avatar || user_avatar}
+            alt=""
+          />
           <h4>
             {props.firstName} &nbsp;
             {props.lastName}
@@ -32,29 +36,29 @@ const Index = (props, { index }) => {
         </div>
         <ViewUser onClick={handleViewUser} />
       </div>
-      <div className='box'>
+      <div className="box">
         <p>{props.phoneNumber}</p>
         <p>{props.email}</p>
         <p>
-          {props.date || '2/1/2022'} || {props.time || '09:30 pm'}
+          {props.date || "2/1/2022"} || {props.time || "09:30 pm"}
         </p>
         <Dropdown
           arrow
           overlay={
             <Menu
               style={{
-                padding: '1rem',
-                borderRadius: '10px',
-                fontSize: '0.9rem',
-                color: '#999999',
+                padding: "1rem",
+                borderRadius: "10px",
+                fontSize: "0.9rem",
+                color: "#999999",
               }}
             >
               {props.location}
             </Menu>
           }
         >
-          <div className='group'>
-            <img src={locationIcon} alt='' />
+          <div className="group">
+            <img src={locationIcon} alt="" />
             <span>Lagos, NG</span>
           </div>
         </Dropdown>
@@ -82,40 +86,47 @@ const Container = styled.div`
   height: 240px;
   background: #ffffff;
   border-radius: 10px;
-  padding:1rem 1.5rem;
-  margin-right:1rem !important;
+  padding: 1rem 1.5rem;
+  margin-right: 1rem !important;
 
-  .box{
-      margin-top:1rem;
-    height:145px;
-    min-height:112px
-    width:100%;
-    padding:0.5rem 1.5rem;
-    background: #F4F4F4;
+  .box {
+    margin-top: 1rem;
+    height: 145px;
+    min-height: 112px;
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    background: #f4f4f4;
     border-radius: 10px;
 
-    p{
-        font-style: normal;
-font-weight: normal;
-font-size: 1em;
-line-height: 16px;
-letter-spacing: 0.0025em;
-color: #666666;
-margin: 0.8em 0;
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1em;
+      line-height: 16px;
+      letter-spacing: 0.0025em;
+      color: #666666;
+      margin: 0.8em 0;
     }
 
     .group {
-        display: flex;
-        align-items:center;
-        column-gap:1rem;
-        cursor:pointer;
+      display: flex;
+      align-items: center;
+      column-gap: 1rem;
+      cursor: pointer;
 
-        span{
-            font-weight: bold;
-            color: #E20B8C;
-        }
+      span {
+        font-weight: bold;
+        color: #e20b8c;
       }
+   
+    }
   }
+  .Avatar_img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
   .row1 {
     display: flex;
     justify-content: space-between;
@@ -123,8 +134,8 @@ margin: 0.8em 0;
 
     .group {
       display: flex;
-      align-items:center;
-      column-gap:1rem;
+      align-items: center;
+      column-gap: 1rem;
     }
 
     h4 {
@@ -135,6 +146,4 @@ margin: 0.8em 0;
       color: #666666;
     }
   }
-
-  
 `;

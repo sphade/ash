@@ -115,29 +115,3 @@ export const MoreButton = styled(More)`
   }
 `;
 
-export const patientData = {
-  fullname: 'Ooklie Chris',
-  dateOfBirth: '19/09/2010',
-  sex: 'Male',
-  height: '6.10m',
-  weight: '160kg',
-  maritalStatus: 'Single',
-  genotype: 'AA',
-  bloodGroup: 'AB+',
-  allergies:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
-  preExistingConditions:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
-};
-
-export const consultationData = {
-  date: '25/01/2022',
-  patientName: 'Ooklie Chris',
-  doctorName: 'Dr John Doe',
-  diagnosis:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
-  comment:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
-  prescription:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla adipiscing placerat auctor eu quisque.',
-};

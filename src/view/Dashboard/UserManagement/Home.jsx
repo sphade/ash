@@ -21,14 +21,8 @@ const Home = () => {
   const [page, setPage] = useState("1");
   const [userType, setUserType] = useState("doctor");
   const [search, setSearch] = useState("");
-  // const onTextChange = (e) => {
-  //   setSearch(e.target.value);
-  // };
-  const {
-    isLoading: usersLoading,
-
-    data: users,
-  } = useQuery(
+ 
+  const { isLoading: usersLoading, data: users } = useQuery(
     ["users", page, userType, search],
     () => getUsersData(page, userType, search),
     {
@@ -82,15 +76,14 @@ const Home = () => {
         </>
       </Heading>
       <TableWrapper>
-        {usersLoading ? (
-          <Skeleton width={"100%"} height={330} />
-        ) : (
+        
           <Table
+          loading={usersLoading}
             dataSource={users}
             rowSelection={{ ...rowSelection }}
             columns={columns}
           />
-        )}
+     
       </TableWrapper>
     </Fragment>
   );

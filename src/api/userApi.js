@@ -7,8 +7,8 @@ export const getUsersData = async (page, userType, search) => {
     }&limit=${100}`
   );
   const res = data.data;
+  console.log("🚀 ~ file: userApi.js ~ line 10 ~ getUsersData ~ res", res);
   return res;
 };
 
-export const getUser = () =>
-  api.get(`/users`).then((res) => res.data.data);
+export const getUser = () => api.get(`/users`).then((res) => res.data.data);

@@ -18,7 +18,7 @@ import { useQuery } from "react-query";
 import { getDoctorData } from "../../../api/doctorApi";
 
 const Doctors = () => {
-  const [userType, setUserType] = useState("accepted");
+  const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState("1");
 
@@ -179,13 +179,12 @@ const Doctors = () => {
                 borderRadius: "10px",
                 border: "none",
               }}
-              defaultValue='Filter Value'
+              defaultValue="Filter Value"
               className="form-select"
               onChange={(e) => {
                 setUserType(e.target.value);
               }}
             >
-             
               <option value="accepted">Verified</option>
               <option value="pending">Pending</option>
               <option value="rejected">Rejected</option>
@@ -194,16 +193,14 @@ const Doctors = () => {
           <Searchbar setSearch={setSearch} />
         </>
       </Heading>
-      {doctorsLoading ? (
-        <>
-          <Skeleton width={"100%"} height={500} />
-          <br />
-        </>
-      ) : (
-        <TableWrapper>
-          <Table dataSource={doctors} columns={columns} />
-        </TableWrapper>
-      )}
+
+      <TableWrapper>
+        <Table
+          dataSource={doctors}
+          columns={columns}
+          loading={doctorsLoading}
+        />
+      </TableWrapper>
     </Fragment>
   );
 };

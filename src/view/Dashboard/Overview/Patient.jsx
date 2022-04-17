@@ -16,7 +16,7 @@ import Skeleton from "react-loading-skeleton";
 import { PatientInfoModal } from "./Modals";
 import { MoreButton } from "../../../table/patients";
 import { useQuery } from "react-query";
-import { getPatientData } from "../../../api/patientApi";
+import { getPatientData, getPlans } from "../../../api/patientApi";
 
 const Patients = () => {
   const [userType, setUserType] = useState("");
@@ -34,6 +34,8 @@ const Patients = () => {
     ["patients", userType, search, page],
     () => getPatientData(userType, search, page)
   );
+  // const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
+
   // getPatientData(userType, search, page)
   const menu = (data) => (
     <Menu>
@@ -76,22 +78,26 @@ const Patients = () => {
     },
     {
       title: "SIGN UP DATE",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "profile",
+      key: "profile",
       render: (text) => (
-        <Space>{text ? new Date(text).toLocaleDateString() : "--------"}</Space>
+        <Space>
+          {text.createdAt
+            ? new Date(text.createdAt).toLocaleDateString()
+            : "--------"}
+        </Space>
       ),
     },
     {
       title: "VISITs",
-      dataIndex: "visit",
-      key: "visit",
+      dataIndex: "loginCount",
+      key: "loginCount",
       render: (text) => <Space>{text ? text : "--------"}</Space>,
     },
     {
       title: "SUBSCRIPTION",
-      dataIndex: "subscription",
-      key: "subscription",
+      dataIndex: "plan",
+      key: "plan",
       render: (text) => (
         <Space
           style={{
@@ -142,52 +148,33 @@ const Patients = () => {
     <Fragment>
       <PatientInfoModal />
       <Title>
-        {patientsLoading ? (
-          <>
-            <Skeleton width={150} height={40} />
-            <Skeleton width={150} height={40} />
-          </>
-        ) : (
-          <>
-            <BackArrow onClick={() => history.goBack()} />
-            <h6>Total Patients</h6>
-          </>
-        )}
+        <>
+          <BackArrow onClick={() => history.goBack()} />
+          <h6>Total Patients</h6>
+        </>
       </Title>
       <Heading>
-        {patientsLoading ? (
-          <>
-            <Skeleton width={150} height={40} />
-            <Skeleton width={350} height={40} />
-          </>
-        ) : (
-          <>
-            <div className="group">
-              <SelectField
-                placeholder="Filter"
-                data={[
-                  { value: "premium", name: "Premium" },
-                  { value: "standard", name: "Standard" },
-                  { value: "unlimited", name: "Unlimited" },
-                ]}
-                setUserType={setUserType}
-                userType={userType}
-              />
-            </div>
-            <Searchbar setSearch={setSearch} />
-          </>
-        )}
-      </Heading>
-      {patientsLoading ? (
         <>
-          <Skeleton width={"100%"} height={500} />
-          <br />
+          <div className="group">
+            <SelectField
+              placeholder="Filter"
+              data={[
+                { value: "premium", name: "Premium" },
+                { value: "standard", name: "Standard" },
+                { value: "unlimited", name: "Unlimited" },
+              ]}
+              setUserType={setUserType}
+              userType={userType}
+            />
+          </div>
+          <Searchbar setSearch={setSearch} />
         </>
-      ) : (
+      </Heading>
+     
         <TableWrapper>
-          <Table dataSource={patients} columns={columns} />
+          <Table loading={patientsLoading} dataSource={patients} columns={columns} />
         </TableWrapper>
-      )}
+    
     </Fragment>
   );
 };

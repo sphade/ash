@@ -74,10 +74,10 @@ const UserMonitor = () => {
     },
     {
       title: "SIGNUP DATE",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "profile",
+      key: "profile",
       render: (text) => (
-        <Space>{text ? new Date(text).toLocaleDateString() : "------"}</Space>
+        <Space>{text ? new Date(text.createdAt).toLocaleDateString() : "------"}</Space>
       ),
     },
     {
@@ -103,14 +103,12 @@ const UserMonitor = () => {
         handleClose={() => dispatch(toggleShowModal())}
       />
       <Title>
-        {usersLoading ? (
-          <Skeleton width="150px" height="35px" />
-        ) : (
+       
           <>
             <BackArrow onClick={() => history.goBack()} />
             <h6>User Monitor</h6>
           </>
-        )}
+        
       </Title>
       <Heading>
         <>
@@ -138,11 +136,9 @@ const UserMonitor = () => {
         </>
       </Heading>
       <TableWrapper>
-        {usersLoading ? (
-          <Skeleton width={"100%"} height={330} />
-        ) : (
-          <Table dataSource={users} columns={columns} />
-        )}
+       
+          <Table loading={usersLoading} dataSource={users} columns={columns} />
+        
       </TableWrapper>
     </Fragment>
   );
