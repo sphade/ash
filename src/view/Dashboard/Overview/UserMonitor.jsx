@@ -17,11 +17,14 @@ import { ViewButton } from "../../../table/user_monitor";
 import { UserMonitorModal } from "./Modals";
 import { getUsersData } from "../../../api/userApi";
 import { useQuery } from "react-query";
+import { month, today, week, year } from "../../../utils/dates";
 
 const UserMonitor = () => {
   const [page, setPage] = useState("1");
   const [userType, setUserType] = useState("doctor");
   const [search, setSearch] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -29,8 +32,8 @@ const UserMonitor = () => {
 
     data: users,
   } = useQuery(
-    ["users", page, userType, search],
-    () => getUsersData(page, userType, search),
+    ["users", page, userType, search,filterDate],
+    () => getUsersData(page, userType, search,filterDate),
     {
       staleTime: 5000,
     }
@@ -77,7 +80,9 @@ const UserMonitor = () => {
       dataIndex: "profile",
       key: "profile",
       render: (text) => (
-        <Space>{text ? new Date(text.createdAt).toLocaleDateString() : "------"}</Space>
+        <Space>
+          {text ? new Date(text.createdAt).toLocaleDateString() : "------"}
+        </Space>
       ),
     },
     {
@@ -103,12 +108,10 @@ const UserMonitor = () => {
         handleClose={() => dispatch(toggleShowModal())}
       />
       <Title>
-       
-          <>
-            <BackArrow onClick={() => history.goBack()} />
-            <h6>User Monitor</h6>
-          </>
-        
+        <>
+          <BackArrow onClick={() => history.goBack()} />
+          <h6>User Monitor</h6>
+        </>
       </Title>
       <Heading>
         <>
@@ -120,25 +123,25 @@ const UserMonitor = () => {
                 { value: "patient", name: "Patient" },
               ]}
               setUserType={setUserType}
-              userType={userType}
+              
             />
             <SelectField
               placeholder="Filter"
               data={[
-                { value: "today", name: "Today" },
-                { value: "7_days", name: "7 days" },
-                { value: "one_month", name: "One Month" },
-                { value: "one_year", name: "One Year" },
+                { value: today.toLocaleDateString(), name: "Today" },
+                { value: week.toLocaleDateString(), name: "7 days" },
+                { value: month.toLocaleDateString(), name: "One Month" },
+                { value: year.toLocaleDateString(), name: "One Year" },
               ]}
+              setUserType={setFilterDate}
+
             />
           </div>
-          <Searchbar setSearch={setSearch}/>
+          <Searchbar setSearch={setSearch} />
         </>
       </Heading>
       <TableWrapper>
-       
-          <Table loading={usersLoading} dataSource={users} columns={columns} />
-        
+        <Table loading={usersLoading} dataSource={users} columns={columns} />
       </TableWrapper>
     </Fragment>
   );

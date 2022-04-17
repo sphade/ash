@@ -1,10 +1,10 @@
 import { api } from "./instance";
 
-export const getUsersData = async (page, userType, search) => {
+export const getUsersData = async (page, userType, search, filterDate) => {
   const { data } = await api.get(
-    `/users?page=${page}&userType=${userType}${
+    `/users?page=${page}&userType=${userType}&startDate=${filterDate}${
       !search ? "" : `&search=${search}`
-    }&limit=${100}`
+    }`
   );
   const res = data.data;
   console.log("🚀 ~ file: userApi.js ~ line 10 ~ getUsersData ~ res", res);

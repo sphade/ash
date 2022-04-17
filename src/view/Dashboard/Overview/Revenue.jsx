@@ -17,7 +17,6 @@ import { useQuery } from "react-query";
 import { month, today, week, year } from "../../../utils/dates";
 
 const Revenue = () => {
-
   const [select, setSelect] = React.useState("");
   const [userType, setUserType] = React.useState("");
   const history = useHistory();
@@ -126,9 +125,11 @@ const Revenue = () => {
               <option value={year.toLocaleDateString()}>One Year</option>
             </select>
           </header>
-          {transactions.map((item, index) => {
-            return <TransactionCard key={index} {...item} />;
-          })}
+          {!transactions.length
+            ? "no data"
+            : transactions.map((item, index) => {
+                return <TransactionCard key={index} {...item} />;
+              })}
         </TransactionWrapper>
       )}
     </Fragment>

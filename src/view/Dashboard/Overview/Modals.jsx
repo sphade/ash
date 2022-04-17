@@ -73,7 +73,9 @@ export const UserMonitorModal = (props) => {
             </div>
             <div className="group">
               <h4>Activity Status</h4>
-              <h5 className="active">{selectedUser.active===true?'active':'inactive' }</h5>
+              <h5 className="active">
+                {selectedUser.active === true ? "active" : "inactive"}
+              </h5>
             </div>
           </div>
         </Container>
@@ -163,10 +165,10 @@ export const PatientInfoModal = () => {
         </div>
         <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
         <PreliminaryAccordion {...patientData} />
-        {
-          patient && patient.appointments.map((consultationData)=>(<ConsultationAccordion {...consultationData} />))
-        }
-  
+        {patient &&
+          patient.appointments.map((consultationData) => (
+            <ConsultationAccordion {...consultationData} />
+          ))}
       </Container>
     </Modal>
   );
@@ -252,8 +254,8 @@ export const DoctorInfoModal = () => {
           </div>
           <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
           <h4>Patient Review</h4>
-          {Array.from({ length: 3 }, (index) => {
-            return <PatientReview key={index} />;
+          {doctor.ratings.map((rating, index) => {
+            return <PatientReview key={index} rating={rating} />;
           })}
         </Container>
       ) : (

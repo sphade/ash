@@ -38,15 +38,15 @@ import {
 import { month, today, week, year } from "../../../utils/dates";
 
 const Home = () => {
-  const [filterdate, setFilterdate] = useState("");
+  const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
 
     data: appointments,
-  } = useQuery(["appointments", search, page], () =>
-    getAppointmentData(search, page)
+  } = useQuery(["appointments", search, page,filterDate], () =>
+    getAppointmentData(search, page,filterDate)
   );
   const dispatch = useDispatch();
   const settings = {
@@ -233,12 +233,15 @@ const Home = () => {
                 <select
                   style={{ border: "none", height: "3rem", width: "150px" }}
                   className="form-select"
+                  onChange={(e) => {
+                    setFilterDate(e.target.value);
+                  }}
                 >
-                  <option selected>Filter</option>
-                  <option value="today">Today</option>
-                  <option value="one_week">Last 7 Days</option>
-                  <option value="one_month">One Month</option>
-                  <option value="one_year">One Year</option>
+                <option selected value="">Filter</option>
+                <option value={today.toLocaleDateString()}>Today</option>
+                <option value={week.toLocaleDateString()}>Last 7 Days</option>
+                <option value={month.toLocaleDateString()}>One Month</option>
+                <option value={year.toLocaleDateString()}>One Year</option>
                 </select>
                 <Searchbar setSearch={setSearch} />
               </>
