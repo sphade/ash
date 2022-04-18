@@ -1,16 +1,17 @@
-export var today = new Date();
-export var week = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate() - 7
-);
-export var month = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate() - 30
-);
-export var year = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate() - 365
-);
+export var instance = new Date();
+export var getTodayDate = instance.toLocaleDateString();
+export var getWeekDate = new Date(
+  instance.getFullYear(),
+  instance.getMonth(),
+  instance.getDate() - 7
+).toLocaleDateString();
+export var getMonthDate = new Date(
+  instance.getFullYear(),
+  instance.getMonth(),
+  instance.getDate() - 30
+).toLocaleDateString();
+export var getYearDate = new Date(
+  instance.getFullYear(),
+  instance.getMonth(),
+  instance.getDate() - 365
+).toLocaleDateString();

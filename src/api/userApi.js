@@ -2,7 +2,7 @@ import { api } from "./instance";
 
 export const getUsersData = async (page, userType, search, filterDate) => {
   const { data } = await api.get(
-    `/users?page=${page}&userType=${userType}&startDate=${filterDate}${
+    `/users?page=${page}&userType=${userType}&startDate=${filterDate || ""}${
       !search ? "" : `&search=${search}`
     }`
   );

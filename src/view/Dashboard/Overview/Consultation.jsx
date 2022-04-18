@@ -124,44 +124,38 @@ const Consultations = () => {
             textTransform: "capitalize",
             borderRadius: "5px",
             color:
-              text === "active"
+              text === "completed"
                 ? "#19B729"
                 : text === "accepted"
                 ? "#19B729"
                 : text === "rejected"
                 ? "#FF8282"
+                : text === "cancelled"
+                ? "#FF8282"
                 : text === "pending"
                 ? "#455AFE"
                 : text === "failed"
                 ? "#FF8282"
-                : text === "scheduled"
-                ? "#455AFE"
+                
                 : "",
             background:
-              text === "active"
-                ? "rgba(255, 173, 51, 0.1)"
+              text === "completed"
+                ? "rgba(25, 183, 41, 0.1)"
                 : text === "accepted"
                 ? "rgba(25, 183, 41, 0.1)"
                 : text === "rejected"
                 ? "rgba(255, 130, 130, 0.1)"
+                : text === "cancelled"
+                ? "rgba(255, 130, 130, 0.1)"
                 : text === "pending"
                 ? "rgba(69, 90, 254, 0.1)"
                 : text === "failed"
                 ? "rgba(255, 130, 130, 0.1)"
-                : text === "scheduled"
-                ? "rgba(69, 90, 254, 0.1)"
+                
                 : "",
           }}
         >
-          {text === "accepted"
-            ? "completed"
-            : text === "active"
-            ? "ongoing"
-            : text === "pending"
-            ? "scheduled"
-            : text === "failed"
-            ? "cancelled"
-            : text}
+          {text}
         </Space>
       ),
     },
@@ -179,9 +173,7 @@ const Consultations = () => {
   ];
   return (
     <Fragment>
-      {
-        // <ConsultationInfoModal />
-      }
+      {<ConsultationInfoModal />}
       <Title>
         <>
           <BackArrow onClick={() => history.goBack()} />
@@ -206,10 +198,10 @@ const Consultations = () => {
               <option selected value="">
                 Filter Role
               </option>
-              <option value="accepted">completed</option>
-              <option value="active">ongoing</option>
-              <option value="rejected">scheduled</option>
-              <option value="failed">cancelled</option>
+              <option value="completed">completed</option>
+              <option value="accepted">accepted</option>
+              <option value="pending">pending</option>
+              <option value="failed">failed</option>
             </select>
           </div>
           <Searchbar setSearch={setSearch} />

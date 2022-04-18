@@ -17,7 +17,7 @@ import { ViewButton } from "../../../table/user_monitor";
 import { UserMonitorModal } from "./Modals";
 import { getUsersData } from "../../../api/userApi";
 import { useQuery } from "react-query";
-import { month, today, week, year } from "../../../utils/dates";
+import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
 
 const UserMonitor = () => {
   const [page, setPage] = useState("1");
@@ -32,8 +32,8 @@ const UserMonitor = () => {
 
     data: users,
   } = useQuery(
-    ["users", page, userType, search,filterDate],
-    () => getUsersData(page, userType, search,filterDate),
+    ["users", page, userType, search, filterDate],
+    () => getUsersData(page, userType, search, filterDate),
     {
       staleTime: 5000,
     }
@@ -123,18 +123,16 @@ const UserMonitor = () => {
                 { value: "patient", name: "Patient" },
               ]}
               setUserType={setUserType}
-              
             />
             <SelectField
               placeholder="Filter"
               data={[
-                { value: today.toLocaleDateString(), name: "Today" },
-                { value: week.toLocaleDateString(), name: "7 days" },
-                { value: month.toLocaleDateString(), name: "One Month" },
-                { value: year.toLocaleDateString(), name: "One Year" },
+                { value: getTodayDate, name: "Today" },
+                { value: getWeekDate, name: "7 days" },
+                { value: getMonthDate, name: "One Month" },
+                { value: getYearDate, name: "One Year" },
               ]}
               setUserType={setFilterDate}
-
             />
           </div>
           <Searchbar setSearch={setSearch} />

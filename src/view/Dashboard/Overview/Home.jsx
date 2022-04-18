@@ -35,7 +35,7 @@ import {
   getAppointmentData,
   getAppointmentFilterData,
 } from "../../../api/appointmentApi";
-import { month, today, week, year } from "../../../utils/dates";
+import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
 
 const Home = () => {
   const [filterDate, setFilterDate] = useState("");
@@ -206,9 +206,9 @@ const Home = () => {
                   <SelectField
                     placeholder="Filter"
                     data={[
-                      { value: week.toLocaleDateString(), name: "This Week" },
+                      { value: getWeekDate, name: "This Week" },
                       { value: "last week", name: "Last Week" },
-                      { value: month.toLocaleDateString(), name: "One Month" },
+                      { value: getMonthDate, name: "One Month" },
                     ]}
                   />
                   <Searchbar />
@@ -238,10 +238,10 @@ const Home = () => {
                   }}
                 >
                 <option selected value="">Filter</option>
-                <option value={today.toLocaleDateString()}>Today</option>
-                <option value={week.toLocaleDateString()}>Last 7 Days</option>
-                <option value={month.toLocaleDateString()}>One Month</option>
-                <option value={year.toLocaleDateString()}>One Year</option>
+                <option value={getTodayDate}>Today</option>
+                <option value={getWeekDate}>Last 7 Days</option>
+                <option value={getMonthDate}>One Month</option>
+                <option value={getYearDate}>One Year</option>
                 </select>
                 <Searchbar setSearch={setSearch} />
               </>

@@ -1,7 +1,9 @@
 import { api } from "./instance";
 
-export const getAppointmentData = async (search, page,filterDate) => {
-  const { data } = await api.get(`consultations?page=${page}&search=${search}&startDate=${filterDate}`);
+export const getAppointmentData = async (search, page, filterDate) => {
+  const { data } = await api.get(
+    `consultations?page=${page}&search=${search}&startDate=${filterDate}`
+  );
   const res = data.data.consultations;
 
   return res;

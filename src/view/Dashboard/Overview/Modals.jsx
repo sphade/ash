@@ -69,7 +69,7 @@ export const UserMonitorModal = (props) => {
             </div>
             <div className="group">
               <h4>Location</h4>
-              <h5>Lagos, NG</h5>
+              <h5>{selectedUser && selectedUser.location}</h5>
             </div>
             <div className="group">
               <h4>Activity Status</h4>
@@ -334,7 +334,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           <div className="group">
             <h4>Status</h4>
             <h5 className="subscription">
-              {consultation && consultation.state.status}
+              {consultation && consultation.status}
             </h5>
           </div>
         </div>

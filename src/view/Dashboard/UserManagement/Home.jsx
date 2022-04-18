@@ -19,9 +19,9 @@ import { getUsersData } from "../../../api/userApi";
 
 const Home = () => {
   const [page, setPage] = useState("1");
-  const [userType, setUserType] = useState("doctor");
+  const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
- 
+
   const { isLoading: usersLoading, data: users } = useQuery(
     ["users", page, userType, search],
     () => getUsersData(page, userType, search),
@@ -66,24 +66,22 @@ const Home = () => {
           <SelectField
             placeholder="Filter"
             data={[
+              { value: "", name: "All" },
               { value: "doctor", name: "Doctor" },
               { value: "patient", name: "Patient" },
             ]}
             setUserType={setUserType}
-            userType={userType}
           />
           <Searchbar setSearch={setSearch} />
         </>
       </Heading>
       <TableWrapper>
-        
-          <Table
+        <Table
           loading={usersLoading}
-            dataSource={users}
-            rowSelection={{ ...rowSelection }}
-            columns={columns}
-          />
-     
+          dataSource={users}
+          rowSelection={{ ...rowSelection }}
+          columns={columns}
+        />
       </TableWrapper>
     </Fragment>
   );

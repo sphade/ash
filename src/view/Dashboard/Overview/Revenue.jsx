@@ -14,7 +14,7 @@ import { transactionsSelector } from "../../../redux/reducers/dashboard/transact
 import Skeleton from "react-loading-skeleton";
 import { getTransactionData } from "../../../api/transactionApi";
 import { useQuery } from "react-query";
-import { month, today, week, year } from "../../../utils/dates";
+import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
 
 const Revenue = () => {
   const [select, setSelect] = React.useState("");
@@ -119,10 +119,10 @@ const Revenue = () => {
               }}
             >
               <option value="">Filter By Date</option>
-              <option value={today.toLocaleDateString()}>Today</option>
-              <option value={week.toLocaleDateString()}>Last 7 Days</option>
-              <option value={month.toLocaleDateString()}>One Month</option>
-              <option value={year.toLocaleDateString()}>One Year</option>
+              <option value={getTodayDate}>Today</option>
+              <option value={getWeekDate}>Last 7 Days</option>
+              <option value={getMonthDate}>One Month</option>
+              <option value={getYearDate}>One Year</option>
             </select>
           </header>
           {!transactions.length

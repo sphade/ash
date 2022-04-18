@@ -9,7 +9,6 @@ const Selectfield = (props) => {
           defaultValue={props.placeholder}
           onChange={(e) => {
             props.setUserType(e.target.value);
-          
           }}
           name={props.name}
           id={props.id}
