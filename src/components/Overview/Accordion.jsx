@@ -70,7 +70,7 @@ export const ConsultationAccordion = (props) => {
         <div className="text">
           <div className="title">Consultations</div>
           <div className="date">
-            {new Date(props.startDate).toLocaleDateString()}
+            {new Date(props?.startDate).toLocaleDateString()}
           </div>
         </div>
         <FaChevronDown className="icon" onClick={() => setToggle(!toggle)} />
@@ -79,24 +79,24 @@ export const ConsultationAccordion = (props) => {
         <div className="body">
           <div className="text-group">
             <div className="title">Patient Name</div>
-            <div className="value">props.patientName</div>
+            <div className="value">{props?.patientName}</div>
           </div>
           <div className="text-group">
             <div className="title">Doctor's Name</div>
-            <div className="value">{props.doctor.firstName}</div>
+            <div className="value">{props?.doctor.firstName}</div>
           </div>
           <div className="text-group">
             <div className="title">Diagnosis</div>
-            <div className="value">{props.note.diagnosis}</div>
+            <div className="value">{props?.note?.diagnosis}</div>
           </div>
           <div className="text-group">
             <div className="title">Doctor's Commmment</div>
-            <div className="value">{props.note.conclusion}</div>
+            <div className="value">{props?.note?.conclusion}</div>
           </div>
           <div className="text-group">
             <div className="title">Prescription</div>
             <div className="value">
-              {props.prescription.map(({ name, dosage }) => (
+              {props?.prescription.map(({ name, dosage }) => (
                 <>
                   <span>name: {name}</span>
                   <span>dosage: {dosage}</span>

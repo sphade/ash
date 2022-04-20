@@ -17,7 +17,12 @@ import { ViewButton } from "../../../table/user_monitor";
 import { UserMonitorModal } from "./Modals";
 import { getUsersData } from "../../../api/userApi";
 import { useQuery } from "react-query";
-import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
+import {
+  getMonthDate,
+  getTodayDate,
+  getWeekDate,
+  getYearDate,
+} from "../../../utils/dates";
 
 const UserMonitor = () => {
   const [page, setPage] = useState("1");
@@ -29,7 +34,8 @@ const UserMonitor = () => {
   const dispatch = useDispatch();
   const {
     isLoading: usersLoading,
-
+    isError,
+    error,
     data: users,
   } = useQuery(
     ["users", page, userType, search, filterDate],
@@ -77,12 +83,10 @@ const UserMonitor = () => {
     },
     {
       title: "SIGNUP DATE",
-      dataIndex: "profile",
-      key: "profile",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => (
-        <Space>
-          {text ? new Date(text.createdAt).toLocaleDateString() : "------"}
-        </Space>
+        <Space>{text ? new Date(text).toLocaleDateString() : "------"}</Space>
       ),
     },
     {
@@ -139,7 +143,11 @@ const UserMonitor = () => {
         </>
       </Heading>
       <TableWrapper>
-        <Table loading={usersLoading} dataSource={users} columns={columns} />
+        {isError ? (
+          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
+        ) : (
+          <Table loading={usersLoading} dataSource={users} columns={columns} />
+        )}
       </TableWrapper>
     </Fragment>
   );

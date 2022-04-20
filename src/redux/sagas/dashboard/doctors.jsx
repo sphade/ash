@@ -12,6 +12,7 @@ export const getDoctors = createAsyncThunk(
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+
         },
       });
       let data = await response.json();

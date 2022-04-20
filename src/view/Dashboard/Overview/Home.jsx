@@ -35,18 +35,25 @@ import {
   getAppointmentData,
   getAppointmentFilterData,
 } from "../../../api/appointmentApi";
-import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
+import {
+  getMonthDate,
+  getTodayDate,
+  getWeekDate,
+  getYearDate,
+} from "../../../utils/dates";
 
 const Home = () => {
+  console.log('this is  the home')
   const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
-
+    isError: appointmentHasError,
+    error,
     data: appointments,
-  } = useQuery(["appointments", search, page,filterDate], () =>
-    getAppointmentData(search, page,filterDate)
+  } = useQuery(["appointments", search, page, filterDate], () =>
+    getAppointmentData({ search: search, page: page, filterDate: filterDate })
   );
   const dispatch = useDispatch();
   const settings = {
@@ -86,7 +93,6 @@ const Home = () => {
     showUserModal,
   } = useSelector(overviewSelector);
 
- 
   const loading =
     doctorCountLoading && patientCountLoading && appointmentCountLoading;
 
@@ -237,29 +243,37 @@ const Home = () => {
                     setFilterDate(e.target.value);
                   }}
                 >
-                <option selected value="">Filter</option>
-                <option value={getTodayDate}>Today</option>
-                <option value={getWeekDate}>Last 7 Days</option>
-                <option value={getMonthDate}>One Month</option>
-                <option value={getYearDate}>One Year</option>
+                  <option selected value="">
+                    Filter
+                  </option>
+                  <option value={getTodayDate}>Today</option>
+                  <option value={getWeekDate}>Last 7 Days</option>
+                  <option value={getMonthDate}>One Month</option>
+                  <option value={getYearDate}>One Year</option>
                 </select>
                 <Searchbar setSearch={setSearch} />
               </>
             </div>
           </Header>
           <TableWrapper>
-            <Table
-              loading={appointmentCountLoading}
-              dataSource={appointments}
-              columns={consultationsColumns}
-              pagination={{
-                pageSize: 10,
-                total: appointmentCount  ,
-                onChange: (page) => {
-                  setPage(page);
-                },
-              }}
-            />
+            {appointmentHasError ? (
+              <div style={{ color: "red", fontSize: "30px" }}>
+                {error.message}
+              </div>
+            ) : (
+              <Table
+                loading={appointmentCountLoading}
+                dataSource={appointments}
+                columns={consultationsColumns}
+                pagination={{
+                  pageSize: 10,
+                  total: appointmentCount,
+                  onChange: (page) => {
+                    setPage(page);
+                  },
+                }}
+              />
+            )}
           </TableWrapper>
         </>
       )}

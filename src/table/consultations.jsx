@@ -148,7 +148,7 @@ export const columns = [
     render: (text) => <Space>{new Date(text).toLocaleDateString()}</Space>,
   },
   {
-    title: "STATUS",
+    title: "SUBSCRIPTION",
     dataIndex: "status",
     key: "status",
     render: (text) => (
@@ -164,28 +164,45 @@ export const columns = [
           textTransform: "capitalize",
           borderRadius: "5px",
           color:
-            text === "active"
+            text === "completed"
               ? "#19B729"
-              : text === "pending"
+              : text === "accepted"
+              ? "#455AFE"
+              : text === "active"
               ? "#FFAD33"
+              : text === "cancelled"
+              ? "#FF8282"
+              : text === "pending"
+              ? "#455AFE"
               : text === "failed"
               ? "#FF8282"
-              : text === "scheduled"
-              ? "#455AFE"
               : "",
           background:
-            text === "active"
+            text === "completed"
               ? "rgba(25, 183, 41, 0.1)"
-              : text === "pending"
+              : text === "active"
               ? "rgba(255, 173, 51, 0.1)"
+              : text === "accepted"
+              ? "rgba(69, 90, 254, 0.1)"
+              : text === "cancelled"
+              ? "rgba(255, 130, 130, 0.1)"
+              : text === "pending"
+              ? "rgba(69, 90, 254, 0.1)"
               : text === "failed"
               ? "rgba(255, 130, 130, 0.1)"
-              : text === "scheduled"
-              ? "rgba(69, 90, 254, 0.1)"
               : "",
         }}
       >
-        {text === "accepted" ? "Verified" : text}
+        >
+        {text === "accepted"
+          ? "Scheduled"
+          : text === "active"
+          ? "Ongoing"
+          : text === "completed"
+          ? "Completed"
+          : text === "cancelled"
+          ? "Cancelled"
+          : text}
       </Space>
     ),
   },

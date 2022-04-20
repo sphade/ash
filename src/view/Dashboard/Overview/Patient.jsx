@@ -30,10 +30,15 @@ const Patients = () => {
     dispatch(getPatients());
   }, [dispatch]);
   // const { patients, patientsLoading } = useSelector(patientsSelector);
-  const { data: patients, isLoading: patientsLoading } = useQuery(
-    ["patients", userType, search, page],
-    () => getPatientData(userType, search, page)
-  );
+  const {
+    data: patients,
+    isLoading: patientsLoading,
+    isError: patientHasError,
+    error,
+  } = useQuery(["patients", userType, search, page], () =>
+    getPatientData(userType, search, page)
+    );
+  getPlans()
   // const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
 
   // getPatientData(userType, search, page)
@@ -170,11 +175,18 @@ const Patients = () => {
           <Searchbar setSearch={setSearch} />
         </>
       </Heading>
-     
-        <TableWrapper>
-          <Table loading={patientsLoading} dataSource={patients} columns={columns} />
-        </TableWrapper>
-    
+
+      <TableWrapper>
+        {patientHasError ? (
+          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
+        ) : (
+          <Table
+            loading={patientsLoading}
+            dataSource={patients}
+            columns={columns}
+          />
+        )}
+      </TableWrapper>
     </Fragment>
   );
 };

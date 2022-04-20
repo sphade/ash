@@ -61,11 +61,17 @@ export const UserMonitorModal = (props) => {
             </div>
             <div className="group">
               <h4>Sign Up Date</h4>
-              <h5>18th Oct. 2021</h5>
+              <h5>
+                {selectedUser &&
+                  new Date(selectedUser.createdAt).toLocaleTimeString()}
+              </h5>
             </div>
             <div className="group">
               <h4>Time</h4>
-              <h5>15:24:35</h5>
+              <h5>
+                {selectedUser &&
+                  new Date(selectedUser.createdAt).toLocaleDateString()}
+              </h5>
             </div>
             <div className="group">
               <h4>Location</h4>
@@ -322,7 +328,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
             <h4>Doctor Type</h4>
             <h5>
               {consultation &&
-                consultation.doctor.specializations.map((item) => {
+                consultation?.doctor?.specializations.map((item) => {
                   return item.title;
                 })}
             </h5>
@@ -350,8 +356,8 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
                 {consultation && (
                   <>
                     Dr. &nbsp;
-                    {consultation.doctor.firstName} &nbsp;
-                    {consultation.doctor.lastName}
+                    {consultation?.doctor?.firstName} &nbsp;
+                    {consultation?.doctor?.lastName}
                   </>
                 )}
               </h5>
@@ -359,29 +365,26 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           </div>
           <div className="group">
             <h4>Duration</h4>
-            <h5>30 mins</h5>
+            <h5>30mins</h5>
           </div>
           <div className="group">
             <h4>Diagnosis</h4>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
-              adipiscing placerat auctor eu quisque.
-            </h5>
+            <h5>{consultation && consultation?.note?.diagnosis}</h5>
           </div>
           <div className="group">
             <h4>Doctor's Comment</h4>
-            <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
-              adipiscing placerat auctor eu quisque.
-            </h5>
+            <h5>{consultation && consultation?.note?.conclusion}</h5>
           </div>
           <div className="group">
             <h4>Prescription</h4>
             <h5>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, nulla
-              adipiscing placerat auctor eu quisque. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. A, nulla adipiscing placerat auctor
-              eu quisque.
+              {consultation &&
+                consultation?.prescription.map(({ name, dosage }) => (
+                  <>
+                    <h5>Drug:{name}</h5>
+                    <h5>Dosage:{dosage}</h5>
+                  </>
+                ))}
             </h5>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Header as Title } from "../Overview/Revenue";
 import { Header as Heading, TableWrapper } from "../Overview/Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
+import { DisableAccountModal } from "./Modals";
 import { Table } from "antd";
 import {
   columns,
@@ -18,18 +19,26 @@ import { useQuery } from "react-query";
 import { getUsersData } from "../../../api/userApi";
 
 const Home = () => {
+  // variables
+
   const [page, setPage] = useState("1");
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
-
-  const { isLoading: usersLoading, data: users } = useQuery(
+  // data fetching with react Query
+  const {
+    isLoading: usersLoading,
+    data: users,
+    isError,
+    error,
+  } = useQuery(
     ["users", page, userType, search],
     () => getUsersData(page, userType, search),
     {
       staleTime: 5000,
     }
   );
-  // const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       // console.log(
@@ -50,14 +59,12 @@ const Home = () => {
   //   dispatch(getUsers());
   // }, [dispatch]);
 
-  // const {
-  //   usersLoading,
-  //   users,
-  //   // showUserModal
-  // } = useSelector(overviewSelector);
-  // const [checkStrictly, setCheckStrictly] = React.useState(false);
+  const { showUserModal } = useSelector(overviewSelector);
+  const [checkStrictly, setCheckStrictly] = React.useState(false);
+
   return (
     <Fragment>
+      <DisableAccountModal show={showUserModal} />
       <Title>
         <h6>User Management</h6>
       </Title>
@@ -66,7 +73,7 @@ const Home = () => {
           <SelectField
             placeholder="Filter"
             data={[
-              { value: "", name: "All" },
+              { value: "", name: "Filter" },
               { value: "doctor", name: "Doctor" },
               { value: "patient", name: "Patient" },
             ]}
@@ -76,12 +83,16 @@ const Home = () => {
         </>
       </Heading>
       <TableWrapper>
-        <Table
-          loading={usersLoading}
-          dataSource={users}
-          rowSelection={{ ...rowSelection }}
-          columns={columns}
-        />
+        {isError ? (
+          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
+        ) : (
+          <Table
+            loading={usersLoading}
+            dataSource={users}
+            rowSelection={{ ...rowSelection }}
+            columns={columns}
+          />
+        )}
       </TableWrapper>
     </Fragment>
   );

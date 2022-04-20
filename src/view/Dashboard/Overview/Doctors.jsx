@@ -24,7 +24,8 @@ const Doctors = () => {
 
   const {
     isLoading: doctorsLoading,
-
+    isError: doctorHasError,
+    error,
     data: doctors,
   } = useQuery(["doctor", page, userType, search], () =>
     getDoctorData(page, userType, search)
@@ -185,6 +186,7 @@ const Doctors = () => {
                 setUserType(e.target.value);
               }}
             >
+              <option value="">Filter</option>
               <option value="accepted">Verified</option>
               <option value="pending">Pending</option>
               <option value="rejected">Rejected</option>
@@ -195,11 +197,15 @@ const Doctors = () => {
       </Heading>
 
       <TableWrapper>
-        <Table
-          dataSource={doctors}
-          columns={columns}
-          loading={doctorsLoading}
-        />
+        {doctorHasError ? (
+          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
+        ) : (
+          <Table
+            dataSource={doctors}
+            columns={columns}
+            loading={doctorsLoading}
+          />
+        )}
       </TableWrapper>
     </Fragment>
   );

@@ -15,6 +15,7 @@ import { handleToggleModal } from "../../../redux/reducers/dashboard/consultatio
 import {
   getAppointmentFilterData,
   getAppointmentCount,
+  getAppointmentData,
 } from "../../../api/appointmentApi";
 import { useQuery } from "react-query";
 
@@ -26,10 +27,11 @@ const Consultations = () => {
   const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
-
+    isError: appointmentHasError,
+    error,
     data: appointments,
   } = useQuery(["appointmentFilterData", userType, search, page], () =>
-    getAppointmentFilterData({ userType: userType, search: search, page: page })
+    getAppointmentData({ userType: userType, search: search, page: page })
   );
   const { data: appointmentCount } = useQuery(
     ["appointmentCount"],
@@ -127,35 +129,41 @@ const Consultations = () => {
               text === "completed"
                 ? "#19B729"
                 : text === "accepted"
-                ? "#19B729"
-                : text === "rejected"
-                ? "#FF8282"
+                ? "#455AFE"
+                : text === "active"
+                ? "#FFAD33"
                 : text === "cancelled"
                 ? "#FF8282"
                 : text === "pending"
                 ? "#455AFE"
                 : text === "failed"
                 ? "#FF8282"
-                
                 : "",
             background:
               text === "completed"
                 ? "rgba(25, 183, 41, 0.1)"
+                : text === "active"
+                ? "rgba(255, 173, 51, 0.1)"
                 : text === "accepted"
-                ? "rgba(25, 183, 41, 0.1)"
-                : text === "rejected"
-                ? "rgba(255, 130, 130, 0.1)"
+                ? "rgba(69, 90, 254, 0.1)"
                 : text === "cancelled"
                 ? "rgba(255, 130, 130, 0.1)"
                 : text === "pending"
                 ? "rgba(69, 90, 254, 0.1)"
                 : text === "failed"
                 ? "rgba(255, 130, 130, 0.1)"
-                
                 : "",
           }}
         >
-          {text}
+          {text === "accepted"
+            ? "Scheduled"
+            : text === "active"
+            ? "Ongoing"
+            : text === "completed"
+            ? "Completed"
+            : text === "cancelled"
+            ? "Cancelled"
+            : text}
         </Space>
       ),
     },
@@ -198,10 +206,13 @@ const Consultations = () => {
               <option selected value="">
                 Filter Role
               </option>
-              <option value="completed">completed</option>
-              <option value="accepted">accepted</option>
+              <option value="completed">Completed</option>
+              <option value="accepted">Scheduled</option>
               <option value="pending">pending</option>
+              <option value="active">Ongoing</option>
               <option value="failed">failed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="rejected">rejected</option>
             </select>
           </div>
           <Searchbar setSearch={setSearch} />
@@ -209,18 +220,22 @@ const Consultations = () => {
       </Heading>
 
       <TableWrapper>
-        <Table
-          loading={appointmentCountLoading}
-          dataSource={appointments}
-          columns={columns}
-          pagination={{
-            pageSize: 10,
-            total: appointmentCount,
-            onChange: (page) => {
-              setPage(page);
-            },
-          }}
-        />
+        {appointmentHasError ? (
+          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
+        ) : (
+          <Table
+            loading={appointmentCountLoading}
+            dataSource={appointments}
+            columns={columns}
+            pagination={{
+              pageSize: 10,
+              total: appointmentCount,
+              onChange: (page) => {
+                setPage(page);
+              },
+            }}
+          />
+        )}
       </TableWrapper>
     </Fragment>
   );
