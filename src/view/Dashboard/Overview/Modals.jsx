@@ -288,7 +288,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
       <CloseButton onClick={() => dispatch(handleToggleConsultationModal())} />
       <Container subscription="Premium">
         <div className="header_info">
-          <img src={usmAvatar} alt="" />
+          <img src={consultation && consultation.patient.avatar } alt="" />
           <div className="group">
             <h2>
               {consultation && (
@@ -350,7 +350,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           <div className="group">
             <h4>Doctor's Name</h4>
             <div className="info-group">
-              <img src={usmAvatar} alt="" />
+              <img src={consultation && consultation?.doctor?.avatar} alt="" />
               <h5>
                 {" "}
                 {consultation && (
@@ -381,8 +381,8 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
               {consultation &&
                 consultation?.prescription.map(({ name, dosage }) => (
                   <>
-                    <h5>Drug:{name}</h5>
-                    <h5>Dosage:{dosage}</h5>
+                    <h5>Drug: {name}</h5>
+                    <h5>Dosage: {dosage}</h5>
                   </>
                 ))}
             </h5>
