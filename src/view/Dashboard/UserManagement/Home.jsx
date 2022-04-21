@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Header as Title } from "../Overview/Revenue";
 import { Header as Heading, TableWrapper } from "../Overview/Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
-import { DisableAccountModal } from "./Modals";
+import { DisableAccountModal, ResetPasswordModal } from "./Modals";
 import { Table } from "antd";
 import {
   columns,
@@ -13,6 +13,8 @@ import { getUsers } from "../../../redux/sagas/dashboard/overview";
 import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
+  toggleShowModal,
+  toggleShowResetPasswordModal,
   // toggleShowModal,
 } from "../../../redux/reducers/dashboard/overview";
 import { useQuery } from "react-query";
@@ -59,12 +61,22 @@ const Home = () => {
   //   dispatch(getUsers());
   // }, [dispatch]);
 
-  const { showUserModal } = useSelector(overviewSelector);
+  const { showUserModal, showResetPasswordModal } =
+    useSelector(overviewSelector);
   const [checkStrictly, setCheckStrictly] = React.useState(false);
-
+  const handleClose = () => {
+    dispatch(toggleShowModal());
+  };
+  const handleClosePasswordReset = () => {
+    dispatch(toggleShowResetPasswordModal());
+  };
   return (
     <Fragment>
-      <DisableAccountModal show={showUserModal} />
+      <DisableAccountModal show={showUserModal} handleClose={handleClose} />
+      <ResetPasswordModal
+        show={showResetPasswordModal}
+        handleClose={handleClosePasswordReset}
+      />
       <Title>
         <h6>User Management</h6>
       </Title>

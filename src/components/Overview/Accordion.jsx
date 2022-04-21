@@ -83,7 +83,7 @@ export const ConsultationAccordion = (props) => {
           </div>
           <div className="text-group">
             <div className="title">Doctor's Name</div>
-            <div className="value">{props?.doctor.firstName}</div>
+            <div className="value">{props?.doctor?.firstName}</div>
           </div>
           <div className="text-group">
             <div className="title">Diagnosis</div>
@@ -96,11 +96,11 @@ export const ConsultationAccordion = (props) => {
           <div className="text-group">
             <div className="title">Prescription</div>
             <div className="value">
-              {props?.prescription.map(({ name, dosage }) => (
-                <>
+              {props?.prescription.map(({ name, dosage },index) => (
+                <h5 key={index}>
                   <span>name: {name}</span>
                   <span>dosage: {dosage}</span>
-                </>
+                </h5>
               ))}
             </div>
           </div>

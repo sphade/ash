@@ -1,9 +1,10 @@
 import { api } from "./instance";
 
 export const getPatientData = async (userType, search, page) => {
-  const { data } = await api(`/admin/patients`, {
+  const { data } = await api.get(`/admin/patients`, {
     params: {
       search: search,
+      plan:userType
     },
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -18,7 +19,7 @@ export const getPatientData = async (userType, search, page) => {
 };
 
 export const getPatientCount = async () => {
-  const { data } = await api(`/admin/patients/count`, {
+  const { data } = await api.get(`/admin/patients/count`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",

@@ -193,7 +193,6 @@ export const columns = [
               : "",
         }}
       >
-        >
         {text === "accepted"
           ? "Scheduled"
           : text === "active"

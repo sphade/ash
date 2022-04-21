@@ -15,14 +15,13 @@ export const getAppointmentData = async (args) => {
     },
   });
   const res = data.data.consultations;
-  console.log("🚀 ~ file: appointmentApi.js ~ line 18 ~ getAppointmentData ~ res", res)
  
 
   return res;
 };
 
 export const getAppointmentFilterData = async (args) => {
-  const { data } = await api(`consultations`, {
+  const { data } = await api.get(`consultations`, {
     params: {
       page: args.page,
       status: args.userType,

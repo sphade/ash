@@ -1,7 +1,7 @@
 import { api } from "./instance";
 
 export const getTransactionData = async (userType) => {
-  const { data } = await api(`/transactions`, {
+  const { data } = await api.get(`/transactions`, {
     params: {
       startDate: userType,
     },

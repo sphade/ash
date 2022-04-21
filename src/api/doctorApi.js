@@ -1,7 +1,7 @@
 import { api } from "./instance";
 
 export const getDoctorData = async (page, userType, search) => {
-  const { data } = await api(`admin/doctors`, {
+  const { data } = await api.get(`admin/doctors`, {
     params: {
       verified: userType,
       search: search,
@@ -18,7 +18,7 @@ export const getDoctorData = async (page, userType, search) => {
   return res;
 };
 export const getDoctorCount = async () => {
-  const { data } = await api(`/admin/doctors/count`, {
+  const { data } = await api.get(`/admin/doctors/count`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",

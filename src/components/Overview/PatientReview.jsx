@@ -1,26 +1,27 @@
-import React from 'react';
-import styled from 'styled-components';
-import usmAvatar from '../../assets/images/icons/usm_avatar.png';
-import star from '../../assets/images/icons/star.svg';
-import starOutline from '../../assets/images/icons/star-outline.svg';
+import React from "react";
+import styled from "styled-components";
+import dummy_avatar from "../../assets/images/icons/dummy_avatar.png";
+import star from "../../assets/images/icons/star.svg";
+import starOutline from "../../assets/images/icons/star-outline.svg";
 
-const PatientReview = ({ rating}) => {
+const PatientReview = ({ rating }) => {
   return (
     <Container>
-      <img src={rating?.rater?.avatar || usmAvatar} alt='' />
-      <div className='group'>
-        <h5>{rating?.rater?.firstName}{rating?.rater?.lastName}</h5>
-        <div className='rating-group'>
+      <img src={rating?.rater?.avatar || dummy_avatar} alt="" />
+      <div className="group">
+        <h5>
+          {rating?.rater?.firstName}
+          {rating?.rater?.lastName}
+        </h5>
+        <div className="rating-group">
           {Array.from({ length: rating.value }, (index) => {
-            return <img key={index} src={star} alt='' />;
+            return <img key={index} src={star} alt="" />;
           })}
-          {Array.from({ length: parseInt(5 - rating.value ) }, (index) => {
-            return <img key={index} src={starOutline} alt='' />;
+          {Array.from({ length: parseInt(5 - rating.value) }, (index) => {
+            return <img key={index} src={starOutline} alt="" />;
           })}
         </div>
-        <p>
-         {rating?.comment}
-        </p>
+        <p>{rating?.comment}</p>
       </div>
     </Container>
   );
@@ -34,7 +35,6 @@ const Container = styled.div`
   align-items: flex-start;
   width: 100%;
   margin: 1em 0;
-
 
   img {
     width: 40px;

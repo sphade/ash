@@ -3,13 +3,36 @@ import { Modal } from "antd";
 import styled from "styled-components";
 import { Button } from "../../../Reuseable";
 import successIcon from "../../../assets/images/icons/success-message-icon.png";
-
+import { api } from "../../../api/instance";
+import axios from "axios";
+import { useMutation } from "react-query";
 export const DisableAccountModal = ({ show, handleClose }) => {
   const [success, setSuccess] = useState(false);
   const [visible, setVisible] = useState(false);
+  const user = JSON.parse(sessionStorage.getItem("selectedUser"));
+  const disableUser = async () => {
+    const res = await api.patch(
+      "/users",
+      {
+        userType: user.role,
+        active: user.active,
+        ids: [user.id],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setSuccess(true);
+  };
+  const { isLoading, mutate, isError, error } = useMutation(disableUser);
+
   return (
     <Modal
-      visible={visible}
+      visible={show}
       width={565}
       footer={null}
       closable={false}
@@ -27,26 +50,36 @@ export const DisableAccountModal = ({ show, handleClose }) => {
               <Button
                 info
                 text="YES"
+                loading={isLoading}
                 onClick={() => {
-                  setSuccess(true);
+                  mutate();
                 }}
               />
-              <Button outline text="NO" />
+              <Button
+                outline
+                text="NO"
+                disabled={isLoading}
+                onClick={() => {
+                  handleClose();
+                }}
+              />
             </div>
+            {isError && <p style={{ color: "red" }}>{error.message}</p>}
           </>
         ) : (
           <>
             <img src={successIcon} alt="" />
             <h4>Link Sent to Admin</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis
-              sagittis maecenas faucibus suspendisse.
+              A confirmation link has been sent to your email address, please
+              click on the link to complete the process.
             </p>
             <Button
               outline
               text="CLOSE"
               onClick={() => {
-                setVisible(false);
+                handleClose();
+                setSuccess(false);
               }}
             />
           </>
@@ -58,6 +91,26 @@ export const DisableAccountModal = ({ show, handleClose }) => {
 
 export const ResetPasswordModal = ({ show, handleClose }) => {
   const [success, setSuccess] = useState(false);
+  const user = JSON.parse(sessionStorage.getItem("selectedUser"));
+
+  const resetUserPassword = async () => {
+    const res = await api.patch(
+      `/users/${user.id}`,
+      {
+        userType: user.role,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res);
+    setSuccess(true);
+  };
+  const { isLoading, mutate, isError, error } = useMutation(resetUserPassword);
   return (
     <Modal
       visible={show}
@@ -71,24 +124,43 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
           <>
             <h4>Reset User Password</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis
-              sagittis maecenas faucibus suspendisse.
+              A password reset link will be sent to the user's email address.
+              Click “NO” to cancel.
             </p>
             <div className="btn-group">
-              <Button info text="YES" />
+              <Button
+                info
+                text="YES"
+                loading={isLoading}
+                onClick={() => {
+                  mutate();
+                }}
+              />
 
-              <Button outline text="NO" />
+              <Button
+                outline
+                text="NO"
+                disabled={isLoading}
+                onClick={() => {
+                  handleClose();
+                }}
+              />
             </div>
+            {isError && <p style={{ color: "red" }}>{error.message}</p>}
           </>
         ) : (
           <>
             <img src={successIcon} alt="" />
             <h4>Password Reset Link Sent</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis
-              sagittis maecenas faucibus suspendisse.
-            </p>
-            <Button outline text="CLOSE" />
+            <p>A password reset link has been sent to the user</p>
+            <Button
+              outline
+              text="CLOSE"
+              onClick={() => {
+                handleClose();
+                setSuccess(false);
+              }}
+            />
           </>
         )}
       </Container>

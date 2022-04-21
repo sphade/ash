@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
-import user_avatar from "../../assets/images/icons/monitor_avatar.png";
+import user_avatar from "../../assets/images/icons/dummy_avatar.png";
 import locationIcon from "../../assets/images/icons/location.svg";
 import { ReactComponent as ViewUserIcon } from "../../assets/images/icons/monitor_card_back.svg";
 import { toggleShowModal } from "../../redux/reducers/dashboard/overview";

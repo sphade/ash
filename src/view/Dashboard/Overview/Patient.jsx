@@ -38,7 +38,7 @@ const Patients = () => {
   } = useQuery(["patients", userType, search, page], () =>
     getPatientData(userType, search, page)
     );
-  getPlans()
+  // getPlans()
   // const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
 
   // getPatientData(userType, search, page)
@@ -164,12 +164,11 @@ const Patients = () => {
             <SelectField
               placeholder="Filter"
               data={[
-                { value: "premium", name: "Premium" },
+                { value: "basic plan", name: "Premium" },
                 { value: "standard", name: "Standard" },
                 { value: "unlimited", name: "Unlimited" },
               ]}
               setUserType={setUserType}
-              userType={userType}
             />
           </div>
           <Searchbar setSearch={setSearch} />

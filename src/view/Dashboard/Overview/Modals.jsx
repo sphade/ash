@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Modal } from "antd";
 import { ReactComponent as Close } from "../../../assets/images/icons/cancel.svg";
-import usmAvatar from "../../../assets/images/icons/usm_avatar.png";
+import dummy_avatar from "../../../assets/images/icons/dummy_avatar.png";
 import star from "../../../assets/images/icons/star.svg";
 import starOutline from "../../../assets/images/icons/star-outline.svg";
 import {
@@ -40,7 +40,7 @@ export const UserMonitorModal = (props) => {
       {selectedUser && (
         <Container>
           <div className="header_info">
-            <img src={selectedUser.avatar || usmAvatar} alt="" />
+            <img src={selectedUser.avatar || dummy_avatar} alt="" />
             <div className="group">
               <h2>
                 {selectedUser.firstName || null} {selectedUser.lastName || null}
@@ -131,7 +131,7 @@ export const PatientInfoModal = () => {
       <CloseButton onClick={() => dispatch(handleToggleModal())} />
       <Container subscription="Premium">
         <div className="header_info">
-          <img src={patient?.avatar || usmAvatar} alt="" />
+          <img src={patient?.avatar || dummy_avatar} alt="" />
           <div className="group">
             <h2>
               {patient && patient.firstName}&nbsp;
@@ -166,14 +166,15 @@ export const PatientInfoModal = () => {
           </div>
           <div className="group">
             <h4>Requests</h4>
-            <h5>31</h5>
+            <h5>{patient &&
+              patient.appointments.length}</h5>
           </div>
         </div>
         <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
         <PreliminaryAccordion {...patientData} />
         {patient &&
-          patient.appointments.map((consultationData) => (
-            <ConsultationAccordion {...consultationData} />
+          patient.appointments.map((consultationData,index) => (
+            <ConsultationAccordion {...consultationData} key={index} />
           ))}
       </Container>
     </Modal>
@@ -196,7 +197,7 @@ export const DoctorInfoModal = () => {
       {doctor ? (
         <Container subscription="Premium">
           <div className="header_info">
-            <img src={usmAvatar} alt="" />
+            <img src={dummy_avatar} alt="" />
             <div className="group">
               <h2>
                 Dr&nbsp;
@@ -241,7 +242,15 @@ export const DoctorInfoModal = () => {
             </div>
             <div className="group">
               <h4>Availability</h4>
-              <h5>Fri. September 10th, 2021 15:00 - 15:45</h5>
+
+              {doctor &&
+                doctor.availableDates.map(({ startDate, endDate }, index) => (
+                  <h5 key={index}>
+                    {new Date(startDate).toDateString()}{" "}
+                    {new Date(startDate).toLocaleTimeString()}-
+                    {new Date(endDate).toLocaleTimeString()}
+                  </h5>
+                ))}
             </div>
             <div className="group">
               <h4>Verification Status</h4>
@@ -288,7 +297,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
       <CloseButton onClick={() => dispatch(handleToggleConsultationModal())} />
       <Container subscription="Premium">
         <div className="header_info">
-          <img src={consultation && consultation.patient.avatar } alt="" />
+          <img src={(consultation && consultation.patient.avatar )|| dummy_avatar} alt="" />
           <div className="group">
             <h2>
               {consultation && (
@@ -333,10 +342,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
                 })}
             </h5>
           </div>
-          <div className="group">
-            <h4>Amount</h4>
-            <h5>#25,000</h5>
-          </div>
+
           <div className="group">
             <h4>Status</h4>
             <h5 className="subscription">
@@ -350,7 +356,7 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           <div className="group">
             <h4>Doctor's Name</h4>
             <div className="info-group">
-              <img src={consultation && consultation?.doctor?.avatar} alt="" />
+              <img src={(consultation && consultation?.doctor?.avatar) || dummy_avatar} alt="" />
               <h5>
                 {" "}
                 {consultation && (

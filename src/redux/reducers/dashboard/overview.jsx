@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getDoctorCount,
   getPatientCount,
@@ -6,12 +6,12 @@ import {
   getTotalRevenue,
   getUsers,
   getReferrals,
-} from '../../sagas/dashboard/overview';
+} from "../../sagas/dashboard/overview";
 
 export const overviewSlice = createSlice({
-  name: 'overview',
+  name: "overview",
   initialState: {
-    activeTab: 'Consultations',
+    activeTab: "Consultations",
     doctorCountLoading: false,
     doctorCount: 0,
     patientCountLoading: false,
@@ -26,6 +26,7 @@ export const overviewSlice = createSlice({
     referralsLoading: false,
     referrals: [],
     showUserModal: false,
+    showResetPasswordModal: false,
   },
   reducers: {
     toggleActiveTab: (state, { payload }) => {
@@ -34,6 +35,10 @@ export const overviewSlice = createSlice({
     },
     toggleShowModal: (state) => {
       state.showUserModal = !state.showUserModal;
+      return state;
+    },
+    toggleShowResetPasswordModal: (state) => {
+      state.showResetPasswordModal = !state.showResetPasswordModal;
       return state;
     },
   },
@@ -96,6 +101,10 @@ export const overviewSlice = createSlice({
   },
 });
 
-export const { toggleActiveTab, toggleShowModal } = overviewSlice.actions;
+export const {
+  toggleActiveTab,
+  toggleShowModal,
+  toggleShowResetPasswordModal,
+} = overviewSlice.actions;
 
 export const overviewSelector = (state) => state.overview;

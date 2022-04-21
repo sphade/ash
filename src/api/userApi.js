@@ -1,7 +1,7 @@
 import { api } from "./instance";
 
 export const getUsersData = async (page, userType, search, filterDate) => {
-  const { data } = await api(`/users`, {
+  const { data } = await api.get(`/users`, {
     params: {
       page: page,
       userType: userType,
@@ -20,4 +20,4 @@ export const getUsersData = async (page, userType, search, filterDate) => {
   return res;
 };
 
-export const getUser = () => api(`/users`).then((res) => res.data.data);
+export const getUser = () => api.get(`/users`).then((res) => res.data.data);
