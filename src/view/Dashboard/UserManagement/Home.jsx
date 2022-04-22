@@ -90,6 +90,7 @@ const Home = () => {
               { value: "patient", name: "Patient" },
             ]}
             setUserType={setUserType}
+            setPage={setPage}
           />
           <Searchbar setSearch={setSearch} />
         </>
@@ -100,9 +101,15 @@ const Home = () => {
         ) : (
           <Table
             loading={usersLoading}
-            dataSource={users}
+            dataSource={users?.users}
             rowSelection={{ ...rowSelection }}
             columns={columns}
+            pagination={{
+              total: users?.count,
+              onChange: (page) => {
+                setPage(page);
+              },
+            }}
           />
         )}
       </TableWrapper>

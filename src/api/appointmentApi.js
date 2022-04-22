@@ -14,8 +14,11 @@ export const getAppointmentData = async (args) => {
       "Content-Type": "application/json",
     },
   });
-  const res = data.data.consultations;
- 
+  const res = data.data;
+  console.log(
+    "🚀 ~ file: appointmentApi.js ~ line 18 ~ getAppointmentData ~ data",
+    data
+  );
 
   return res;
 };

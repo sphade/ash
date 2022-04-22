@@ -26,7 +26,7 @@ import {
 
 const UserMonitor = () => {
   const [page, setPage] = useState("1");
-  const [userType, setUserType] = useState("doctor");
+  const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   const [filterDate, setFilterDate] = useState("");
 
@@ -47,7 +47,7 @@ const UserMonitor = () => {
   // React.useEffect(() => {
   //   dispatch(getUsers());
   // }, [dispatch]);
-
+  console.log(users);
   const { showUserModal } = useSelector(overviewSelector);
 
   const handleViewUser = (data) => {
@@ -121,12 +121,14 @@ const UserMonitor = () => {
         <>
           <div className="group">
             <SelectField
-              placeholder="Filter"
+            
               data={[
+                { value: "", name: "Filter" },
                 { value: "doctor", name: "Doctor" },
                 { value: "patient", name: "Patient" },
               ]}
               setUserType={setUserType}
+              setPage={setPage}
             />
             <SelectField
               placeholder="Filter"
@@ -137,6 +139,7 @@ const UserMonitor = () => {
                 { value: getYearDate, name: "One Year" },
               ]}
               setUserType={setFilterDate}
+              setPage={setPage}
             />
           </div>
           <Searchbar setSearch={setSearch} />
@@ -146,7 +149,17 @@ const UserMonitor = () => {
         {isError ? (
           <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
         ) : (
-          <Table loading={usersLoading} dataSource={users} columns={columns} />
+          <Table
+            loading={usersLoading}
+            dataSource={users?.users}
+            columns={columns}
+            pagination={{
+              total: users?.count,
+              onChange: (page) => {
+                setPage(page);
+              },
+            }}
+          />
         )}
       </TableWrapper>
     </Fragment>

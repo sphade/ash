@@ -15,7 +15,6 @@ export const getUsersData = async (page, userType, search, filterDate) => {
     },
   });
   const res = data.data;
-  console.log("🚀 ~ file: userApi.js ~ line 18 ~ getUsersData ~ res", res);
 
   return res;
 };

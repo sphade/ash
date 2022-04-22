@@ -85,7 +85,7 @@ export const overviewSlice = createSlice({
       return state;
     },
     [getUsers.fulfilled]: (state, { payload }) => {
-      state.users = payload.data;
+      state.users = payload.data.users;
       state.usersLoading = false;
       return state;
     },

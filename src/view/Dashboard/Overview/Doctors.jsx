@@ -184,6 +184,7 @@ const Doctors = () => {
               className="form-select"
               onChange={(e) => {
                 setUserType(e.target.value);
+                setPage('1')
               }}
             >
               <option value="">Filter</option>
@@ -201,9 +202,16 @@ const Doctors = () => {
           <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
         ) : (
           <Table
-            dataSource={doctors}
+            dataSource={doctors?.doctors}
             columns={columns}
-            loading={doctorsLoading}
+              loading={doctorsLoading}
+              pagination={{
+                pageSize: 10,
+                total: doctors?.count,
+                onChange: (page) => {
+                  setPage(page);
+                },
+              }}
           />
         )}
       </TableWrapper>

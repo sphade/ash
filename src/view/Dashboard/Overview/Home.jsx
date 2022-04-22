@@ -43,7 +43,6 @@ import {
 } from "../../../utils/dates";
 
 const Home = () => {
-  console.log('this is  the home')
   const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -215,7 +214,9 @@ const Home = () => {
                       { value: getWeekDate, name: "This Week" },
                       { value: "last week", name: "Last Week" },
                       { value: getMonthDate, name: "One Month" },
-                    ]}
+                      ]}
+                    setPage={setPage}
+                      
                   />
                   <Searchbar />
                 </>
@@ -241,6 +242,7 @@ const Home = () => {
                   className="form-select"
                   onChange={(e) => {
                     setFilterDate(e.target.value);
+                    setPage("1");
                   }}
                 >
                   <option selected value="">
@@ -263,11 +265,11 @@ const Home = () => {
             ) : (
               <Table
                 loading={appointmentCountLoading}
-                dataSource={appointments}
+                dataSource={appointments?.consultations}
                 columns={consultationsColumns}
                 pagination={{
                   pageSize: 10,
-                  total: appointmentCount,
+                  total: appointments?.count,
                   onChange: (page) => {
                     setPage(page);
                   },

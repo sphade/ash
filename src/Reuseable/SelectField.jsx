@@ -9,6 +9,7 @@ const Selectfield = (props) => {
           defaultValue={props.placeholder}
           onChange={(e) => {
             props.setUserType(e.target.value);
+            props.setPage('1')
           }}
           name={props.name}
           id={props.id}

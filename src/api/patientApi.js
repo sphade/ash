@@ -13,7 +13,7 @@ export const getPatientData = async (userType, search, page) => {
     },
   });
 
-  const res = data.data.patients;
+  const res = data.data;
   console.log("🚀 ~ file: patientApi.js ~ line 7 ~ getPatientData ~ res", res);
   return res;
 };

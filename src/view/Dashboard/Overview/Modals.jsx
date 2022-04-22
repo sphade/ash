@@ -5,6 +5,8 @@ import { ReactComponent as Close } from "../../../assets/images/icons/cancel.svg
 import dummy_avatar from "../../../assets/images/icons/dummy_avatar.png";
 import star from "../../../assets/images/icons/star.svg";
 import starOutline from "../../../assets/images/icons/star-outline.svg";
+import successIcon from "../../../assets/images/icons/empty-image.png";
+
 import {
   ConsultationAccordion,
   PreliminaryAccordion,
@@ -166,14 +168,13 @@ export const PatientInfoModal = () => {
           </div>
           <div className="group">
             <h4>Requests</h4>
-            <h5>{patient &&
-              patient.appointments.length}</h5>
+            <h5>{patient && patient.appointments.length}</h5>
           </div>
         </div>
         <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
         <PreliminaryAccordion {...patientData} />
         {patient &&
-          patient.appointments.map((consultationData,index) => (
+          patient.appointments.map((consultationData, index) => (
             <ConsultationAccordion {...consultationData} key={index} />
           ))}
       </Container>
@@ -269,9 +270,21 @@ export const DoctorInfoModal = () => {
           </div>
           <hr style={{ height: "0.1px", margin: "1.5em 0" }} />
           <h4>Patient Review</h4>
-          {doctor.ratings.map((rating, index) => {
-            return <PatientReview key={index} rating={rating} />;
-          })}
+
+          {doctor.ratings.length === 0 ? (
+            <center>
+            
+            <img src={successIcon} alt="" />
+            <p>
+            There are no patient review for this doctor</p>
+            </center>
+          ) : (
+            <>
+              {doctor.ratings.map((rating, index) => {
+                return <PatientReview key={index} rating={rating} />;
+              })}
+            </>
+          )}
         </Container>
       ) : (
         ""
@@ -297,7 +310,10 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
       <CloseButton onClick={() => dispatch(handleToggleConsultationModal())} />
       <Container subscription="Premium">
         <div className="header_info">
-          <img src={(consultation && consultation.patient.avatar )|| dummy_avatar} alt="" />
+          <img
+            src={(consultation && consultation.patient.avatar) || dummy_avatar}
+            alt=""
+          />
           <div className="group">
             <h2>
               {consultation && (
@@ -356,7 +372,12 @@ export const ConsultationInfoModal = ({ show, handleClose }) => {
           <div className="group">
             <h4>Doctor's Name</h4>
             <div className="info-group">
-              <img src={(consultation && consultation?.doctor?.avatar) || dummy_avatar} alt="" />
+              <img
+                src={
+                  (consultation && consultation?.doctor?.avatar) || dummy_avatar
+                }
+                alt=""
+              />
               <h5>
                 {" "}
                 {consultation && (

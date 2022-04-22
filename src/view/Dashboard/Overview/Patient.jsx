@@ -169,6 +169,7 @@ const Patients = () => {
                 { value: "unlimited", name: "Unlimited" },
               ]}
               setUserType={setUserType}
+              setPage={setPage}
             />
           </div>
           <Searchbar setSearch={setSearch} />
@@ -181,8 +182,14 @@ const Patients = () => {
         ) : (
           <Table
             loading={patientsLoading}
-            dataSource={patients}
-            columns={columns}
+            dataSource={patients?.patients}
+              columns={columns}
+              pagination={{
+                total: patients?.count,
+                onChange: (page) => {
+                  setPage(page);
+                },
+              }}
           />
         )}
       </TableWrapper>
