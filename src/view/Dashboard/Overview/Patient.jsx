@@ -21,7 +21,7 @@ import { getPatientData, getPlans } from "../../../api/patientApi";
 const Patients = () => {
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState(1);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -186,6 +186,8 @@ const Patients = () => {
               columns={columns}
               pagination={{
                 total: patients?.count,
+                current: page,
+
                 onChange: (page) => {
                   setPage(page);
                 },

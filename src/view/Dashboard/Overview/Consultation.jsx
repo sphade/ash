@@ -201,7 +201,7 @@ const Consultations = () => {
               className="form-select"
               onChange={(e) => {
                 setUserType(e.target.value);
-                setPage('1')
+                setPage(1);
               }}
             >
               <option selected value="">
@@ -230,6 +230,8 @@ const Consultations = () => {
             columns={columns}
             pagination={{
               pageSize: 10,
+              current: page,
+
               total: appointments?.count,
               onChange: (page) => {
                 setPage(page);

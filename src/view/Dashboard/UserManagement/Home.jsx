@@ -23,7 +23,7 @@ import { getUsersData } from "../../../api/userApi";
 const Home = () => {
   // variables
 
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState(1);
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   // data fetching with react Query
@@ -106,6 +106,8 @@ const Home = () => {
             columns={columns}
             pagination={{
               total: users?.count,
+              current: page,
+
               onChange: (page) => {
                 setPage(page);
               },

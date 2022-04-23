@@ -25,7 +25,7 @@ import {
 } from "../../../utils/dates";
 
 const UserMonitor = () => {
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState(1);
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   const [filterDate, setFilterDate] = useState("");
@@ -121,7 +121,6 @@ const UserMonitor = () => {
         <>
           <div className="group">
             <SelectField
-            
               data={[
                 { value: "", name: "Filter" },
                 { value: "doctor", name: "Doctor" },
@@ -155,6 +154,8 @@ const UserMonitor = () => {
             columns={columns}
             pagination={{
               total: users?.count,
+              current: page,
+
               onChange: (page) => {
                 setPage(page);
               },

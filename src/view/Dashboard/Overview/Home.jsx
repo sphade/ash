@@ -214,9 +214,8 @@ const Home = () => {
                       { value: getWeekDate, name: "This Week" },
                       { value: "last week", name: "Last Week" },
                       { value: getMonthDate, name: "One Month" },
-                      ]}
+                    ]}
                     setPage={setPage}
-                      
                   />
                   <Searchbar />
                 </>
@@ -242,7 +241,7 @@ const Home = () => {
                   className="form-select"
                   onChange={(e) => {
                     setFilterDate(e.target.value);
-                    setPage("1");
+                    setPage(1);
                   }}
                 >
                   <option selected value="">
@@ -269,6 +268,8 @@ const Home = () => {
                 columns={consultationsColumns}
                 pagination={{
                   pageSize: 10,
+                  current: page,
+
                   total: appointments?.count,
                   onChange: (page) => {
                     setPage(page);

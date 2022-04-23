@@ -20,7 +20,7 @@ import { getDoctorData } from "../../../api/doctorApi";
 const Doctors = () => {
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState(1);
 
   const {
     isLoading: doctorsLoading,
@@ -184,7 +184,7 @@ const Doctors = () => {
               className="form-select"
               onChange={(e) => {
                 setUserType(e.target.value);
-                setPage('1')
+                setPage(1);
               }}
             >
               <option value="">Filter</option>
@@ -204,14 +204,16 @@ const Doctors = () => {
           <Table
             dataSource={doctors?.doctors}
             columns={columns}
-              loading={doctorsLoading}
-              pagination={{
-                pageSize: 10,
-                total: doctors?.count,
-                onChange: (page) => {
-                  setPage(page);
-                },
-              }}
+            loading={doctorsLoading}
+            pagination={{
+              pageSize: 10,
+              total: doctors?.count,
+              current: page,
+
+              onChange: (page) => {
+                setPage(page);
+              },
+            }}
           />
         )}
       </TableWrapper>
