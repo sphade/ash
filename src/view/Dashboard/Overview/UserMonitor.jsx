@@ -29,7 +29,8 @@ const UserMonitor = () => {
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
   const [filterDate, setFilterDate] = useState("");
-
+  const [doctorsNo, setDoctorsNo] = useState(0);
+  const [patientsNo, setPatientsNo] = useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -39,9 +40,21 @@ const UserMonitor = () => {
     data: users,
   } = useQuery(
     ["users", page, userType, search, filterDate],
-    () => getUsersData(page, userType, search, filterDate),
+    () =>
+      getUsersData({
+        page: page,
+        userType: userType,
+        search: search,
+        filterDate: filterDate,
+        patientsNo: patientsNo,
+        doctorsNo: doctorsNo,
+      }),
     {
       staleTime: 5000,
+      onSuccess: (data) => {
+        setPatientsNo(data?.patients);
+        setDoctorsNo(data?.doctors);
+      },
     }
   );
   // React.useEffect(() => {
@@ -121,8 +134,7 @@ const UserMonitor = () => {
         <>
           <div className="group">
             <SelectField
-            placeholder="Filter Users"
-              
+              placeholder="Filter Users"
               data={[
                 { value: "doctor", name: "Doctor" },
                 { value: "patient", name: "Patient" },
