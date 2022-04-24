@@ -1,12 +1,14 @@
 import { api } from "./instance";
 
-export const getUsersData = async (page, userType, search, filterDate) => {
+export const getUsersData = async (args) => {
   const { data } = await api.get(`/users`, {
     params: {
-      page: page,
-      userType: userType,
-      startDate: filterDate,
-      search: search,
+      page: args.page,
+      userType: args.userType,
+      startDate: args.filterDate,
+      search: args.search,
+      doctors: args.doctorsNo,
+      patients: args.patientsNo,
     },
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,

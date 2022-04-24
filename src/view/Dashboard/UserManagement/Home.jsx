@@ -26,6 +26,8 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [userType, setUserType] = useState("");
   const [search, setSearch] = useState("");
+  const [doctorsNo, setDoctorsNo] = useState(0);
+  const [patientsNo, setPatientsNo] = useState(0);
   // data fetching with react Query
   const {
     isLoading: usersLoading,
@@ -34,9 +36,20 @@ const Home = () => {
     error,
   } = useQuery(
     ["users", page, userType, search],
-    () => getUsersData(page, userType, search),
+    () =>
+      getUsersData({
+        page: page,
+        userType: userType,
+        search: search,
+        patientsNo: patientsNo,
+        doctorsNo: doctorsNo,
+      }),
     {
       staleTime: 5000,
+      onSuccess: (data) => {
+        setPatientsNo(data?.patients);
+        setDoctorsNo(data?.doctors);
+      },
     }
   );
 
@@ -106,7 +119,7 @@ const Home = () => {
             pagination={{
               total: users?.count,
               current: page,
-              showSizeChanger:false,
+              showSizeChanger: false,
 
               onChange: (page) => {
                 setPage(page);
