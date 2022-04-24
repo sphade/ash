@@ -243,15 +243,25 @@ export const DoctorInfoModal = () => {
             </div>
             <div className="group">
               <h4>Availability</h4>
+<div>
 
-              {doctor &&
+                            {doctor &&
                 doctor.availableDates.map(({ startDate, endDate }, index) => (
-                  <h5 key={index}>
-                    {new Date(startDate).toDateString()}{" "}
-                    {new Date(startDate).toLocaleTimeString()}-
-                    {new Date(endDate).toLocaleTimeString()}
-                  </h5>
+                  <div key={index}>
+                  <span >
+                    {new Date(startDate).toLocaleString()}
+                  </span>
+                  {' '}
+                   - 
+                  {' '}
+
+                  <span >
+                  {new Date(endDate).toLocaleTimeString()}
+                </span>
+                  </div>
                 ))}
+</div>
+
             </div>
             <div className="group">
               <h4>Verification Status</h4>
@@ -521,12 +531,13 @@ const Container = styled.div`
         margin-right: 2rem;
         text-transform: capitalize;
       }
-      h5 {
+      h5,span {
         flex: 1;
         margin: 0;
         padding: 0;
         color: #666666;
         font-size: 1rem;
+        font-weight:500
       }
     }
   }

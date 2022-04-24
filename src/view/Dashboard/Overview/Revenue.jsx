@@ -144,7 +144,16 @@ const Revenue = () => {
           </select>
         </header>
         {transactionsLoading ? (
-          <Skeleton width={"100%"} height={500} />
+          <center
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height:'90%'
+          }}
+        >
+          <Spin size="large" />
+        </center>
         ) : !transactions.length ? (
           "no data"
         ) : (
