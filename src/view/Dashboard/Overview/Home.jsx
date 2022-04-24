@@ -41,17 +41,21 @@ import {
   getWeekDate,
   getYearDate,
 } from "../../../utils/dates";
-import { getUser, getUsersData } from "../../../api/userApi";
+import { getUser } from "../../../api/userApi";
 
 const Home = () => {
   const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const { isLoading: usersLoading, data: users } = useQuery("users", getUser, {
+  const {
+    isLoading: usersLoading,
+    data: users,
+    isError: userError,
+  } = useQuery("users", getUser, {
     staleTime: 5000,
   });
   const {
-    isLoading: appointmentCountLoading,
+    isLoading: appointmentLoading,
     isError: appointmentHasError,
     error,
     data: appointments,
@@ -82,7 +86,7 @@ const Home = () => {
   const {
     doctorCountLoading,
     patientCountLoading,
-    // appointmentCountLoading,
+    appointmentCountLoading,
     doctorCount,
     patientCount,
     appointmentCount,
@@ -173,9 +177,13 @@ const Home = () => {
           <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
         </MonitorCardWrapper>
+      ) : userError ? (
+        <div style={{ color: "red", fontSize: "30px" }}>
+          failed to extablish connection, network error
+        </div>
       ) : (
         <Slider {...settings}>
-          {users.map((item, index) => {
+          {users?.users.map((item, index) => {
             return <UserMonitorCard key={index} {...item} />;
           })}
         </Slider>
@@ -260,7 +268,7 @@ const Home = () => {
               </div>
             ) : (
               <Table
-                loading={appointmentCountLoading}
+                loading={appointmentLoading}
                 dataSource={appointments?.consultations}
                 columns={consultationsColumns}
                 pagination={{

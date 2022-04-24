@@ -21,14 +21,13 @@ export const getUsersData = async (page, userType, search, filterDate) => {
 
 export const getUser = async () => {
   const { data } = await api.get(`/users`, {
-    
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   });
-  const res = data.data.users;
+  const res = data.data;
 
   return res;
 };

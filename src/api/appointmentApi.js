@@ -15,10 +15,7 @@ export const getAppointmentData = async (args) => {
     },
   });
   const res = data.data;
-  console.log(
-    "🚀 ~ file: appointmentApi.js ~ line 18 ~ getAppointmentData ~ data",
-    data
-  );
+ 
 
   return res;
 };

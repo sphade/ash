@@ -14,7 +14,6 @@ export const getDoctorData = async (page, userType, search) => {
     },
   });
   const res = data.data;
-  console.log("🚀 ~ file: doctorApi.js ~ line 9 ~ getDoctorData ~ res", res);
   return res;
 };
 export const getDoctorCount = async () => {

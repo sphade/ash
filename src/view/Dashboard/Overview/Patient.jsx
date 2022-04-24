@@ -37,9 +37,8 @@ const Patients = () => {
     error,
   } = useQuery(["patients", userType, search, page], () =>
     getPatientData(userType, search, page)
-    );
-  // getPlans()
-  // const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
+  );
+  const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
 
   // getPatientData(userType, search, page)
   const menu = (data) => (
@@ -161,16 +160,14 @@ const Patients = () => {
       <Heading>
         <>
           <div className="group">
-            <SelectField
-              placeholder="Filter"
-              data={[
-                { value: "basic plan", name: "Premium" },
-                { value: "standard", name: "Standard" },
-                { value: "unlimited", name: "Unlimited" },
-              ]}
-              setUserType={setUserType}
-              setPage={setPage}
-            />
+            {plans && (
+              <SelectField
+                placeholder="Filter"
+                data={plans.map(({ id, name }) => ({ value: id, name: name }))}
+                setUserType={setUserType}
+                setPage={setPage}
+              />
+            )}
           </div>
           <Searchbar setSearch={setSearch} />
         </>
@@ -183,16 +180,16 @@ const Patients = () => {
           <Table
             loading={patientsLoading}
             dataSource={patients?.patients}
-              columns={columns}
-              pagination={{
-                total: patients?.count,
-                current: page,
-                showSizeChanger:false,
+            columns={columns}
+            pagination={{
+              total: patients?.count,
+              current: page,
+              showSizeChanger: false,
 
-                onChange: (page) => {
-                  setPage(page);
-                },
-              }}
+              onChange: (page) => {
+                setPage(page);
+              },
+            }}
           />
         )}
       </TableWrapper>

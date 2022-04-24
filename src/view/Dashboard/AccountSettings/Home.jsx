@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { Header as Title } from '../Overview/Revenue';
-import styled from 'styled-components';
-import { InputField, Button } from '../../../Reuseable';
-import { manageSelector } from '../../../redux/reducers/auth/manage';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeAdminPassword } from '../../../redux/sagas/auth/manage';
-import { rem } from 'polished';
+import React, { Fragment } from "react";
+import { Header as Title } from "../Overview/Revenue";
+import styled from "styled-components";
+import { InputField, Button } from "../../../Reuseable";
+import { manageSelector } from "../../../redux/reducers/auth/manage";
+import { useDispatch, useSelector } from "react-redux";
+import { changeAdminPassword } from "../../../redux/sagas/auth/manage";
+import { rem } from "polished";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,9 +18,10 @@ const Home = () => {
   const [show, setShow] = React.useState({
     change_password: false,
   });
+
   const [passcode, setPasscode] = React.useState({
-    oldPassword: '',
-    newPassword: '',
+    oldPassword: "",
+    newPassword: "",
     submitted: false,
   });
 
@@ -38,7 +39,7 @@ const Home = () => {
       dispatch(changeAdminPassword(passcode));
     }
   };
-  
+
   return (
     <Fragment>
       <Title>
@@ -61,31 +62,31 @@ const Home = () => {
           {show.change_password && (
             <Form onSubmit={handleSubmit}>
               <p>Change Password</p>
-              <div className='group'>
-                <div className='input_field_wrapper'>
-                  <h6 className='label'>Old Password</h6>
+              <div className="group">
+                <div className="input_field_wrapper">
+                  <h6 className="label">Old Password</h6>
                   <InputField
                     onTextChange={handleChange}
                     value={passcode.oldPassword}
-                    inputType='password'
-                    placeholder='Enter Old Password'
-                    fieldname='oldPassword'
+                    inputType="password"
+                    placeholder="Enter Old Password"
+                    fieldname="oldPassword"
                   />
                   {submitted && !passcode.oldPassword && (
-                    <p className='error-msg'>Field is requied</p>
+                    <p className="error-msg">Field is requied</p>
                   )}
                 </div>
-                <div className='input_field_wrapper'>
+                <div className="input_field_wrapper">
                   <p>New Password</p>
                   <InputField
                     onTextChange={handleChange}
                     value={passcode.newPassword}
-                    inputType='password'
-                    placeholder='Enter New Password'
-                    fieldname='newPassword'
+                    inputType="password"
+                    placeholder="Enter New Password"
+                    fieldname="newPassword"
                   />
                   {submitted && !passcode.newPassword && (
-                    <p className='error-msg'>Field is requied</p>
+                    <p className="error-msg">Field is requied</p>
                   )}
                 </div>
               </div>
@@ -93,22 +94,22 @@ const Home = () => {
                 changePasswordErrors &&
                 changePasswordErrors.map((item, index) => {
                   return (
-                    <p key={index} className='error-msg'>
+                    <p key={index} className="error-msg">
                       {item.Credentials || item.email || item.message || item}
                     </p>
                   );
                 })}
               {changePasswordSuccess && (
                 <>
-                  <p className='success'>Password updated successfully!</p>
+                  <p className="success">Password updated successfully!</p>
                   <br />
                 </>
               )}
               <Button
                 loading={changePasswordLoading}
-                full='quarter'
+                full="quarter"
                 info
-                text='Create Password'
+                text="Create Password"
               />
             </Form>
           )}
@@ -129,8 +130,8 @@ const Container = styled.div`
     margin: 0 !important;
     padding: 0 !important;
     // margin-top: 0.5em;
-    font-size: ${rem('13px')};
-    letter-spacing: ${rem('0.13px')};
+    font-size: ${rem("13px")};
+    letter-spacing: ${rem("0.13px")};
     color: #ff5e5e;
     opacity: 1;
   }
@@ -140,9 +141,9 @@ const Container = styled.div`
     margin: 0px;
     padding: 0;
     // margin-top: 0.5em;
-    font-size: ${rem('13px')};
+    font-size: ${rem("13px")};
     font-weight: bold;
-    letter-spacing: ${rem('0.13px')};
+    letter-spacing: ${rem("0.13px")};
     color: green;
     opacity: 1;
   }
