@@ -19,4 +19,16 @@ export const getUsersData = async (page, userType, search, filterDate) => {
   return res;
 };
 
-export const getUser = () => api.get(`/users`).then((res) => res.data.data);
+export const getUser = async () => {
+  const { data } = await api.get(`/users`, {
+    
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  const res = data.data.users;
+
+  return res;
+};

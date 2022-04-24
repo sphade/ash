@@ -14,7 +14,13 @@ import { transactionsSelector } from "../../../redux/reducers/dashboard/transact
 import Skeleton from "react-loading-skeleton";
 import { getTransactionData } from "../../../api/transactionApi";
 import { useQuery } from "react-query";
-import { getMonthDate, getTodayDate, getWeekDate, getYearDate } from "../../../utils/dates";
+import {
+  getMonthDate,
+  getTodayDate,
+  getWeekDate,
+  getYearDate,
+} from "../../../utils/dates";
+import { Spin } from "antd";
 
 const Revenue = () => {
   const [select, setSelect] = React.useState("");
@@ -90,10 +96,22 @@ const Revenue = () => {
         )}
       </Statistics>
       {transactionsLoading ? (
-        <>
-          <Skeleton width={"100%"} height={500} />
-          <br />
-        </>
+        <ChartWrapper>
+          <header>
+            <h5 className="fw-bold">Deals</h5>
+            <h6>Show</h6>
+          </header>
+          <center
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height:'90%'
+            }}
+          >
+            <Spin size="large" />
+          </center>
+        </ChartWrapper>
       ) : (
         <ChartWrapper>
           <header>
@@ -105,33 +123,36 @@ const Revenue = () => {
           </div>
         </ChartWrapper>
       )}
-      {transactionsLoading ? (
-        <Skeleton width={"100%"} height={500} />
-      ) : (
-        <TransactionWrapper>
-          <header>
-            <h5>Transaction History</h5>
-            <select
-              style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
-              className="form-select"
-              onChange={(e) => {
-                setUserType(e.target.value);
-              }}
-            >
-              <option value="">Filter By Date</option>
-              <option value={getTodayDate}>Today</option>
-              <option value={getWeekDate}>Last 7 Days</option>
-              <option value={getMonthDate}>One Month</option>
-              <option value={getYearDate}>One Year</option>
-            </select>
-          </header>
-          {!transactions.length
-            ? "no data"
-            : transactions.map((item, index) => {
-                return <TransactionCard key={index} {...item} />;
-              })}
-        </TransactionWrapper>
-      )}
+
+      <TransactionWrapper>
+        <header>
+          <h5>Transaction History</h5>
+          <select
+            style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
+            className="form-select"
+            onChange={(e) => {
+              setUserType(e.target.value);
+            }}
+          >
+            <option disabled hidden selected value="">
+              Filter By Date
+            </option>
+            <option value={getTodayDate}>Today</option>
+            <option value={getWeekDate}>Last 7 Days</option>
+            <option value={getMonthDate}>One Month</option>
+            <option value={getYearDate}>One Year</option>
+          </select>
+        </header>
+        {transactionsLoading ? (
+          <Skeleton width={"100%"} height={500} />
+        ) : !transactions.length ? (
+          "no data"
+        ) : (
+          transactions.map((item, index) => {
+            return <TransactionCard key={index} {...item} />;
+          })
+        )}
+      </TransactionWrapper>
     </Fragment>
   );
 };

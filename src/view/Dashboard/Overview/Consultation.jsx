@@ -231,6 +231,7 @@ const Consultations = () => {
             pagination={{
               pageSize: 10,
               current: page,
+              showSizeChanger:false,
 
               total: appointments?.count,
               onChange: (page) => {

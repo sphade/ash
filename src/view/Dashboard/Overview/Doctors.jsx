@@ -180,14 +180,13 @@ const Doctors = () => {
                 borderRadius: "10px",
                 border: "none",
               }}
-              defaultValue="Filter Value"
               className="form-select"
               onChange={(e) => {
                 setUserType(e.target.value);
                 setPage(1);
               }}
             >
-              <option value="">Filter</option>
+              <option disabled hidden selected value="">Filter</option>
               <option value="accepted">Verified</option>
               <option value="pending">Pending</option>
               <option value="rejected">Rejected</option>
@@ -208,6 +207,7 @@ const Doctors = () => {
             pagination={{
               pageSize: 10,
               total: doctors?.count,
+              showSizeChanger:false,
               current: page,
 
               onChange: (page) => {

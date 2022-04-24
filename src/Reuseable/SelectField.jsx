@@ -6,15 +6,14 @@ const Selectfield = (props) => {
     <Container full={props.full ? props.full : undefined}>
       <div className="group">
         <select
-          defaultValue={props.placeholder}
           onChange={(e) => {
             props.setUserType(e.target.value);
-            props.setPage(1)
+            props.setPage(1);
           }}
           name={props.name}
           id={props.id}
         >
-          {/* <option>{props.placeholder}</option> */}
+         <option disabled selected hidden value=''>{props.placeholder}</option> 
           {props.data.map((item, index) => {
             return (
               <option key={index} value={item.value || item.uid}>

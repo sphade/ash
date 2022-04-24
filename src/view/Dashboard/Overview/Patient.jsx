@@ -187,6 +187,7 @@ const Patients = () => {
               pagination={{
                 total: patients?.count,
                 current: page,
+                showSizeChanger:false,
 
                 onChange: (page) => {
                   setPage(page);

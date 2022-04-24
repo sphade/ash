@@ -41,11 +41,15 @@ import {
   getWeekDate,
   getYearDate,
 } from "../../../utils/dates";
+import { getUser, getUsersData } from "../../../api/userApi";
 
 const Home = () => {
   const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const { isLoading: usersLoading, data: users } = useQuery("users", getUser, {
+    staleTime: 5000,
+  });
   const {
     isLoading: appointmentCountLoading,
     isError: appointmentHasError,
@@ -84,8 +88,8 @@ const Home = () => {
     appointmentCount,
     // appointments,
     revenue,
-    usersLoading,
-    users,
+    // usersLoading,
+    // users,
     referralsLoading,
     referrals,
     activeTab,
@@ -177,24 +181,17 @@ const Home = () => {
         </Slider>
       )}
       <div className="tab-group">
-        {referralsLoading ? (
-          <>
-            <Skeleton width={150} height={40} />
-            <Skeleton width={150} height={40} />
-          </>
-        ) : (
-          ["Consultations", "Referral"].map((item, index) => {
-            return (
-              <Tab
-                key={index}
-                className={activeTab === item ? "active" : ""}
-                onClick={() => dispatch(toggleActiveTab(item))}
-              >
-                {item}
-              </Tab>
-            );
-          })
-        )}
+        {["Consultations", "Referral"].map((item, index) => {
+          return (
+            <Tab
+              key={index}
+              className={activeTab === item ? "active" : ""}
+              onClick={() => dispatch(toggleActiveTab(item))}
+            >
+              {item}
+            </Tab>
+          );
+        })}
       </div>
 
       {activeTab === "Referral" && (
@@ -244,7 +241,7 @@ const Home = () => {
                     setPage(1);
                   }}
                 >
-                  <option selected value="">
+                  <option disabled hidden selected value="">
                     Filter
                   </option>
                   <option value={getTodayDate}>Today</option>
@@ -269,6 +266,7 @@ const Home = () => {
                 pagination={{
                   pageSize: 10,
                   current: page,
+                  showSizeChanger: false,
 
                   total: appointments?.count,
                   onChange: (page) => {

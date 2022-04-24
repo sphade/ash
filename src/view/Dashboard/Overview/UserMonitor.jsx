@@ -121,8 +121,9 @@ const UserMonitor = () => {
         <>
           <div className="group">
             <SelectField
+            placeholder="Filter Users"
+              
               data={[
-                { value: "", name: "Filter" },
                 { value: "doctor", name: "Doctor" },
                 { value: "patient", name: "Patient" },
               ]}
@@ -130,7 +131,7 @@ const UserMonitor = () => {
               setPage={setPage}
             />
             <SelectField
-              placeholder="Filter"
+              placeholder="Filter Dates"
               data={[
                 { value: getTodayDate, name: "Today" },
                 { value: getWeekDate, name: "7 days" },
@@ -155,6 +156,7 @@ const UserMonitor = () => {
             pagination={{
               total: users?.count,
               current: page,
+              showSizeChanger: false,
 
               onChange: (page) => {
                 setPage(page);

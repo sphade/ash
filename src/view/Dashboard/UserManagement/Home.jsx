@@ -85,7 +85,6 @@ const Home = () => {
           <SelectField
             placeholder="Filter"
             data={[
-              { value: "", name: "Filter" },
               { value: "doctor", name: "Doctor" },
               { value: "patient", name: "Patient" },
             ]}
@@ -107,6 +106,7 @@ const Home = () => {
             pagination={{
               total: users?.count,
               current: page,
+              showSizeChanger:false,
 
               onChange: (page) => {
                 setPage(page);
