@@ -249,7 +249,10 @@ const Home = () => {
                     setPage(1);
                   }}
                 >
-                <option selected value="">
+                <option selected disabled hidden value="">
+                Filter Role
+              </option>
+                <option  value="">
                 All
               </option>
                   <option value={getTodayDate}>Today</option>

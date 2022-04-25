@@ -16,7 +16,7 @@ const Selectfield = (props) => {
           <option disabled selected hidden value="">
             {props.placeholder}
           </option>
-          <option selected value="">
+          <option  value="">
             All
           </option>
           {props.data.map((item, index) => {

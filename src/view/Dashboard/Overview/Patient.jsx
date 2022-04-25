@@ -162,10 +162,11 @@ const Patients = () => {
           <div className="group">
             {plans && (
               <SelectField
-                placeholder="Filter"
+                placeholder="Filter Plan"
                 data={plans.map(({ id, name }) => ({ value: id, name: name }))}
                 setUserType={setUserType}
                 setPage={setPage}
+                full={true}
               />
             )}
           </div>
