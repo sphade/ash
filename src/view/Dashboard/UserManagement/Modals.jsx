@@ -107,7 +107,6 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
         },
       }
     );
-    console.log(res);
     setSuccess(true);
   };
   const { isLoading, mutate, isError, error } = useMutation(resetUserPassword);

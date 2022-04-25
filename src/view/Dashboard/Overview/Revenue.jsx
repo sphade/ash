@@ -134,9 +134,9 @@ const Revenue = () => {
               setUserType(e.target.value);
             }}
           >
-            <option disabled hidden selected value="">
-              Filter By Date
-            </option>
+          <option selected value="">
+          All
+        </option>
             <option value={getTodayDate}>Today</option>
             <option value={getWeekDate}>Last 7 Days</option>
             <option value={getMonthDate}>One Month</option>

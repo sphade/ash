@@ -249,9 +249,9 @@ const Home = () => {
                     setPage(1);
                   }}
                 >
-                  <option disabled hidden selected value="">
-                    Filter
-                  </option>
+                <option selected value="">
+                All
+              </option>
                   <option value={getTodayDate}>Today</option>
                   <option value={getWeekDate}>Last 7 Days</option>
                   <option value={getMonthDate}>One Month</option>
@@ -264,7 +264,7 @@ const Home = () => {
           <TableWrapper>
             {appointmentHasError ? (
               <div style={{ color: "red", fontSize: "30px" }}>
-                {error.message}
+               'An error occurred check your network connection'
               </div>
             ) : (
               <Table

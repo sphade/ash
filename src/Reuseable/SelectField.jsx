@@ -13,7 +13,12 @@ const Selectfield = (props) => {
           name={props.name}
           id={props.id}
         >
-         <option disabled selected hidden value=''>{props.placeholder}</option> 
+          <option disabled selected hidden value="">
+            {props.placeholder}
+          </option>
+          <option selected value="">
+            All
+          </option>
           {props.data.map((item, index) => {
             return (
               <option key={index} value={item.value || item.uid}>

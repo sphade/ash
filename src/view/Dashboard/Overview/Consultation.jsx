@@ -33,10 +33,7 @@ const Consultations = () => {
   } = useQuery(["appointmentFilterData", userType, search, page], () =>
     getAppointmentData({ userType: userType, search: search, page: page })
   );
-  const { data: appointmentCount } = useQuery(
-    ["appointmentCount"],
-    getAppointmentCount
-  );
+
 
   // React.useEffect(() => {
   //   dispatch(getAppointmentCount());
@@ -207,6 +204,7 @@ const Consultations = () => {
               <option selected disabled hidden value="">
                 Filter Role
               </option>
+              <option value="">All</option>
               <option value="completed">Completed</option>
               <option value="accepted">Scheduled</option>
               <option value="pending">pending</option>
@@ -231,7 +229,7 @@ const Consultations = () => {
             pagination={{
               pageSize: 10,
               current: page,
-              showSizeChanger:false,
+              showSizeChanger: false,
 
               total: appointments?.count,
               onChange: (page) => {

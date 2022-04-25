@@ -205,15 +205,6 @@ export const columns = [
       </Space>
     ),
   },
-  {
-    title: "Action",
-    key: "action",
-    render: () => (
-      <Space>
-        <MoreButton />
-      </Space>
-    ),
-  },
 ];
 
 export const MoreButton = styled(More)`

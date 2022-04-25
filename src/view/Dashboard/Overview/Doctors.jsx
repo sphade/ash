@@ -186,7 +186,9 @@ const Doctors = () => {
                 setPage(1);
               }}
             >
-              <option disabled hidden selected value="">Filter</option>
+              <option selected value="">
+              All
+            </option>
               <option value="accepted">Verified</option>
               <option value="pending">Pending</option>
               <option value="rejected">Rejected</option>
