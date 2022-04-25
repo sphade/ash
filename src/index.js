@@ -1,9 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import store from './redux/configureStore';
-import { Provider } from 'react-redux';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import store from "./redux/configureStore";
+import { Provider } from "react-redux";
+import "./index.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import App from "./App";
+const queryClient = new QueryClient();
 // import throttle from "lodash/throttle";
 // import { saveState } from "./redux/sessionStorage";
 
@@ -13,10 +15,12 @@ import App from './App';
 //   }, 1000)
 // );
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </QueryClientProvider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

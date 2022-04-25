@@ -1,58 +1,60 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FaChevronDown } from 'react-icons/fa';
+import React from "react";
+import styled from "styled-components";
+import { FaChevronDown } from "react-icons/fa";
 
 export const PreliminaryAccordion = (props) => {
   const [toggle, setToggle] = React.useState(false);
   return (
     <Container>
-      <div className='header'>
-        <div className='text'>
-          <div className='title'>PRELIMINARY FORM</div>
+      <div className="header">
+        <div className="text">
+          <div className="title">PRELIMINARY FORM</div>
         </div>
-        <FaChevronDown className='icon' onClick={() => setToggle(!toggle)} />
+        <FaChevronDown className="icon" onClick={() => setToggle(!toggle)} />
       </div>
       {toggle && (
-        <div className='body'>
-          <div className='text-group'>
-            <div className='title'>Fullname</div>
-            <div className='value'>{props.fullname}</div>
+        <div className="body">
+          <div className="text-group">
+            <div className="title">Fullname</div>
+            <div className="value">{props.fullname || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Date of Birth</div>
-            <div className='value'>{props.dateOfBirth}</div>
+          <div className="text-group">
+            <div className="title">Date of Birth</div>
+            <div className="value">{props.dateOfBirth || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Sex</div>
-            <div className='value'>{props.sex}</div>
+          <div className="text-group">
+            <div className="title">Sex</div>
+            <div className="value">{props.sex || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Height</div>
-            <div className='value'>{props.height}</div>
+          <div className="text-group">
+            <div className="title">Height</div>
+            <div className="value">{props.height || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Weight</div>
-            <div className='value'>{props.weight}</div>
+          <div className="text-group">
+            <div className="title">Weight</div>
+            <div className="value">{props.weight || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Marital Status</div>
-            <div className='value'>{props.maritalStatus}</div>
+          <div className="text-group">
+            <div className="title">Marital Status</div>
+            <div className="value">{props.maritalStatus || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Genotype</div>
-            <div className='value'>{props.genotype}</div>
+          <div className="text-group">
+            <div className="title">Genotype</div>
+            <div className="value">{props.genotype || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Blood Group</div>
-            <div className='value'>{props.bloodGroup}</div>
+          <div className="text-group">
+            <div className="title">Blood Group</div>
+            <div className="value">{props.bloodGroup || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Allergies</div>
-            <div className='value'>{props.allergies}</div>
+          <div className="text-group">
+            <div className="title">Allergies</div>
+            <div className="value">{props.allergies || "------"}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Pre-existing Conditions</div>
-            <div className='value'>{props.preExistingConditions}</div>
+          <div className="text-group">
+            <div className="title">Pre-existing Conditions</div>
+            <div className="value">
+              {props.preExistingConditions || "------"}
+            </div>
           </div>
         </div>
       )}
@@ -64,34 +66,43 @@ export const ConsultationAccordion = (props) => {
   const [toggle, setToggle] = React.useState(false);
   return (
     <Container>
-      <div className='header'>
-        <div className='text'>
-          <div className='title'>Consultations</div>
-          <div className='date'>{props.date}</div>
+      <div className="header">
+        <div className="text">
+          <div className="title">Consultations</div>
+          <div className="date">
+            {new Date(props?.startDate).toLocaleDateString()}
+          </div>
         </div>
-        <FaChevronDown className='icon' onClick={() => setToggle(!toggle)} />
+        <FaChevronDown className="icon" onClick={() => setToggle(!toggle)} />
       </div>
       {toggle && (
-        <div className='body'>
-          <div className='text-group'>
-            <div className='title'>Patient Name</div>
-            <div className='value'>{props.patientName}</div>
+        <div className="body">
+          <div className="text-group">
+            <div className="title">Patient Name</div>
+            <div className="value">{props?.patientName}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Doctor's Name</div>
-            <div className='value'>{props.doctorName}</div>
+          <div className="text-group">
+            <div className="title">Doctor's Name</div>
+            <div className="value">{props?.doctor?.firstName}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Diagnosis</div>
-            <div className='value'>{props.diagnosis}</div>
+          <div className="text-group">
+            <div className="title">Diagnosis</div>
+            <div className="value">{props?.note?.diagnosis}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Doctor's Commmment</div>
-            <div className='value'>{props.comment}</div>
+          <div className="text-group">
+            <div className="title">Doctor's Commmment</div>
+            <div className="value">{props?.note?.conclusion}</div>
           </div>
-          <div className='text-group'>
-            <div className='title'>Prescription</div>
-            <div className='value'>{props.prescription}</div>
+          <div className="text-group">
+            <div className="title">Prescription</div>
+            <div className="value">
+              {props?.prescription.map(({ name, dosage },index) => (
+                <h5 key={index}>
+                  <span>name: {name}</span>
+                  <span>dosage: {dosage}</span>
+                </h5>
+              ))}
+            </div>
           </div>
         </div>
       )}

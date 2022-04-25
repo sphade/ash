@@ -1,30 +1,30 @@
-import React from 'react';
-import { Dropdown, Menu } from 'antd';
-import styled from 'styled-components';
-import { ReactComponent as Notification } from '../../assets/images/icons/notification.svg';
-import { ReactComponent as ChevronDown } from '../../assets/images/icons/chevron-down.svg';
-import avatar from '../../assets/images/avatar.png';
-import logout from '../../assets/images/icons/logout.svg';
-import { useHistory } from 'react-router-dom';
-import { clearState } from '../../redux/reducers/auth/login';
-import { useDispatch } from 'react-redux';
-import logo from '../../assets/Logo.svg';
+import React from "react";
+import { Dropdown, Menu } from "antd";
+import styled from "styled-components";
+import { ReactComponent as Notification } from "../../assets/images/icons/notification.svg";
+import { ReactComponent as ChevronDown } from "../../assets/images/icons/chevron-down.svg";
+import avatar from "../../assets/images/avatar.png";
+import logout from "../../assets/images/icons/logout.svg";
+import { useHistory } from "react-router-dom";
+import { clearState } from "../../redux/reducers/auth/login";
+import { useDispatch } from "react-redux";
+import logo from "../../assets/Logo.svg";
 
 const Navbar = () => {
-  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
   const history = useHistory();
   const signout = () => {
     sessionStorage.clear();
     dispatch(clearState());
-    history.push('/login');
+    history.push("/login");
   };
   const menu = (
     <Menu>
       <Menu.Item onClick={signout}>
-        <img className='logout' src={logout} alt='Icon' />
+        <img className="logout" src={logout} alt="Icon" />
         <span
-          style={{ marginLeft: '1rem', color: '#e20b8c', fontSize: '1rem' }}
+          style={{ marginLeft: "1rem", color: "#e20b8c", fontSize: "1rem" }}
         >
           Log out
         </span>
@@ -35,11 +35,13 @@ const Navbar = () => {
     <Container>
       <Logo src={logo} />
       <NavMenu>
-        <NotificationIcon />
-        <Avatar src={avatar} alt='Avatar' />
+        {
+          // <NotificationIcon />
+        }
+        <Avatar src={avatar} alt="Avatar" />
         <UserProfile>
-          <p>{loggedInUser.firstName + ' ' + loggedInUser.lastName}</p>
-          <span>{loggedInUser.isSuper ? 'Super Admin' : 'Sub Admin'}</span>
+          <p>{loggedInUser.firstName + " " + loggedInUser.lastName}</p>
+          <span>{loggedInUser.isSuper ? "Super Admin" : "Sub Admin"}</span>
         </UserProfile>
         <Dropdown overlay={menu}>
           <ArrowDown />

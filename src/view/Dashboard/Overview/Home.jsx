@@ -1,12 +1,12 @@
-import React from 'react';
-import { Table } from 'antd';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { OverviewCard, UserMonitorCard } from '../../../components/Overview';
-import { columns } from '../../../table/overview';
-import { columns as consultationsColumns } from '../../../table/consultations';
-import { Searchbar, SelectField } from '../../../Reuseable';
+import React, { useState } from "react";
+import { Table } from "antd";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { OverviewCard, UserMonitorCard } from "../../../components/Overview";
+import { columns } from "../../../table/overview";
+import { columns as consultationsColumns } from "../../../table/consultations";
+import { Searchbar, SelectField } from "../../../Reuseable";
 import {
   getAppointmentCount,
   getDoctorCount,
@@ -14,24 +14,54 @@ import {
   getTotalRevenue,
   getUsers,
   getReferrals,
-} from '../../../redux/sagas/dashboard/overview';
-import Skeleton from 'react-loading-skeleton';
+} from "../../../redux/sagas/dashboard/overview";
+import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
   toggleActiveTab,
   toggleShowModal,
-} from '../../../redux/reducers/dashboard/overview';
+} from "../../../redux/reducers/dashboard/overview";
 import {
   PatientIcon,
   DoctorIcon,
   DollarIcon,
   ConsultationIcon,
-} from '../../../assets/images/icons/overview';
-import { CardBg1, CardBg2 } from '../../../assets/images/background';
-import { UserMonitorModal } from './Modals';
-import Slider from 'react-slick';
+} from "../../../assets/images/icons/overview";
+import { CardBg1, CardBg2 } from "../../../assets/images/background";
+import { UserMonitorModal } from "./Modals";
+import Slider from "react-slick";
+import { useQuery } from "react-query";
+import {
+  getAppointmentData,
+  getAppointmentFilterData,
+} from "../../../api/appointmentApi";
+import {
+  getMonthDate,
+  getTodayDate,
+  getWeekDate,
+  getYearDate,
+} from "../../../utils/dates";
+import { getUser } from "../../../api/userApi";
 
 const Home = () => {
+  const [filterDate, setFilterDate] = useState("");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const {
+    isLoading: usersLoading,
+    data: users,
+    isError: userError,
+  } = useQuery("users", getUser, {
+    staleTime: 5000,
+  });
+  const {
+    isLoading: appointmentLoading,
+    isError: appointmentHasError,
+    error,
+    data: appointments,
+  } = useQuery(["appointments", search, page, filterDate], () =>
+    getAppointmentData({ search: search, page: page, filterDate: filterDate })
+  );
   const dispatch = useDispatch();
   const settings = {
     dots: true,
@@ -40,9 +70,8 @@ const Home = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   const isSuperAdmin = loggedInUser.isSuper;
-
   React.useEffect(() => {
     dispatch(getAppointmentCount());
     dispatch(getDoctorCount());
@@ -61,10 +90,10 @@ const Home = () => {
     doctorCount,
     patientCount,
     appointmentCount,
-    appointments,
+    // appointments,
     revenue,
-    usersLoading,
-    users,
+    // usersLoading,
+    // users,
     referralsLoading,
     referrals,
     activeTab,
@@ -80,52 +109,50 @@ const Home = () => {
         show={showUserModal}
         handleClose={() => dispatch(toggleShowModal())}
       />
-      {doctorCountLoading || patientCountLoading || appointmentCountLoading ? (
-        <Skeleton width='120px' height='35px' />
-      ) : (
-        <h1>Dashboard</h1>
-      )}
+
+      <h1>Dashboard</h1>
+
       <CardWrapper isSuperAdmin={isSuperAdmin}>
         {loading ? (
           <>
             <Skeleton height={150} />
             <Skeleton height={150} />
             <Skeleton height={150} />
-            {isSuperAdmin ? <Skeleton height={150} /> : ''}
+            {isSuperAdmin ? <Skeleton height={150} /> : ""}
           </>
         ) : (
           <>
             <OverviewCard
-              text='Total Patients'
+              text="Total Patients"
               value={patientCount || 0}
               image={PatientIcon}
               bg={CardBg1}
-              link='/dashboard/patients'
+              link="/dashboard/patients"
             />
             <OverviewCard
-              text='Total Doctors'
+              text="Total Doctors"
               value={doctorCount || 0}
               image={DoctorIcon}
               bg={CardBg2}
-              link='/dashboard/doctors'
+              link="/dashboard/doctors"
             />
             <OverviewCard
-              text='Total Consultations'
+              text="Total Consultations"
               value={appointmentCount || 0}
               image={ConsultationIcon}
               bg={CardBg1}
-              link='/dashboard/consultations'
+              link="/dashboard/consultations"
             />
             {isSuperAdmin ? (
               <OverviewCard
-                text='Total Revenue'
+                text="Total Revenue"
                 value={revenue.total || 0}
                 image={DollarIcon}
                 bg={CardBg2}
-                link='/dashboard/revenue'
+                link="/dashboard/revenue"
               />
             ) : (
-              ''
+              ""
             )}
           </>
         )}
@@ -139,7 +166,7 @@ const Home = () => {
         ) : (
           <>
             <h1>User Monitor</h1>
-            <LinkR to='/dashboard/user-monitor'>View All</LinkR>
+            <LinkR to="/dashboard/user-monitor">View All</LinkR>
           </>
         )}
       </Header>
@@ -150,38 +177,35 @@ const Home = () => {
           <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
         </MonitorCardWrapper>
+      ) : userError ? (
+        <div style={{ color: "red", fontSize: "30px" }}>
+          failed to extablish connection, network error
+        </div>
       ) : (
         <Slider {...settings}>
-          {users.map((item, index) => {
+          {users?.users.map((item, index) => {
             return <UserMonitorCard key={index} {...item} />;
           })}
         </Slider>
       )}
-      <div className='tab-group'>
-        {referralsLoading ? (
-          <>
-            <Skeleton width={150} height={40} />
-            <Skeleton width={150} height={40} />
-          </>
-        ) : (
-          ['Consultations', 'Referral'].map((item, index) => {
-            return (
-              <Tab
-                key={index}
-                className={activeTab === item ? 'active' : ''}
-                onClick={() => dispatch(toggleActiveTab(item))}
-              >
-                {item}
-              </Tab>
-            );
-          })
-        )}
+      <div className="tab-group">
+        {["Consultations", "Referral"].map((item, index) => {
+          return (
+            <Tab
+              key={index}
+              className={activeTab === item ? "active" : ""}
+              onClick={() => dispatch(toggleActiveTab(item))}
+            >
+              {item}
+            </Tab>
+          );
+        })}
       </div>
 
-      {activeTab === 'Referral' && (
+      {activeTab === "Referral" && (
         <>
           <Header>
-            <div className='group'>
+            <div className="group">
               {referralsLoading ? (
                 <>
                   <Skeleton width={180} height={40} />
@@ -190,12 +214,13 @@ const Home = () => {
               ) : (
                 <>
                   <SelectField
-                    placeholder='Filter'
+                    placeholder="Filter"
                     data={[
-                      { value: 'this week', name: 'This Week' },
-                      { value: 'last week', name: 'Last Week' },
-                      { value: 'one month', name: 'One Month' },
+                      { value: getWeekDate, name: "This Week" },
+                      { value: "last week", name: "Last Week" },
+                      { value: getMonthDate, name: "One Month" },
                     ]}
+                    setPage={setPage}
                   />
                   <Searchbar />
                 </>
@@ -204,44 +229,62 @@ const Home = () => {
           </Header>
           <TableWrapper>
             {referralsLoading ? (
-              <Skeleton width={'100%'} height={330} />
+              <Skeleton width={"100%"} height={330} />
             ) : (
               <Table dataSource={referrals} columns={columns} />
             )}
           </TableWrapper>
         </>
       )}
-      {activeTab === 'Consultations' && (
+      {activeTab === "Consultations" && (
         <>
           <Header>
-            <div className='group'>
-              {appointmentCountLoading ? (
-                <>
-                  <Skeleton width={180} height={40} />
-                  <Skeleton width={250} height={40} />
-                </>
-              ) : (
-                <>
-                  <select
-                    style={{ border: 'none', height: '3rem', width: '150px' }}
-                    className='form-select'
-                  >
-                    <option selected>Filter</option>
-                    <option value='today'>Today</option>
-                    <option value='one_week'>Last 7 Days</option>
-                    <option value='one_month'>One Month</option>
-                    <option value='one_year'>One Year</option>
-                  </select>
-                  <Searchbar />
-                </>
-              )}
+            <div className="group">
+              <>
+                <select
+                  style={{ border: "none", height: "3rem", width: "150px" }}
+                  className="form-select"
+                  onChange={(e) => {
+                    setFilterDate(e.target.value);
+                    setPage(1);
+                  }}
+                >
+                <option selected disabled hidden value="">
+                Filter Role
+              </option>
+                <option  value="">
+                All
+              </option>
+                  <option value={getTodayDate}>Today</option>
+                  <option value={getWeekDate}>Last 7 Days</option>
+                  <option value={getMonthDate}>One Month</option>
+                  <option value={getYearDate}>One Year</option>
+                </select>
+                <Searchbar setSearch={setSearch} />
+              </>
             </div>
           </Header>
           <TableWrapper>
-            {appointmentCountLoading ? (
-              <Skeleton width={'100%'} height={330} />
+            {appointmentHasError ? (
+              <div style={{ color: "red", fontSize: "30px" }}>
+               'An error occurred check your network connection'
+              </div>
             ) : (
-              <Table dataSource={appointments} columns={consultationsColumns} />
+              <Table
+                loading={appointmentLoading}
+                dataSource={appointments?.consultations}
+                columns={consultationsColumns}
+                pagination={{
+                  pageSize: 10,
+                  current: page,
+                  showSizeChanger: false,
+
+                  total: appointments?.count,
+                  onChange: (page) => {
+                    setPage(page);
+                  },
+                }}
+              />
             )}
           </TableWrapper>
         </>
@@ -279,7 +322,7 @@ export const CardWrapper = styled.div`
   margin-top: 1.2rem;
   display: grid;
   grid-template-columns: ${({ isSuperAdmin }) =>
-    isSuperAdmin ? '1fr 1fr 1fr 1fr' : '1fr 1fr 1fr'};
+    isSuperAdmin ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr"};
   gap: 1.5rem;
 `;
 

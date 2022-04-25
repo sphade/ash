@@ -2,12 +2,18 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   overflow-x: hidden !important;
 }
-
+.ant-pagination-item-active {
+  z-index: 3;
+  color: #fff !important;
+  background-color: rgba(226, 11, 140, 1) !important;
+  border: 1px #e20b8c solid !important ;
+  border-radius: 5px !important ;
+}
 code {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 *,
@@ -37,7 +43,7 @@ code {
   width: 100%;
   height: 100vh;
   padding: 2rem;
-  background-image: url('../src/assets/images/background/forgotPassword2.jpg');
+  background-image: url("../src/assets/images/background/forgotPassword2.jpg");
   text-align: center;
 }
 @media screen and (min-width: 768px) {
@@ -144,7 +150,10 @@ p.success {
   font-size: 2rem !important;
 }
 
-.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table tfoot > tr > td {
   position: relative;
   padding: 8px 16px !important;
   overflow-wrap: break-word;

@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../assets/images/icons/search_icon.svg";
 
-const Searchbar = ({ onTextChange }) => (
-  <SearchBar>
-    <form action="">
-      <SearchIcon className="icon" />
-      <input
-        type="text"
-        placeholder="Search for keyword"
-        onChange={onTextChange}
-      />
-    </form>
-  </SearchBar>
-);
+const Searchbar = ({ setSearch }) => {
+  const [state, setState] = useState("");
+  return (
+    <SearchBar>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSearch(state);
+        }}
+      >
+        <SearchIcon
+          onClick={() => {
+            setSearch(state);
+          }}
+          className="icon"
+        />
+        <input
+          type="text"
+          placeholder="Search for keyword"
+          onChange={(e) => {
+            setState(e.target.value);
+          }}
+        />
+      </form>
+    </SearchBar>
+  );
+};
 
 const SearchBar = styled.div`
   position: relative;
@@ -29,7 +44,7 @@ const SearchBar = styled.div`
       right: 0;
       transfrom: translateX(-50%);
       width: 3em;
-      cursor:pointer;
+      cursor: pointer;
     }
 
     input {

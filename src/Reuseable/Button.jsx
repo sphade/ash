@@ -43,6 +43,7 @@ const Container = styled.button`
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   height: 2.8rem;
   display: flex;
+  /* padding: 0rem 2rem; */
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -86,7 +87,7 @@ const Container = styled.button`
       color: #455afe;
 
       :hover {
-        color:#fff;
+        color: #fff;
         border: none !important;
         background: #455afe !important;
       }
