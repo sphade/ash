@@ -70,13 +70,11 @@ const Home = () => {
     },
   };
 
-  // React.useEffect(() => {
-  //   dispatch(getUsers());
-  // }, [dispatch]);
+
 
   const { showUserModal, showResetPasswordModal } =
     useSelector(overviewSelector);
-  const [checkStrictly, setCheckStrictly] = React.useState(false);
+  // const [checkStrictly, setCheckStrictly] = React.useState(false);
   const handleClose = () => {
     dispatch(toggleShowModal());
   };
