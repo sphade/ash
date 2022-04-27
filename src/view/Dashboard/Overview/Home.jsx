@@ -8,12 +8,12 @@ import { columns } from "../../../table/overview";
 import { columns as consultationsColumns } from "../../../table/consultations";
 import { Searchbar, SelectField } from "../../../Reuseable";
 import {
-  getAppointmentCount,
-  getDoctorCount,
-  getPatientCount,
-  getTotalRevenue,
-  getUsers,
-  getReferrals,
+  // getAppointmentCount,
+  // getDoctorCount,
+  // getPatientCount,
+  // getTotalRevenue,
+  // getUsers,
+  // getReferrals,
 } from "../../../redux/sagas/dashboard/overview";
 import Skeleton from "react-loading-skeleton";
 import {
@@ -31,10 +31,7 @@ import { CardBg1, CardBg2 } from "../../../assets/images/background";
 import { UserMonitorModal } from "./Modals";
 import Slider from "react-slick";
 import { useQuery } from "react-query";
-import {
-  getAppointmentData,
-  getAppointmentFilterData,
-} from "../../../api/appointmentApi";
+import { getAppointmentCount, getAppointmentData } from "../../../api/appointmentApi";
 import {
   getMonthDate,
   getTodayDate,
@@ -42,6 +39,9 @@ import {
   getYearDate,
 } from "../../../utils/dates";
 import { getUser } from "../../../api/userApi";
+import { getDoctorCount } from "../../../api/doctorApi";
+import { getPatientCount } from "../../../api/patientApi";
+import { getRevenue } from "../../../api/transactionApi";
 
 const Home = () => {
   const [filterDate, setFilterDate] = useState("");
@@ -57,11 +57,29 @@ const Home = () => {
   const {
     isLoading: appointmentLoading,
     isError: appointmentHasError,
-    error,
     data: appointments,
   } = useQuery(["appointments", search, page, filterDate], () =>
     getAppointmentData({ search: search, page: page, filterDate: filterDate })
-  );
+  ); 
+  
+  
+  const {
+    isLoading: doctorCountLoading,
+    data: doctorCount,
+  } = useQuery('doctorCount', getDoctorCount);
+  const {
+    isLoading: patientCountLoading,
+    data: patientCount,
+  } = useQuery('patientCount', getPatientCount);
+  const {
+    isLoading: appointmentCountLoading,
+    data: appointmentCount,
+  } = useQuery('appointmentCount', getAppointmentCount);
+  const {
+    data: revenue,
+  } = useQuery('revenue', getRevenue);
+  
+
   const dispatch = useDispatch();
   const settings = {
     dots: true,
@@ -73,25 +91,25 @@ const Home = () => {
   const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   const isSuperAdmin = loggedInUser.isSuper;
   React.useEffect(() => {
-    dispatch(getAppointmentCount());
-    dispatch(getDoctorCount());
-    dispatch(getPatientCount());
-    if (isSuperAdmin) {
-      dispatch(getTotalRevenue());
-    }
-    dispatch(getUsers());
-    dispatch(getReferrals());
+    // dispatch(getAppointmentCount());
+    // dispatch(getDoctorCount());
+    // dispatch(getPatientCount());
+    // if (isSuperAdmin) {
+    //   dispatch(getTotalRevenue());
+    // }
+    // dispatch(getUsers());
+    // dispatch(getReferrals());
   }, [dispatch, isSuperAdmin]);
 
   const {
-    doctorCountLoading,
-    patientCountLoading,
-    appointmentCountLoading,
-    doctorCount,
-    patientCount,
-    appointmentCount,
+    // doctorCountLoading,
+    // patientCountLoading,
+    // appointmentCountLoading,
+    // doctorCount,
+    // patientCount,
+    // appointmentCount,
     // appointments,
-    revenue,
+    // revenue,
     // usersLoading,
     // users,
     referralsLoading,
@@ -146,7 +164,7 @@ const Home = () => {
             {isSuperAdmin ? (
               <OverviewCard
                 text="Total Revenue"
-                value={revenue.total || 0}
+                value={revenue || 0}
                 image={DollarIcon}
                 bg={CardBg2}
                 link="/dashboard/revenue"
@@ -249,12 +267,10 @@ const Home = () => {
                     setPage(1);
                   }}
                 >
-                <option selected disabled hidden value="">
-                Filter Role
-              </option>
-                <option  value="">
-                All
-              </option>
+                  <option selected disabled hidden value="">
+                    Filter Role
+                  </option>
+                  <option value="">All</option>
                   <option value={getTodayDate}>Today</option>
                   <option value={getWeekDate}>Last 7 Days</option>
                   <option value={getMonthDate}>One Month</option>
@@ -267,7 +283,7 @@ const Home = () => {
           <TableWrapper>
             {appointmentHasError ? (
               <div style={{ color: "red", fontSize: "30px" }}>
-               'An error occurred check your network connection'
+                'An error occurred check your network connection'
               </div>
             ) : (
               <Table

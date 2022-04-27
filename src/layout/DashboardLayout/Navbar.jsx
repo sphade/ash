@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
-import { ReactComponent as Notification } from "../../assets/images/icons/notification.svg";
+// import { ReactComponent as Notification } from "../../assets/images/icons/notification.svg";
 import { ReactComponent as ChevronDown } from "../../assets/images/icons/chevron-down.svg";
 import avatar from "../../assets/images/avatar.png";
 import logout from "../../assets/images/icons/logout.svg";
@@ -108,17 +108,17 @@ const UserProfile = styled.div`
   }
 `;
 
-const NotificationIcon = styled(Notification)`
-  margin-right: 2.5rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
+// const NotificationIcon = styled(Notification)`
+//   margin-right: 2.5rem;
+//   width: 2rem;
+//   height: 2rem;
+//   cursor: pointer;
 
-  :hover {
-    transform: scale(1.1);
-    transition: 0.2s all ease-in-out;
-  }
-`;
+//   :hover {
+//     transform: scale(1.1);
+//     transition: 0.2s all ease-in-out;
+//   }
+// `;
 
 const Avatar = styled.img`
   margin-right: 0.5rem;

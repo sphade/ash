@@ -15,7 +15,6 @@ export const getAppointmentData = async (args) => {
     },
   });
   const res = data.data;
- 
 
   return res;
 };
@@ -38,7 +37,7 @@ export const getAppointmentFilterData = async (args) => {
   return res;
 };
 export const getAppointmentCount = async () => {
-  const { data } = await api.get(`consultations`, {
+  const { data } = await api.get(`admin/appointments/count`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",
@@ -51,7 +50,7 @@ export const getAppointmentCount = async () => {
 };
 
 export const getReferralsData = async () => {
-  const { data } = await api.get(`referrals?page=${1}&limit=${200}`, {
+  const { data } = await api.get(`referrals?page=${1}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",

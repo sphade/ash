@@ -9,56 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    date: "1 Sep",
-    credit: 520,
-    debit: 580,
-    amount: 2000,
-  },
-  {
-    date: 5,
-    credit: 680,
-    debit: 730,
-    amount: 2210,
-  },
-  {
-    date: "16 Sep",
-    credit: 1289,
-    debit: 1190,
-    amount: 2290,
-  },
-  {
-    date: "30 Sep",
-    credit: 750,
-    debit: 715,
-    amount: 2000,
-  },
-  {
-    date: "1 Oct",
-    credit: 980,
-    debit: 998,
-    amount: 2181,
-  },
-  {
-    date: "8 Oct",
-    credit: 3300,
-    debit: 2009,
-    amount: 2500,
-  },
-  {
-    date: "16 Oct",
-    credit: 400,
-    debit: 410,
-    amount: 2500,
-  },
-  {
-    date: "30 Oct",
-    credit: 676,
-    debit: 600,
-    amount: 2500,
-  },
-];
+
 
 export default function Chart({ data }) {
   const RedifinedData = data.map(({ transactionDate: date, ...rest }) => ({

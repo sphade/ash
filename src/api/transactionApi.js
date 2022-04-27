@@ -15,3 +15,16 @@ export const getTransactionData = async (userType) => {
 
   return res;
 };
+
+export const getRevenue = async (userType) => {
+  const { data } = await api.get(`/transactions/stats`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  const res = data.data.total;
+
+  return res;
+};

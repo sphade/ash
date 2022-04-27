@@ -10,7 +10,7 @@ import { getTotalRevenue } from "../../../redux/sagas/dashboard/overview";
 import { getTransactions } from "../../../redux/sagas/dashboard/transactions";
 import { useSelector, useDispatch } from "react-redux";
 import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
-import { transactionsSelector } from "../../../redux/reducers/dashboard/transactions";
+// import { transactionsSelector } from "../../../redux/reducers/dashboard/transactions";
 import Skeleton from "react-loading-skeleton";
 import { getTransactionData } from "../../../api/transactionApi";
 import { useQuery } from "react-query";
@@ -23,7 +23,7 @@ import {
 import { Spin } from "antd";
 
 const Revenue = () => {
-  const [select, setSelect] = React.useState("");
+  // const [select, setSelect] = React.useState("");
   const [userType, setUserType] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();

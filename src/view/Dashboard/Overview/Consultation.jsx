@@ -6,15 +6,14 @@ import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar } from "../../../Reuseable";
 import { Space, Table, Dropdown, Menu } from "antd";
 import { MoreButton } from "../../../table/consultations";
-import { useDispatch, useSelector } from "react-redux";
-import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
+import { useDispatch,  } from "react-redux";
+// import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
 // import { getAppointmentCount } from "../../../redux/sagas/dashboard/overview";
-import Skeleton from "react-loading-skeleton";
+// import Skeleton from "react-loading-skeleton";
 import { ConsultationInfoModal } from "./Modals";
 import { handleToggleModal } from "../../../redux/reducers/dashboard/consultations";
 import {
-  getAppointmentFilterData,
-  getAppointmentCount,
+ 
   getAppointmentData,
 } from "../../../api/appointmentApi";
 import { useQuery } from "react-query";

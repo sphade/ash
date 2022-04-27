@@ -6,11 +6,8 @@ import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
 import { Space, Table, Dropdown, Menu } from "antd";
 // import { columns } from '../../../table/patients';
-import { useDispatch, useSelector } from "react-redux";
-import {
-  handleToggleModal,
-  patientsSelector,
-} from "../../../redux/reducers/dashboard/patients";
+import { useDispatch } from "react-redux";
+import { handleToggleModal } from "../../../redux/reducers/dashboard/patients";
 import { getPatients } from "../../../redux/sagas/dashboard/patients";
 import Skeleton from "react-loading-skeleton";
 import { PatientInfoModal } from "./Modals";
@@ -160,7 +157,9 @@ const Patients = () => {
       <Heading>
         <>
           <div className="group">
-            {plans && (
+            {plansLoading ? (
+              <Skeleton width={200} height={40} />
+            ) : (
               <SelectField
                 placeholder="Filter Plan"
                 data={plans.map(({ id, name }) => ({ value: id, name: name }))}
