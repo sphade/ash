@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { Button } from "../../../Reuseable";
 import successIcon from "../../../assets/images/icons/success-message-icon.png";
 import { api } from "../../../api/instance";
-import axios from "axios";
+// import axios from "axios";
 import { useMutation } from "react-query";
 export const DisableAccountModal = ({ show, handleClose }) => {
   const [success, setSuccess] = useState(false);
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
   const disableUser = async () => {
-    const res = await api.patch(
+    await api.patch(
       "/users",
       {
         userType: user.role,
@@ -94,7 +94,7 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
 
   const resetUserPassword = async () => {
-    const res = await api.patch(
+    await api.patch(
       `/users/${user.id}`,
       {
         userType: user.role,

@@ -186,6 +186,7 @@ export const DoctorInfoModal = () => {
   const dispatch = useDispatch();
   const { doctorModal } = useSelector(doctorsSelector);
   const doctor = JSON.parse(sessionStorage.getItem("selectedDoctor"));
+  console.log("🚀 ~ file: Modals.jsx ~ line 189 ~ DoctorInfoModal ~ doctor", doctor)
   return (
     <Modal
       visible={doctorModal}
@@ -198,7 +199,7 @@ export const DoctorInfoModal = () => {
       {doctor ? (
         <Container subscription="Premium">
           <div className="header_info">
-            <img src={dummy_avatar} alt="" />
+            <img src={doctor?.avatar || dummy_avatar} alt="" />
             <div className="group">
               <h2>
                 Dr&nbsp;

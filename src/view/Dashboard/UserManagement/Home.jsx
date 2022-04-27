@@ -9,8 +9,8 @@ import {
   // dataSource
 } from "../../../table/user_management";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../../redux/sagas/dashboard/overview";
-import Skeleton from "react-loading-skeleton";
+// import { getUsers } from "../../../redux/sagas/dashboard/overview";
+// import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
   toggleShowModal,

@@ -63,13 +63,13 @@ const Container = styled.div`
 
     select {
       width: 100%;
-      // background: #f4f4f4;
+      background: white;
       padding: 0 16px;
       height: 100%;
       // border: 1px solid #e6e7e8;
       border: 1px solid #e5e5e5;
       box-sizing: border-box;
-      border-radius: 5px;
+      border-radius: 10px;
 
       -webkit-appearance: none;
       appearance: none;

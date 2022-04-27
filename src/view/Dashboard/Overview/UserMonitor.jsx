@@ -6,13 +6,13 @@ import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
 // import { columns } from '../../../table/user_monitor';
-import Skeleton from "react-loading-skeleton";
+// import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
   toggleShowModal,
 } from "../../../redux/reducers/dashboard/overview";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../../redux/sagas/dashboard/overview";
+// import { getUsers } from "../../../redux/sagas/dashboard/overview";
 import { ViewButton } from "../../../table/user_monitor";
 import { UserMonitorModal } from "./Modals";
 import { getUsersData } from "../../../api/userApi";

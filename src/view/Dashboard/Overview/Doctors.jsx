@@ -6,13 +6,13 @@ import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar } from "../../../Reuseable";
 import { Space, Table, Dropdown, Menu } from "antd";
 import { Star, MoreButton, StarOutline } from "../../../table/doctors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  doctorsSelector,
+  // doctorsSelector,
   handleToggleModal,
 } from "../../../redux/reducers/dashboard/doctors";
-import { getDoctors } from "../../../redux/sagas/dashboard/doctors";
-import Skeleton from "react-loading-skeleton";
+// import { getDoctors } from "../../../redux/sagas/dashboard/doctors";
+// import Skeleton from "react-loading-skeleton";
 import { DoctorInfoModal } from "./Modals";
 import { useQuery } from "react-query";
 import { getDoctorData } from "../../../api/doctorApi";

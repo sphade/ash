@@ -4,7 +4,8 @@ export const getPatientData = async (userType, search, page) => {
   const { data } = await api.get(`/admin/patients`, {
     params: {
       search: search,
-      plan:userType
+      plan: userType,
+      page:page
     },
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
