@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Table, Space } from "antd";
+import { Table, Space, message } from "antd";
 import { useHistory } from "react-router-dom";
 import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
@@ -35,8 +35,7 @@ const UserMonitor = () => {
   const dispatch = useDispatch();
   const {
     isLoading: usersLoading,
-    isError,
-    error,
+    
     data: users,
   } = useQuery(
     ["users", page, userType, search, filterDate],
@@ -55,6 +54,15 @@ const UserMonitor = () => {
         setPatientsNo(data?.patients);
         setDoctorsNo(data?.doctors);
       },
+      
+        onError: (err) => {
+          message.error(
+            err.message === "Network Error"
+              ? "it looks like you are offline, check your internet and try again"
+              : err.message
+          );
+        },
+      
     }
   );
   // React.useEffect(() => {
@@ -158,9 +166,7 @@ const UserMonitor = () => {
         </>
       </Heading>
       <TableWrapper>
-        {isError ? (
-          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
-        ) : (
+       
           <Table
             loading={usersLoading}
             dataSource={users?.users}
@@ -175,7 +181,7 @@ const UserMonitor = () => {
               },
             }}
           />
-        )}
+        
       </TableWrapper>
     </Fragment>
   );

@@ -4,7 +4,7 @@ import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar } from "../../../Reuseable";
-import { Space, Table, Dropdown, Menu } from "antd";
+import { Space, Table, Dropdown, Menu, message } from "antd";
 import { MoreButton } from "../../../table/consultations";
 import { useDispatch,  } from "react-redux";
 // import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
@@ -26,11 +26,19 @@ const Consultations = () => {
   const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
-    isError: appointmentHasError,
-    error,
+   
     data: appointments,
   } = useQuery(["appointmentFilterData", userType, search, page], () =>
-    getAppointmentData({ userType: userType, search: search, page: page })
+    getAppointmentData({ userType: userType, search: search, page: page }),
+    {
+      onError: (err) => {
+        message.error(
+          err.message === "Network Error"
+            ? "it looks like you are offline, check your internet and try again"
+            : err.message
+        );
+      },
+    }
   );
 
 
@@ -218,9 +226,7 @@ const Consultations = () => {
       </Heading>
 
       <TableWrapper>
-        {appointmentHasError ? (
-          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
-        ) : (
+       
           <Table
             loading={appointmentCountLoading}
             dataSource={appointments?.consultations}
@@ -236,7 +242,7 @@ const Consultations = () => {
               },
             }}
           />
-        )}
+        
       </TableWrapper>
     </Fragment>
   );

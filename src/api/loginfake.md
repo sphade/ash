@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import { Checkbox } from "antd";
+import { Checkbox, message } from "antd";
 import { Link } from "react-router-dom";
 import bg from "../../../assets/images/background/login.jpg";
 import { InputField, Button } from "../../../Reuseable";
@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../redux/sagas/auth/login";
 import { loginSelector, clearState } from "../../../redux/reducers/auth/login";
+import { useMutation } from "react-query";
+import { loginIn } from "../../../api/adminApi";
 
 const Index = () => {
   const history = useHistory();
@@ -20,8 +22,8 @@ const Index = () => {
     dispatch(clearState());
   }, []);
   // Variables & States
-  const { authenticating, authenticated, errors, isError } =
-    useSelector(loginSelector);
+  // const { authenticating, authenticated, errors, isError } =
+  //   useSelector(loginSelector);
   const [submitted, setSubmitted] = useState(false);
   const [user, setUser] = useState({
     email: "abfatahi.iaf@gmail.com",
@@ -38,12 +40,28 @@ const Index = () => {
     setSubmitted(true);
     const { email, password } = user;
     if (isEmail(email) && password) {
-      dispatch(loginUser(user));
+      // dispatch(loginUser(user));
+      mutate(user, {
+        onSuccess: (data) => {
+          sessionStorage.setItem("token", data.data.token);
+          sessionStorage.setItem("tab", "Overview");
+          sessionStorage.setItem("user", JSON.stringify(data.data.user));
+        },
+      });
     }
   };
-
-  if (authenticated && token !== null) {
-    console.log(token);
+  const { mutate, isLoading, isError, error } = useMutation(
+    (user) => loginIn(user),
+    {
+      onSuccess: (data) => {
+        message.success("you have successfully LogedIn");
+      },
+      onError: (err) => {
+        message.error(err.message);
+      },
+    }
+  );
+  if (token !== null) {
     history.push("/dashboard");
   }
 
@@ -86,15 +104,17 @@ const Index = () => {
               {submitted && !user.password && (
                 <p className="error-msg">Password field cannot be blank</p>
               )}
-              {isError &&
-                errors &&
-                errors.map((item, index) => {
-                  return (
-                    <p key={index} className="error-msg">
-                      {item.Credentials || item.email || item.message || item}
-                    </p>
-                  );
-                })}
+              {isError && (
+                <p className="error-msg">
+                  {error.message ===
+                  ("Request failed with status code 401" ||
+                    "Request failed with status code 400")
+                    ? "password or Email is incorrect, check it and try again"
+                    : error.message === "Network Error"
+                    ? "there was an error establishing a connection, please try again"
+                    : error.message}
+                </p>
+              )}
             </div>
             <div className="others_wrapper">
               <Checkbox style={{ cursor: "pointer" }}>
@@ -107,7 +127,7 @@ const Index = () => {
                 forgot password?
               </Link>
             </div>
-            <Button loading={authenticating} primary full text="LOGIN" />
+            <Button loading={isLoading} primary full text="LOGIN" />
           </form>
         </>
       }
@@ -116,7 +136,3 @@ const Index = () => {
 };
 
 export default Index;
-
-
-
-

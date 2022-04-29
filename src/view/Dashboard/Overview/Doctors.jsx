@@ -4,7 +4,7 @@ import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar } from "../../../Reuseable";
-import { Space, Table, Dropdown, Menu } from "antd";
+import { Space, Table, Dropdown, Menu, message } from "antd";
 import { Star, MoreButton, StarOutline } from "../../../table/doctors";
 import { useDispatch } from "react-redux";
 import {
@@ -24,11 +24,19 @@ const Doctors = () => {
 
   const {
     isLoading: doctorsLoading,
-    isError: doctorHasError,
-    error,
+    
     data: doctors,
   } = useQuery(["doctor", page, userType, search], () =>
-    getDoctorData(page, userType, search)
+    getDoctorData(page, userType, search),
+    {
+      onError: (err) => {
+        message.error(
+          err.message === "Network Error"
+            ? "it looks like you are offline, check your internet and try again"
+            : err.message
+        );
+      },
+    }
   );
   const history = useHistory();
   const dispatch = useDispatch();
@@ -202,9 +210,7 @@ const Doctors = () => {
       </Heading>
 
       <TableWrapper>
-        {doctorHasError ? (
-          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
-        ) : (
+        
           <Table
             dataSource={doctors?.doctors}
             columns={columns}
@@ -220,7 +226,7 @@ const Doctors = () => {
               },
             }}
           />
-        )}
+        
       </TableWrapper>
     </Fragment>
   );
