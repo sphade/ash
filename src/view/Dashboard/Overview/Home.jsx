@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table } from "antd";
+import { message, Table } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -7,14 +7,13 @@ import { OverviewCard, UserMonitorCard } from "../../../components/Overview";
 import { columns } from "../../../table/overview";
 import { columns as consultationsColumns } from "../../../table/consultations";
 import { Searchbar, SelectField } from "../../../Reuseable";
-import {
-  // getAppointmentCount,
-  // getDoctorCount,
-  // getPatientCount,
-  // getTotalRevenue,
-  // getUsers,
-  // getReferrals,
-} from "../../../redux/sagas/dashboard/overview";
+import // getAppointmentCount,
+// getDoctorCount,
+// getPatientCount,
+// getTotalRevenue,
+// getUsers,
+// getReferrals,
+"../../../redux/sagas/dashboard/overview";
 import Skeleton from "react-loading-skeleton";
 import {
   overviewSelector,
@@ -31,7 +30,10 @@ import { CardBg1, CardBg2 } from "../../../assets/images/background";
 import { UserMonitorModal } from "./Modals";
 import Slider from "react-slick";
 import { useQuery } from "react-query";
-import { getAppointmentCount, getAppointmentData } from "../../../api/appointmentApi";
+import {
+  getAppointmentCount,
+  getAppointmentData,
+} from "../../../api/appointmentApi";
 import {
   getMonthDate,
   getTodayDate,
@@ -50,35 +52,44 @@ const Home = () => {
   const {
     isLoading: usersLoading,
     data: users,
-    isError: userError,
+    
   } = useQuery("users", getUser, {
     staleTime: 5000,
   });
   const {
     isLoading: appointmentLoading,
-    isError: appointmentHasError,
+
     data: appointments,
-  } = useQuery(["appointments", search, page, filterDate], () =>
-    getAppointmentData({ search: search, page: page, filterDate: filterDate })
-  ); 
-  
-  
-  const {
-    isLoading: doctorCountLoading,
-    data: doctorCount,
-  } = useQuery('doctorCount', getDoctorCount);
-  const {
-    isLoading: patientCountLoading,
-    data: patientCount,
-  } = useQuery('patientCount', getPatientCount);
-  const {
-    isLoading: appointmentCountLoading,
-    data: appointmentCount,
-  } = useQuery('appointmentCount', getAppointmentCount);
-  const {
-    data: revenue,
-  } = useQuery('revenue', getRevenue);
-  
+  } = useQuery(
+    ["appointments", search, page, filterDate],
+    () =>
+      getAppointmentData({
+        search: search,
+        page: page,
+        filterDate: filterDate,
+      }),
+    {
+      onError: (err) => {
+        message.error(
+          err.message === "Network Error"
+            ? "it looks like you are offline, check your internet and try again"
+            : err.message
+        );
+      },
+    }
+  );
+
+  const { isLoading: doctorCountLoading, data: doctorCount } = useQuery(
+    "doctorCount",
+    getDoctorCount
+  );
+  const { isLoading: patientCountLoading, data: patientCount } = useQuery(
+    "patientCount",
+    getPatientCount
+  );
+  const { isLoading: appointmentCountLoading, data: appointmentCount } =
+    useQuery("appointmentCount", getAppointmentCount);
+  const { data: revenue } = useQuery("revenue", getRevenue);
 
   const dispatch = useDispatch();
   const settings = {
@@ -195,10 +206,6 @@ const Home = () => {
           <Skeleton width={340} height={240} />
           <Skeleton width={340} height={240} />
         </MonitorCardWrapper>
-      ) : userError ? (
-        <div style={{ color: "red", fontSize: "30px" }}>
-          failed to extablish connection, network error
-        </div>
       ) : (
         <Slider {...settings}>
           {users?.users.map((item, index) => {
@@ -281,27 +288,21 @@ const Home = () => {
             </div>
           </Header>
           <TableWrapper>
-            {appointmentHasError ? (
-              <div style={{ color: "red", fontSize: "30px" }}>
-                'An error occurred check your network connection'
-              </div>
-            ) : (
-              <Table
-                loading={appointmentLoading}
-                dataSource={appointments?.consultations}
-                columns={consultationsColumns}
-                pagination={{
-                  pageSize: 10,
-                  current: page,
-                  showSizeChanger: false,
+            <Table
+              loading={appointmentLoading}
+              dataSource={appointments?.consultations}
+              columns={consultationsColumns}
+              pagination={{
+                pageSize: 10,
+                current: page,
+                showSizeChanger: false,
 
-                  total: appointments?.count,
-                  onChange: (page) => {
-                    setPage(page);
-                  },
-                }}
-              />
-            )}
+                total: appointments?.count,
+                onChange: (page) => {
+                  setPage(page);
+                },
+              }}
+            />
           </TableWrapper>
         </>
       )}

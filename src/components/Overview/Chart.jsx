@@ -12,7 +12,7 @@ import {
 
 
 export default function Chart({ data }) {
-  const RedifinedData = data.map(({ transactionDate: date, ...rest }) => ({
+  const RedifinedData = data?.map(({ transactionDate: date, ...rest }) => ({
     date,
     ...rest,
   }));

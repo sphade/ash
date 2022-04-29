@@ -7,25 +7,24 @@ const Selectfield = (props) => {
       <div className="group">
         <select
           onChange={(e) => {
-            props.setUserType(e.target.value);
-            props.setPage(1);
+            props?.setUserType(e.target.value);
+            props?.setPage(1);
           }}
-          name={props.name}
-          id={props.id}
+          name={props?.name}
+          id={props?.id}
         >
           <option disabled selected hidden value="">
-            {props.placeholder}
+            {props?.placeholder}
           </option>
-          <option  value="">
-            All
-          </option>
-          {props.data.map((item, index) => {
-            return (
-              <option key={index} value={item.value || item.uid}>
-                {item.name}
-              </option>
-            );
-          })}
+          <option value="">All</option>
+          {props.data !== (null || undefined) &&
+            props?.data.map((item, index) => {
+              return (
+                <option key={index} value={item.value || item.uid}>
+                  {item.name}
+                </option>
+              );
+            })}
         </select>
       </div>
     </Container>

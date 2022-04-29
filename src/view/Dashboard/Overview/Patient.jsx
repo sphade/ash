@@ -4,12 +4,12 @@ import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
-import { Space, Table, Dropdown, Menu } from "antd";
+import { Space, Table, Dropdown, Menu, message } from "antd";
 // import { columns } from '../../../table/patients';
 import { useDispatch } from "react-redux";
 import { handleToggleModal } from "../../../redux/reducers/dashboard/patients";
 import { getPatients } from "../../../redux/sagas/dashboard/patients";
-import Skeleton from "react-loading-skeleton";
+// import Skeleton from "react-loading-skeleton";
 import { PatientInfoModal } from "./Modals";
 import { MoreButton } from "../../../table/patients";
 import { useQuery } from "react-query";
@@ -27,15 +27,28 @@ const Patients = () => {
     dispatch(getPatients());
   }, [dispatch]);
   // const { patients, patientsLoading } = useSelector(patientsSelector);
-  const {
-    data: patients,
-    isLoading: patientsLoading,
-    isError: patientHasError,
-    error,
-  } = useQuery(["patients", userType, search, page], () =>
-    getPatientData(userType, search, page)
+  const { data: patients, isLoading: patientsLoading } = useQuery(
+    ["patients", userType, search, page],
+    () => getPatientData(userType, search, page),
+    {
+      onError: (err) => {
+        message.error(
+          err.message === "Network Error"
+            ? "it looks like you are offline, check your internet and try again"
+            : err.message
+        );
+      },
+    }
   );
-  const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans);
+  const { data: plans, isLoading: plansLoading } = useQuery("plans", getPlans, {
+    onError: (err) => {
+      message.error(
+        err.message === "Network Error"
+          ? "it looks like you are offline, check your internet and try again"
+          : err.message
+      );
+    },
+  });
 
   // getPatientData(userType, search, page)
   const menu = (data) => (
@@ -83,7 +96,7 @@ const Patients = () => {
       key: "profile",
       render: (text) => (
         <Space>
-          {text.createdAt
+          {text?.createdAt
             ? new Date(text.createdAt).toLocaleDateString()
             : "--------"}
         </Space>
@@ -112,19 +125,23 @@ const Patients = () => {
             textTransform: "capitalize",
             borderRadius: "5px",
             color:
-              text === "Premium"
+              text === "Premium Plan"
                 ? "#FA0E9B"
-                : text === "Standard"
+                : text === "Basic Plan"
                 ? "#19B729"
-                : text === "Unlimited"
+                : text === "Premium Family Plan"
+                ? "#455AFE"
+                : text === "Basic Family Plan"
                 ? "#455AFE"
                 : "",
             background:
-              text === "Premium"
+              text === "Premium Plan"
                 ? "rgba(250, 14, 155, 0.05)"
-                : text === "Standard"
+                : text === "Basic Plan"
                 ? "rgba(25, 183, 41, 0.1)"
-                : text === "Unlimited"
+                : text === "Premium Family Plan"
+                ? "rgba(69, 90, 254, 0.05)"
+                : text === "Basic Family Plan"
                 ? "rgba(69, 90, 254, 0.05)"
                 : "",
           }}
@@ -158,11 +175,32 @@ const Patients = () => {
         <>
           <div className="group">
             {plansLoading ? (
-              <Skeleton width={200} height={40} />
+              <SelectField
+                placeholder="Filter Plan"
+                data={[
+                  {
+                    value: "0447a1fd-80f6-4d39-867d-216bd9910e70",
+                    name: "Basic Plan",
+                  },
+                  {
+                    value: "02367630-c318-4bd7-a471-f7f59aa27c4d",
+                    name: "Premium Plan",
+                  },
+                  {
+                    value: "c15339d4-f202-49d7-bef8-e174d1d49901",
+                    name: "Basic Family Plan",
+                  },
+                  {
+                    value: "168c37b1-42e4-470f-8909-f9535fe2203a",
+                    name: "Premium Family Plan",
+                  },
+                ]}
+                full={true}
+              />
             ) : (
               <SelectField
                 placeholder="Filter Plan"
-                data={plans.map(({ id, name }) => ({ value: id, name: name }))}
+                data={plans?.map(({ id, name }) => ({ value: id, name: name }))}
                 setUserType={setUserType}
                 setPage={setPage}
                 full={true}
@@ -174,24 +212,20 @@ const Patients = () => {
       </Heading>
 
       <TableWrapper>
-        {patientHasError ? (
-          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
-        ) : (
-          <Table
-            loading={patientsLoading}
-            dataSource={patients?.patients}
-            columns={columns}
-            pagination={{
-              total: patients?.count,
-              current: page,
-              showSizeChanger: false,
+        <Table
+          loading={patientsLoading}
+          dataSource={patients?.patients}
+          columns={columns}
+          pagination={{
+            total: patients?.count,
+            current: page,
+            showSizeChanger: false,
 
-              onChange: (page) => {
-                setPage(page);
-              },
-            }}
-          />
-        )}
+            onChange: (page) => {
+              setPage(page);
+            },
+          }}
+        />
       </TableWrapper>
     </Fragment>
   );

@@ -6,6 +6,7 @@ import { manageSelector } from "../../../redux/reducers/auth/manage";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAdminPassword } from "../../../redux/sagas/auth/manage";
 import { rem } from "polished";
+import Avatar from "./UploadAvatar";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,9 @@ const Home = () => {
   } = useSelector(manageSelector);
   const [show, setShow] = React.useState({
     change_password: false,
+    change_profilePic: false,
   });
-
+  
   const [passcode, setPasscode] = React.useState({
     oldPassword: "",
     newPassword: "",
@@ -52,10 +54,22 @@ const Home = () => {
               setShow((prevState) => ({
                 ...prevState,
                 change_password: !show.change_password,
+                change_profilePic: false,
               }))
             }
           >
             Change Password
+          </Tabs>
+          <Tabs
+            onClick={() =>
+              setShow((prevState) => ({
+                ...prevState,
+                change_password: false,
+                change_profilePic: !show.change_profilePic,
+              }))
+            }
+          >
+            Change Profile Picture
           </Tabs>
         </TabsWrapper>
         <ContentWrapper>
@@ -113,6 +127,14 @@ const Home = () => {
               />
             </Form>
           )}
+
+          {show.change_profilePic && (
+            <>
+              <Form>
+                <Avatar />
+              </Form>
+            </>
+          )}
         </ContentWrapper>
       </Container>
     </Fragment>
@@ -152,12 +174,14 @@ const TabsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 2;
+  gap: 10px;
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
   flex: 5;
-  // flex-direction: column;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Tabs = styled.div`

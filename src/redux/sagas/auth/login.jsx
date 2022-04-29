@@ -1,15 +1,15 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API } from '../../constants';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { API } from "../../constants";
 
 export const loginUser = createAsyncThunk(
-  'login/admins',
+  "login/admins",
   async ({ email, password }, thunkAPI) => {
     try {
       const response = await fetch(`${API}auth/login/admins`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
@@ -18,9 +18,10 @@ export const loginUser = createAsyncThunk(
       });
       let data = await response.json();
       if (data.success === true) {
-        sessionStorage.setItem('token', data.data.token);
-        sessionStorage.setItem('tab', 'Overview');
-        sessionStorage.setItem('user', JSON.stringify(data.data.user));
+        sessionStorage.setItem("token", data.data.token);
+        sessionStorage.setItem("tab", "Overview");
+        sessionStorage.setItem("user", JSON.stringify(data.data.user));
+        sessionStorage.setItem("avatar", JSON.stringify(data.data.user.avatar));
         return data.data;
       } else {
         return thunkAPI.rejectWithValue(data);
@@ -28,7 +29,7 @@ export const loginUser = createAsyncThunk(
     } catch (e) {
       return thunkAPI.rejectWithValue([
         {
-          message: 'Failed to establish connection!',
+          message: "Failed to establish connection!",
         },
       ]);
     }

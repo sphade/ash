@@ -3,7 +3,7 @@ import { Header as Title } from "../Overview/Revenue";
 import { Header as Heading, TableWrapper } from "../Overview/Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
 import { DisableAccountModal, ResetPasswordModal } from "./Modals";
-import { Table } from "antd";
+import { message, Table } from "antd";
 import {
   columns,
   // dataSource
@@ -32,8 +32,7 @@ const Home = () => {
   const {
     isLoading: usersLoading,
     data: users,
-    isError,
-    error,
+   
   } = useQuery(
     ["users", page, userType, search],
     () =>
@@ -50,6 +49,13 @@ const Home = () => {
         setPatientsNo(data?.patients);
         setDoctorsNo(data?.doctors);
       },
+      
+        onError: () => {
+          message.error(
+            "unable to get the users , check your connection and try again"
+          );
+        },
+      
     }
   );
 
@@ -69,8 +75,6 @@ const Home = () => {
       // console.log(selected, selectedRows, changeRows);
     },
   };
-
-
 
   const { showUserModal, showResetPasswordModal } =
     useSelector(overviewSelector);
@@ -106,25 +110,21 @@ const Home = () => {
         </>
       </Heading>
       <TableWrapper>
-        {isError ? (
-          <div style={{ color: "red", fontSize: "30px" }}>{error.message}</div>
-        ) : (
-          <Table
-            loading={usersLoading}
-            dataSource={users?.users}
-            rowSelection={{ ...rowSelection }}
-            columns={columns}
-            pagination={{
-              total: users?.count,
-              current: page,
-              showSizeChanger: false,
+        <Table
+          loading={usersLoading}
+          dataSource={users?.users}
+          rowSelection={{ ...rowSelection }}
+          columns={columns}
+          pagination={{
+            total: users?.count,
+            current: page,
+            showSizeChanger: false,
 
-              onChange: (page) => {
-                setPage(page);
-              },
-            }}
-          />
-        )}
+            onChange: (page) => {
+              setPage(page);
+            },
+          }}
+        />
       </TableWrapper>
     </Fragment>
   );

@@ -3,8 +3,8 @@ import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
 // import { ReactComponent as Notification } from "../../assets/images/icons/notification.svg";
 import { ReactComponent as ChevronDown } from "../../assets/images/icons/chevron-down.svg";
-import avatar from "../../assets/images/avatar.png";
 import logout from "../../assets/images/icons/logout.svg";
+import placeHolderavatar from "../../assets/images/icons/dummy_avatar.png";
 import { useHistory } from "react-router-dom";
 import { clearState } from "../../redux/reducers/auth/login";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import logo from "../../assets/Logo.svg";
 
 const Navbar = () => {
   const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+  const loggedInUserAvatar = JSON.parse(sessionStorage.getItem("avatar"));
   const dispatch = useDispatch();
   const history = useHistory();
   const signout = () => {
@@ -38,7 +39,20 @@ const Navbar = () => {
         {
           // <NotificationIcon />
         }
-        <Avatar src={avatar} alt="Avatar" />
+        {loggedInUser.avatar ? (
+          <Avatar
+            src={loggedInUserAvatar ||  placeHolderavatar}
+            alt="Avatar"
+            style={{ borderRadius: "100px", objectFit: "cover" }}
+          />
+        ) : (
+          <Avatar
+            src={placeHolderavatar}
+            alt="Avatar"
+            style={{ borderRadius: "100px" }}
+          />
+        )}
+
         <UserProfile>
           <p>{loggedInUser.firstName + " " + loggedInUser.lastName}</p>
           <span>{loggedInUser.isSuper ? "Super Admin" : "Sub Admin"}</span>

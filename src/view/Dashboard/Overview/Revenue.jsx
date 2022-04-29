@@ -20,7 +20,7 @@ import {
   getWeekDate,
   getYearDate,
 } from "../../../utils/dates";
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 
 const Revenue = () => {
   // const [select, setSelect] = React.useState("");
@@ -36,6 +36,14 @@ const Revenue = () => {
     () => getTransactionData(userType),
     {
       staleTime: 5000,
+
+      onError: (err) => {
+        message.error(
+          err.message === "Network Error"
+            ? "it looks like you are offline, check your internet and try again"
+            : err.message
+        );
+      },
     }
   );
 
@@ -103,10 +111,10 @@ const Revenue = () => {
           </header>
           <center
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height:'90%'
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "90%",
             }}
           >
             <Spin size="large" />
@@ -119,7 +127,7 @@ const Revenue = () => {
             <h6>Show</h6>
           </header>
           <div className="chart">
-            <Chart data={transactions} />
+            {transactions && <Chart data={transactions} />}
           </div>
         </ChartWrapper>
       )}
@@ -134,9 +142,9 @@ const Revenue = () => {
               setUserType(e.target.value);
             }}
           >
-          <option selected value="">
-          All
-        </option>
+            <option selected value="">
+              All
+            </option>
             <option value={getTodayDate}>Today</option>
             <option value={getWeekDate}>Last 7 Days</option>
             <option value={getMonthDate}>One Month</option>
@@ -145,19 +153,19 @@ const Revenue = () => {
         </header>
         {transactionsLoading ? (
           <center
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height:'90%'
-          }}
-        >
-          <Spin size="large" />
-        </center>
-        ) : !transactions.length ? (
-          "no data"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "90%",
+            }}
+          >
+            <Spin size="large" />
+          </center>
+        ) : (!transactions || transactions.length === 0) ? (
+         <h1> NO DATA </h1>
         ) : (
-          transactions.map((item, index) => {
+          transactions?.map((item, index) => {
             return <TransactionCard key={index} {...item} />;
           })
         )}

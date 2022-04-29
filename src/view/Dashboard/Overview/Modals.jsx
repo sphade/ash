@@ -164,7 +164,32 @@ export const PatientInfoModal = () => {
           </div>
           <div className="group">
             <h4>Subscription</h4>
-            <h5 className="subscription">{patient && patient.plan}</h5>
+            <h5
+              style={{
+                color:
+                  patient?.plan === "Premium Plan"
+                    ? "#FA0E9B"
+                    : patient.plan === "Basic Plan"
+                    ? "#19B729"
+                    : patient.plan === "Premium Family Plan"
+                    ? "#455AFE"
+                    : patient.plan === "Basic Family Plan"
+                    ? "#455AFE"
+                    : "",
+                background:
+                  patient.plan === "Premium Plan"
+                    ? "rgba(250, 14, 155, 0.05)"
+                    : patient.plan === "Basic Plan"
+                    ? "rgba(25, 183, 41, 0.1)"
+                    : patient.plan === "Premium Family Plan"
+                    ? "rgba(69, 90, 254, 0.05)"
+                    : patient.plan === "Basic Family Plan"
+                    ? "rgba(69, 90, 254, 0.05)"
+                    : "",
+              }}
+            >
+              {patient && patient.plan}
+            </h5>
           </div>
           <div className="group">
             <h4>Requests</h4>
@@ -186,7 +211,10 @@ export const DoctorInfoModal = () => {
   const dispatch = useDispatch();
   const { doctorModal } = useSelector(doctorsSelector);
   const doctor = JSON.parse(sessionStorage.getItem("selectedDoctor"));
-  console.log("🚀 ~ file: Modals.jsx ~ line 189 ~ DoctorInfoModal ~ doctor", doctor)
+  console.log(
+    "🚀 ~ file: Modals.jsx ~ line 189 ~ DoctorInfoModal ~ doctor",
+    doctor
+  );
   return (
     <Modal
       visible={doctorModal}
@@ -244,25 +272,15 @@ export const DoctorInfoModal = () => {
             </div>
             <div className="group">
               <h4>Availability</h4>
-<div>
-
-                            {doctor &&
-                doctor.availableDates.map(({ startDate, endDate }, index) => (
-                  <div key={index}>
-                  <span >
-                    {new Date(startDate).toLocaleString()}
-                  </span>
-                  {' '}
-                   - 
-                  {' '}
-
-                  <span >
-                  {new Date(endDate).toLocaleTimeString()}
-                </span>
-                  </div>
-                ))}
-</div>
-
+              <div>
+                {doctor &&
+                  doctor.availableDates.map(({ startDate, endDate }, index) => (
+                    <div key={index}>
+                      <span>{new Date(startDate).toLocaleString()}</span> -{" "}
+                      <span>{new Date(endDate).toLocaleTimeString()}</span>
+                    </div>
+                  ))}
+              </div>
             </div>
             <div className="group">
               <h4>Verification Status</h4>
@@ -284,10 +302,8 @@ export const DoctorInfoModal = () => {
 
           {doctor.ratings.length === 0 ? (
             <center>
-            
-            <img src={successIcon} alt="" />
-            <p>
-            There are no patient review for this doctor</p>
+              <img src={successIcon} alt="" />
+              <p>There are no patient review for this doctor</p>
             </center>
           ) : (
             <>
@@ -532,13 +548,14 @@ const Container = styled.div`
         margin-right: 2rem;
         text-transform: capitalize;
       }
-      h5,span {
+      h5,
+      span {
         flex: 1;
         margin: 0;
         padding: 0;
         color: #666666;
         font-size: 1rem;
-        font-weight:500
+        font-weight: 500;
       }
     }
   }
