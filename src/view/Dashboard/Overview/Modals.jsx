@@ -164,32 +164,34 @@ export const PatientInfoModal = () => {
           </div>
           <div className="group">
             <h4>Subscription</h4>
-            <h5
-              style={{
-                color:
-                  patient?.plan === "Premium Plan"
-                    ? "#FA0E9B"
-                    : patient.plan === "Basic Plan"
-                    ? "#19B729"
-                    : patient.plan === "Premium Family Plan"
-                    ? "#455AFE"
-                    : patient.plan === "Basic Family Plan"
-                    ? "#455AFE"
-                    : "",
-                background:
-                  patient.plan === "Premium Plan"
-                    ? "rgba(250, 14, 155, 0.05)"
-                    : patient.plan === "Basic Plan"
-                    ? "rgba(25, 183, 41, 0.1)"
-                    : patient.plan === "Premium Family Plan"
-                    ? "rgba(69, 90, 254, 0.05)"
-                    : patient.plan === "Basic Family Plan"
-                    ? "rgba(69, 90, 254, 0.05)"
-                    : "",
-              }}
-            >
-              {patient && patient.plan}
-            </h5>
+            {patient && (
+              <h5
+                style={{
+                  color:
+                    patient?.plan === "Premium Plan"
+                      ? "#FA0E9B"
+                      : patient.plan === "Basic Plan"
+                      ? "#19B729"
+                      : patient.plan === "Premium Family Plan"
+                      ? "#455AFE"
+                      : patient.plan === "Basic Family Plan"
+                      ? "#455AFE"
+                      : "",
+                  background:
+                    patient.plan === "Premium Plan"
+                      ? "rgba(250, 14, 155, 0.05)"
+                      : patient.plan === "Basic Plan"
+                      ? "rgba(25, 183, 41, 0.1)"
+                      : patient.plan === "Premium Family Plan"
+                      ? "rgba(69, 90, 254, 0.05)"
+                      : patient.plan === "Basic Family Plan"
+                      ? "rgba(69, 90, 254, 0.05)"
+                      : "",
+                }}
+              >
+                {patient && patient.plan}
+              </h5>
+            )}
           </div>
           <div className="group">
             <h4>Requests</h4>

@@ -52,7 +52,7 @@ const Home = () => {
       
         onError: () => {
           message.error(
-            "unable to get the users , check your connection and try again"
+            "unable to Establish a connection , check your Internet and try again"
           );
         },
       
@@ -98,7 +98,7 @@ const Home = () => {
       <Heading>
         <>
           <SelectField
-            placeholder="Filter"
+            placeholder="Filter By Users"
             data={[
               { value: "doctor", name: "Doctor" },
               { value: "patient", name: "Patient" },

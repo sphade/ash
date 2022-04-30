@@ -275,7 +275,7 @@ const Home = () => {
                   }}
                 >
                   <option selected disabled hidden value="">
-                    Filter Role
+                    Filter By Date
                   </option>
                   <option value="">All</option>
                   <option value={getTodayDate}>Today</option>

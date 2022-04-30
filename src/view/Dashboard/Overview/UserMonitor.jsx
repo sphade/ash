@@ -142,7 +142,7 @@ const UserMonitor = () => {
         <>
           <div className="group">
             <SelectField
-              placeholder="Filter Users"
+              placeholder="Filter By Users"
               data={[
                 { value: "doctor", name: "Doctor" },
                 { value: "patient", name: "Patient" },
@@ -151,7 +151,7 @@ const UserMonitor = () => {
               setPage={setPage}
             />
             <SelectField
-              placeholder="Filter Dates"
+              placeholder="Filter By Dates"
               data={[
                 { value: getTodayDate, name: "Today" },
                 { value: getWeekDate, name: "7 days" },

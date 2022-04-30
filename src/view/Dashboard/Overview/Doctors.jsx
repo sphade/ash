@@ -195,7 +195,7 @@ const Doctors = () => {
               }}
             >
             <option selected disabled hidden value="">
-            Filter Role
+            Filter by Status
           </option>
               <option  value="">
               All

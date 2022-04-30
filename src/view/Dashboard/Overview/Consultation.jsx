@@ -209,7 +209,7 @@ const Consultations = () => {
               }}
             >
               <option selected disabled hidden value="">
-                Filter Role
+                Filter by Status
               </option>
               <option value="">All</option>
               <option value="completed">Completed</option>
