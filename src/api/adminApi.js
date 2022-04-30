@@ -28,3 +28,32 @@ export const loginIn = async ({ email, password }) => {
   );
   return res.data;
 };
+export const disableUser = async (data) => {
+  await api.patch(
+    "/users",
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+export const resetUserPassword = async (user) => {
+  await api.patch(
+    `/users/${user.id}`,
+    {
+      userType: user.role,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};

@@ -62,7 +62,8 @@ const SearchBar = styled.div`
       width: 365px;
       :focus {
         outline: none;
-        border: 1px solid #bdbdbd;
+        border: 1px solid #0dcaf0;
+        box-shadow: 0px 0px 1px #0dcaf0;
       }
     }
   }

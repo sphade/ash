@@ -49,11 +49,7 @@ const Home = () => {
   const [filterDate, setFilterDate] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const {
-    isLoading: usersLoading,
-    data: users,
-    
-  } = useQuery("users", getUser, {
+  const { isLoading: usersLoading, data: users } = useQuery("users", getUser, {
     staleTime: 5000,
   });
   const {
@@ -266,23 +262,18 @@ const Home = () => {
           <Header>
             <div className="group">
               <>
-                <select
-                  style={{ border: "none", height: "3rem", width: "150px" }}
-                  className="form-select"
-                  onChange={(e) => {
-                    setFilterDate(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option selected disabled hidden value="">
-                    Filter By Date
-                  </option>
-                  <option value="">All</option>
-                  <option value={getTodayDate}>Today</option>
-                  <option value={getWeekDate}>Last 7 Days</option>
-                  <option value={getMonthDate}>One Month</option>
-                  <option value={getYearDate}>One Year</option>
-                </select>
+              
+                <SelectField
+                  placeholder="Filter by Dates"
+                  data={[
+                    { value:  getTodayDate , name: "Today" },
+                    { value: getWeekDate , name: "Last 7 Days" },
+                    { value: getMonthDate, name: "One Month" },
+                    { value: getYearDate, name: "One Year" },
+                  ]}
+                  setUserType={setFilterDate}
+                  setPage={setPage}
+                />
                 <Searchbar setSearch={setSearch} />
               </>
             </div>

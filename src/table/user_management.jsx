@@ -3,104 +3,25 @@ import styled from "styled-components";
 import { ReactComponent as More } from "../assets/images/icons/dot.svg";
 import { Space, Dropdown, Menu } from "antd";
 import { useDispatch } from "react-redux";
-import { toggleShowModal, toggleShowResetPasswordModal } from "../redux/reducers/dashboard/overview";
-
-export const dataSource = [
-  {
-    key: "1",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "2",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "3",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "4",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Inactive",
-  },
-  {
-    key: "5",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "6",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Inactive",
-  },
-  {
-    key: "7",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "8",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-  {
-    key: "9",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Inactive",
-  },
-  {
-    key: "10",
-    name: "Mike Johnson",
-    phone: "+234 812 345 6789",
-    email: "amosjohnson@gmail.com",
-    role: "Patient",
-    status: "Active",
-  },
-];
+import {
+  toggleShowModal,
+  toggleShowResetPasswordModal,
+} from "../redux/reducers/dashboard/overview";
 
 const UserMenu = (data) => {
   const dispatch = useDispatch();
-
   return (
     <Menu>
       <Menu.Item
         onClick={() => {
           sessionStorage.setItem("selectedUser", JSON.stringify(data));
+
           dispatch(toggleShowModal());
-        }} //
+        }}
       >
-        Disable
+        {data?.active ? "Disable" : "Enable"}
       </Menu.Item>
+
       <Menu.Item
         onClick={() => {
           sessionStorage.setItem("selectedUser", JSON.stringify(data));
@@ -162,10 +83,12 @@ export const columns = [
   {
     title: "Action",
     key: "action",
-    render: (item, record) => (
+    render: (record) => (
       <Space>
         <Dropdown overlay={UserMenu(record)}>
-          <MoreButton />
+          <div>
+            <MoreButton />
+          </div>
         </Dropdown>
       </Space>
     ),

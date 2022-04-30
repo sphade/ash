@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
-import { Searchbar } from "../../../Reuseable";
+import { Searchbar, SelectField } from "../../../Reuseable";
 import { Space, Table, Dropdown, Menu, message } from "antd";
 import { Star, MoreButton, StarOutline } from "../../../table/doctors";
 import { useDispatch } from "react-redux";
@@ -24,10 +24,11 @@ const Doctors = () => {
 
   const {
     isLoading: doctorsLoading,
-    
+
     data: doctors,
-  } = useQuery(["doctor", page, userType, search], () =>
-    getDoctorData(page, userType, search),
+  } = useQuery(
+    ["doctor", page, userType, search],
+    () => getDoctorData(page, userType, search),
     {
       onError: (err) => {
         message.error(
@@ -181,52 +182,37 @@ const Doctors = () => {
       <Heading>
         <>
           <div className="group">
-            <select
-              style={{
-                height: "3rem",
-                width: "150px",
-                borderRadius: "10px",
-                border: "none",
-              }}
-              className="form-select"
-              onChange={(e) => {
-                setUserType(e.target.value);
-                setPage(1);
-              }}
-            >
-            <option selected disabled hidden value="">
-            Filter by Status
-          </option>
-              <option  value="">
-              All
-            </option>
-              <option value="accepted">Verified</option>
-              <option value="pending">Pending</option>
-              <option value="rejected">Rejected</option>
-            </select>
+            <SelectField
+              placeholder="Filter by Status"
+              data={[
+                { value: "accepted", name: "Verified" },
+                { value: "pending", name: "Pending" },
+                { value: "rejected", name: "Rejected" },
+              ]}
+              setUserType={setUserType}
+              setPage={setPage}
+            />
           </div>
           <Searchbar setSearch={setSearch} />
         </>
       </Heading>
 
       <TableWrapper>
-        
-          <Table
-            dataSource={doctors?.doctors}
-            columns={columns}
-            loading={doctorsLoading}
-            pagination={{
-              pageSize: 10,
-              total: doctors?.count,
-              showSizeChanger:false,
-              current: page,
+        <Table
+          dataSource={doctors?.doctors}
+          columns={columns}
+          loading={doctorsLoading}
+          pagination={{
+            pageSize: 10,
+            total: doctors?.count,
+            showSizeChanger: false,
+            current: page,
 
-              onChange: (page) => {
-                setPage(page);
-              },
-            }}
-          />
-        
+            onChange: (page) => {
+              setPage(page);
+            },
+          }}
+        />
       </TableWrapper>
     </Fragment>
   );

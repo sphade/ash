@@ -195,7 +195,7 @@ const Patients = () => {
                     name: "Premium Family Plan",
                   },
                 ]}
-                full={true}
+               
               />
             ) : (
               <SelectField
@@ -203,7 +203,7 @@ const Patients = () => {
                 data={plans?.map(({ id, name }) => ({ value: id, name: name }))}
                 setUserType={setUserType}
                 setPage={setPage}
-                full={true}
+                
               />
             )}
           </div>

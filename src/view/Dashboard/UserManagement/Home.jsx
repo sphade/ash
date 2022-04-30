@@ -29,11 +29,7 @@ const Home = () => {
   const [doctorsNo, setDoctorsNo] = useState(0);
   const [patientsNo, setPatientsNo] = useState(0);
   // data fetching with react Query
-  const {
-    isLoading: usersLoading,
-    data: users,
-   
-  } = useQuery(
+  const { isLoading: usersLoading, data: users } = useQuery(
     ["users", page, userType, search],
     () =>
       getUsersData({
@@ -49,13 +45,12 @@ const Home = () => {
         setPatientsNo(data?.patients);
         setDoctorsNo(data?.doctors);
       },
-      
-        onError: () => {
-          message.error(
-            "unable to Establish a connection , check your Internet and try again"
-          );
-        },
-      
+
+      onError: () => {
+        message.error(
+          "unable to Establish a connection , check your Internet and try again"
+        );
+      },
     }
   );
 
@@ -75,7 +70,6 @@ const Home = () => {
       // console.log(selected, selectedRows, changeRows);
     },
   };
-
   const { showUserModal, showResetPasswordModal } =
     useSelector(overviewSelector);
   // const [checkStrictly, setCheckStrictly] = React.useState(false);
@@ -106,6 +100,7 @@ const Home = () => {
             setUserType={setUserType}
             setPage={setPage}
           />
+
           <Searchbar setSearch={setSearch} />
         </>
       </Heading>

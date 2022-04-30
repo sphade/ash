@@ -1,34 +1,27 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import styled from "styled-components";
 import { Button } from "../../../Reuseable";
 import successIcon from "../../../assets/images/icons/success-message-icon.png";
-import { api } from "../../../api/instance";
 // import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { disableUser, resetUserPassword } from "../../../api/adminApi";
 export const DisableAccountModal = ({ show, handleClose }) => {
+  const queryClient = useQueryClient();
   const [success, setSuccess] = useState(false);
   // const [visible, setVisible] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
-  const disableUser = async () => {
-    await api.patch(
-      "/users",
-      {
-        userType: user.role,
-        active: user.active,
-        ids: [user.id],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    setSuccess(true);
-  };
-  const { isLoading, mutate, isError, error } = useMutation(disableUser);
+  const { mutate, isLoading } = useMutation((data) => disableUser(data), {
+    onSuccess: (data) => {
+      setSuccess(true);
+
+      queryClient.invalidateQueries("users");
+    },
+    onError: () => {
+      message.error("an error occurred , refresh and try again");
+      handleClose();
+    },
+  });
 
   return (
     <Modal
@@ -41,10 +34,13 @@ export const DisableAccountModal = ({ show, handleClose }) => {
       <Container>
         {!success ? (
           <>
-            <h4>Disable User Account</h4>
+            <h4>
+              {user?.active === true ? "Disable " : "Enable "} User Account
+            </h4>
             <p>
-              If you click “YES” a confirmation link will be sent your email to
-              complete the process. Click “NO” to cancel.
+              If you click “YES” the Selected user Account would be{" "}
+              {user?.active === true ? " Disabled " : " Enabled "}. Click “NO”
+              to cancel.
             </p>
             <div className="btn-group">
               <Button
@@ -52,7 +48,11 @@ export const DisableAccountModal = ({ show, handleClose }) => {
                 text="YES"
                 loading={isLoading}
                 onClick={() => {
-                  mutate();
+                  mutate({
+                    userType: user.role,
+                    active: !user.active,
+                    ids: [user.id],
+                  });
                 }}
               />
               <Button
@@ -64,15 +64,14 @@ export const DisableAccountModal = ({ show, handleClose }) => {
                 }}
               />
             </div>
-            {isError && <p style={{ color: "red" }}>{error.message}</p>}
           </>
         ) : (
           <>
             <img src={successIcon} alt="" />
-            <h4>Link Sent to Admin</h4>
+            <h4> User {user?.active === true ? " Disabled " : " Enabled "} </h4>
             <p>
-              A confirmation link has been sent to your email address, please
-              click on the link to complete the process.
+              User has been successfully{" "}
+              {user?.active === true ? " Disabled " : " Enabled "}
             </p>
             <Button
               outline
@@ -92,24 +91,19 @@ export const DisableAccountModal = ({ show, handleClose }) => {
 export const ResetPasswordModal = ({ show, handleClose }) => {
   const [success, setSuccess] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
+  const queryClient = useQueryClient();
 
-  const resetUserPassword = async () => {
-    await api.patch(
-      `/users/${user.id}`,
-      {
-        userType: user.role,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    setSuccess(true);
-  };
-  const { isLoading, mutate, isError, error } = useMutation(resetUserPassword);
+  const { mutate, isLoading } = useMutation((user) => resetUserPassword(user), {
+    onSuccess: (data) => {
+      setSuccess(true);
+
+      queryClient.invalidateQueries("users");
+    },
+    onError: () => {
+      message.error("an error occurred , refresh and try again");
+      handleClose();
+    },
+  });
   return (
     <Modal
       visible={show}
@@ -132,7 +126,8 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
                 text="YES"
                 loading={isLoading}
                 onClick={() => {
-                  mutate();
+                  mutate(user);
+                  
                 }}
               />
 
@@ -145,7 +140,6 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
                 }}
               />
             </div>
-            {isError && <p style={{ color: "red" }}>{error.message}</p>}
           </>
         ) : (
           <>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import { ReactComponent as Notification } from "../../assets/images/icons/notification.svg";
 import { ReactComponent as ChevronDown } from "../../assets/images/icons/chevron-down.svg";
 import logout from "../../assets/images/icons/logout.svg";
-import placeHolderavatar from "../../assets/images/icons/dummy_avatar.png";
+import user_avatar from "../../assets/images/icons/dummy_avatar.png";
 import { useHistory } from "react-router-dom";
 import { clearState } from "../../redux/reducers/auth/login";
 import { useDispatch } from "react-redux";
@@ -39,17 +39,11 @@ const Navbar = () => {
         {
           // <NotificationIcon />
         }
-        {loggedInUser.avatar ? (
+        {loggedInUserAvatar && (
           <Avatar
-            src={loggedInUserAvatar ||  placeHolderavatar}
+            src={loggedInUserAvatar || user_avatar}
             alt="Avatar"
             style={{ borderRadius: "100px", objectFit: "cover" }}
-          />
-        ) : (
-          <Avatar
-            src={placeHolderavatar}
-            alt="Avatar"
-            style={{ borderRadius: "100px" }}
           />
         )}
 
