@@ -56,7 +56,7 @@ const Avatar = () => {
       <img
         src={url || loggedInUserAvatar}
         alt="avatar"
-        style={{ width: "200px", height: "200px", borderRadius: "50%" }}
+        style={{ width: "200px", height: "200px", borderRadius: "50%", border:'5px solid #455afe' }}
       />
 
       <div style={{ gap: "10px", alignItems: "center", marginTop: "10px" }}>
@@ -66,7 +66,7 @@ const Avatar = () => {
             for="actual-btn"
             style={{
               padding: "5px 10px",
-              background: "#0dcaf0",
+              background: "#455afe",
               cursor: "pointer",
               borderRadius: "5px",
               color: "white",
