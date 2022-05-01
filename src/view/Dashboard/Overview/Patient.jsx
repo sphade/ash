@@ -176,7 +176,7 @@ const Patients = () => {
           <div className="group">
             {plansLoading ? (
               <SelectField
-                placeholder="Filter By Plan"
+                placeholder="Filter Plan"
                 data={[
                   {
                     value: "0447a1fd-80f6-4d39-867d-216bd9910e70",
@@ -199,7 +199,7 @@ const Patients = () => {
               />
             ) : (
               <SelectField
-                placeholder="Filter By Plan"
+                placeholder="Filter Plan"
                 data={plans?.map(({ id, name }) => ({ value: id, name: name }))}
                 setUserType={setUserType}
                 setPage={setPage}
@@ -207,7 +207,7 @@ const Patients = () => {
               />
             )}
           </div>
-          <Searchbar setSearch={setSearch} />
+          <Searchbar setSearch={setSearch} setPage={setPage} />
         </>
       </Heading>
 

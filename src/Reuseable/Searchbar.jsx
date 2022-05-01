@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../assets/images/icons/search_icon.svg";
 
-const Searchbar = ({ setSearch }) => {
+const Searchbar = ({ setSearch, setPage }) => {
   const [state, setState] = useState("");
   return (
     <SearchBar>
@@ -10,6 +10,7 @@ const Searchbar = ({ setSearch }) => {
         onSubmit={(e) => {
           e.preventDefault();
           setSearch(state);
+          setPage(1)
         }}
       >
         <SearchIcon

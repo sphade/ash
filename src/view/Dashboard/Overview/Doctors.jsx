@@ -183,7 +183,7 @@ const Doctors = () => {
         <>
           <div className="group">
             <SelectField
-              placeholder="Filter by Status"
+              placeholder="Filter Status"
               data={[
                 { value: "accepted", name: "Verified" },
                 { value: "pending", name: "Pending" },
@@ -193,7 +193,7 @@ const Doctors = () => {
               setPage={setPage}
             />
           </div>
-          <Searchbar setSearch={setSearch} />
+          <Searchbar setSearch={setSearch} setPage={setPage} />
         </>
       </Heading>
 

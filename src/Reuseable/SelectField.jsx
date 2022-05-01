@@ -8,7 +8,9 @@ const Selectfield = (props) => {
     <Select
       onChange={(value) => {
         props?.setUserType(value);
-        props?.setPage(1);
+        if (props.setPage) {
+          props?.setPage(1);
+        }
       }}
       style={{ width: 200 }}
       placeholder={props.placeholder}
@@ -16,9 +18,7 @@ const Selectfield = (props) => {
       defaultValue={undefined}
       bordered="true"
     >
-    <Option  value=''>
-    All
-  </Option>
+      <Option value="">All</Option>
       {props.data !== (null || undefined) &&
         props?.data.map((item, index) => {
           return (

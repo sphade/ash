@@ -96,10 +96,14 @@ export const ConsultationAccordion = (props) => {
           <div className="text-group">
             <div className="title">Prescription</div>
             <div className="value">
-              {props?.prescription.map(({ name, dosage },index) => (
-                <h5 key={index}>
-                  <span>name: {name}</span>
-                  <span>dosage: {dosage}</span>
+              {props?.prescription.map(({ name, dosage }, index) => (
+                <h5 key={index} style={{ fontSize: "14px" }}>
+                  <p style={{ fontWeight: "600" }}>
+                    <strong>Name</strong> : {name}
+                  </p>
+                  <p style={{ fontWeight: "600" }}>
+                    <strong>Dosage</strong>: {dosage}
+                  </p>
                 </h5>
               ))}
             </div>

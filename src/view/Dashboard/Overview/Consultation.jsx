@@ -3,19 +3,16 @@ import { useHistory } from "react-router-dom";
 import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import { Header as Title } from "./Revenue";
 import { Header as Heading, TableWrapper } from "./Home";
-import { Searchbar } from "../../../Reuseable";
+import { Searchbar, SelectField } from "../../../Reuseable";
 import { Space, Table, Dropdown, Menu, message } from "antd";
 import { MoreButton } from "../../../table/consultations";
-import { useDispatch,  } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
 // import { getAppointmentCount } from "../../../redux/sagas/dashboard/overview";
 // import Skeleton from "react-loading-skeleton";
 import { ConsultationInfoModal } from "./Modals";
 import { handleToggleModal } from "../../../redux/reducers/dashboard/consultations";
-import {
- 
-  getAppointmentData,
-} from "../../../api/appointmentApi";
+import { getAppointmentData } from "../../../api/appointmentApi";
 import { useQuery } from "react-query";
 
 const Consultations = () => {
@@ -26,10 +23,12 @@ const Consultations = () => {
   const [page, setPage] = useState(1);
   const {
     isLoading: appointmentCountLoading,
-   
+
     data: appointments,
-  } = useQuery(["appointmentFilterData", userType, search, page], () =>
-    getAppointmentData({ userType: userType, search: search, page: page }),
+  } = useQuery(
+    ["appointmentFilterData", userType, search, page],
+    () =>
+      getAppointmentData({ userType: userType, search: search, page: page }),
     {
       onError: (err) => {
         message.error(
@@ -40,7 +39,6 @@ const Consultations = () => {
       },
     }
   );
-
 
   // React.useEffect(() => {
   //   dispatch(getAppointmentCount());
@@ -195,54 +193,41 @@ const Consultations = () => {
       <Heading>
         <>
           <div className="group">
-            <select
-              style={{
-                height: "3rem",
-                width: "150px",
-                borderRadius: "10px",
-                border: "none",
-              }}
-              className="form-select"
-              onChange={(e) => {
-                setUserType(e.target.value);
-                setPage(1);
-              }}
-            >
-              <option selected disabled hidden value="">
-                Filter by Status
-              </option>
-              <option value="">All</option>
-              <option value="completed">Completed</option>
-              <option value="accepted">Scheduled</option>
-              <option value="pending">pending</option>
-              <option value="active">Ongoing</option>
-              <option value="failed">failed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="rejected">rejected</option>
-            </select>
+            <SelectField
+              placeholder="Filter Status"
+              data={[
+                { value: "Completed", name: "Completed" },
+                { value: "accepted", name: "Scheduled" },
+                { value: "pending", name: "Pending" },
+                { value: "active", name: "Ongoing" },
+                { value: "failed", name: "Failed" },
+                { value: "cancelled", name: "Cancelled" },
+                { value: "rejected", name: "Rejected" },
+              ]}
+              setUserType={setUserType}
+              setPage={setPage}
+            />
           </div>
-          <Searchbar setSearch={setSearch} />
+          <Searchbar setSearch={setSearch} setPage={setPage} />
         </>
       </Heading>
 
       <TableWrapper>
-       
-          <Table
-            loading={appointmentCountLoading}
-            dataSource={appointments?.consultations}
-            columns={columns}
-            pagination={{
-              pageSize: 10,
-              current: page,
-              showSizeChanger: false,
+        <Table
+          loading={appointmentCountLoading}
+          dataSource={appointments?.consultations}
+          columns={columns}
+          pagination={{
+            pageSize: 10,
+            current: page,
+            showSizeChanger: false,
 
-              total: appointments?.count,
-              onChange: (page) => {
-                setPage(page);
-              },
-            }}
-          />
-        
+            total: appointments?.count,
+            onChange: (page) => {
+              setPage(page);
+            },
+          }}
+        />
       </TableWrapper>
     </Fragment>
   );

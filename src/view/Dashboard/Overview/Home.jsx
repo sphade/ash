@@ -235,7 +235,7 @@ const Home = () => {
               ) : (
                 <>
                   <SelectField
-                    placeholder="Filter"
+                    placeholder="Filter Dates"
                     data={[
                       { value: getWeekDate, name: "This Week" },
                       { value: "last week", name: "Last Week" },
@@ -264,7 +264,7 @@ const Home = () => {
               <>
               
                 <SelectField
-                  placeholder="Filter by Dates"
+                  placeholder="Filter Dates"
                   data={[
                     { value:  getTodayDate , name: "Today" },
                     { value: getWeekDate , name: "Last 7 Days" },
@@ -274,7 +274,7 @@ const Home = () => {
                   setUserType={setFilterDate}
                   setPage={setPage}
                 />
-                <Searchbar setSearch={setSearch} />
+                <Searchbar setSearch={setSearch} setPage={setPage} />
               </>
             </div>
           </Header>

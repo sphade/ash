@@ -21,6 +21,7 @@ import {
   getYearDate,
 } from "../../../utils/dates";
 import { message, Spin } from "antd";
+import { SelectField } from "../../../Reuseable";
 
 const Revenue = () => {
   // const [select, setSelect] = React.useState("");
@@ -46,7 +47,6 @@ const Revenue = () => {
       },
     }
   );
-
   React.useEffect(() => {
     dispatch(getTotalRevenue());
     dispatch(getTransactions());
@@ -135,21 +135,16 @@ const Revenue = () => {
       <TransactionWrapper>
         <header>
           <h5>Transaction History</h5>
-          <select
-            style={{ height: "3rem", width: "150px", borderRadius: "10px" }}
-            className="form-select"
-            onChange={(e) => {
-              setUserType(e.target.value);
-            }}
-          >
-            <option selected value="">
-              All
-            </option>
-            <option value={getTodayDate}>Today</option>
-            <option value={getWeekDate}>Last 7 Days</option>
-            <option value={getMonthDate}>One Month</option>
-            <option value={getYearDate}>One Year</option>
-          </select>
+          <SelectField
+              placeholder="Filter Dates"
+              data={[
+                { value: getTodayDate, name: "Today" },
+                { value: getWeekDate, name: "7 days" },
+                { value: getMonthDate, name: "One Month" },
+                { value: getYearDate, name: "One Year" },
+              ]}
+              setUserType={setUserType}
+            />
         </header>
         {transactionsLoading ? (
           <center

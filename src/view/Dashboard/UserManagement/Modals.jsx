@@ -38,7 +38,7 @@ export const DisableAccountModal = ({ show, handleClose }) => {
               {user?.active === true ? "Disable " : "Enable "} User Account
             </h4>
             <p>
-              If you click “YES” the Selected user Account would be{" "}
+              If you click “YES” the selected user would be{" "}
               {user?.active === true ? " Disabled " : " Enabled "}. Click “NO”
               to cancel.
             </p>
@@ -127,7 +127,6 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
                 loading={isLoading}
                 onClick={() => {
                   mutate(user);
-                  
                 }}
               />
 

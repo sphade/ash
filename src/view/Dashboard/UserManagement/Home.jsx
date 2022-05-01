@@ -92,7 +92,7 @@ const Home = () => {
       <Heading>
         <>
           <SelectField
-            placeholder="Filter By Users"
+            placeholder="Filter Role"
             data={[
               { value: "doctor", name: "Doctor" },
               { value: "patient", name: "Patient" },
@@ -101,7 +101,7 @@ const Home = () => {
             setPage={setPage}
           />
 
-          <Searchbar setSearch={setSearch} />
+          <Searchbar setSearch={setSearch} setPage={setPage} />
         </>
       </Heading>
       <TableWrapper>
