@@ -11,6 +11,7 @@ const Avatar = () => {
   const [url, setUrl] = React.useState("");
   const [validate, setValidate] = React.useState(true);
   const formData = new FormData();
+  const loggedInUserAvatar = JSON.parse(sessionStorage.getItem("avatar"));
 
   formData.append("avatar", file);
 
@@ -51,14 +52,29 @@ const Avatar = () => {
   );
 
   return (
-    <>
-      {file && !validate && (
-        <img src={url} alt="avatar" style={{ width: "100%" }} />
-      )}
+    <div style={{ width: "100%", textAlign: "center" }}>
+      <img
+        src={url || loggedInUserAvatar}
+        alt="avatar"
+        style={{ width: "200px", height: "200px", borderRadius: "50%" }}
+      />
 
-      <>
-        <input type="file" onChange={handleChange} />
-
+      <div style={{ gap: "10px", alignItems: "center", marginTop: "10px" }}>
+        <div>
+          <input type="file" onChange={handleChange} id="actual-btn" hidden />
+          <label
+            for="actual-btn"
+            style={{
+              padding: "5px 10px",
+              background: "#0dcaf0",
+              cursor: "pointer",
+              borderRadius: "5px",
+              color: "white",
+            }}
+          >
+            {url ? "Change" : "Choose"} Picture
+          </label>
+        </div>
         <Button
           type="primary"
           disabled={validate}
@@ -81,9 +97,8 @@ const Avatar = () => {
         >
           {isLoading ? "Uploading" : "Start Upload"}
         </Button>
-        <h1>{}</h1>
-      </>
-    </>
+      </div>
+    </div>
   );
 };
 
