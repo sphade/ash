@@ -20,7 +20,7 @@ const Step3 = () => {
         <img className="img" src={fpIcon2} alt="" />
         <h3>Reset Your Password</h3>
         <h4>
-          Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit.
+        Please, enter your new password and confirm.
         </h4>
         <div className="group">
           <InputField inputType="password" placeholder="New Password" />

@@ -80,7 +80,7 @@ const Step2 = () => {
         <img className='img' src={fpIcon1} alt='' />
         <h3>Insert Your Code</h3>
         <h4>
-          Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit.
+        Kindly enter the 4-digit code  <br /> sent to your email address.
         </h4>
         {invalidOTP && (
           <p className='error-msg'>Invalid OTP! OTP code must be 4 digits.</p>

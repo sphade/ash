@@ -51,9 +51,12 @@ const Step1 = () => {
       >
         <img className='img' src={fpIcon} alt='' />
         <h3>Forgot Your Password</h3>
-        <h4>
-          Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit.
-        </h4>
+        
+         <h4>
+         Don't worry! It happens to the best of us. <br />  Enter the email address associated with your account.
+        </h4>  
+        
+       
         <div style={{ width: '100%' }}>
           <InputField
             fieldname='email'

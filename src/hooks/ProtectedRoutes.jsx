@@ -1,10 +1,10 @@
-import React from 'react';
-import jwt from 'jsonwebtoken';
-import { Route, Redirect } from 'react-router-dom';
+import React from "react";
+import jwt from "jsonwebtoken";
+import { Route, Redirect } from "react-router-dom";
 
 const Index = ({ component: Component, ...rest }) => {
   let isExpired = false;
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem("token");
   if (token) {
     let decodedToken = jwt.decode(token, { complete: true });
     let dateNow = +new Date() / 1000;
@@ -23,7 +23,7 @@ const Index = ({ component: Component, ...rest }) => {
           <Component {...rest} {...props} />
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
+            to={{ pathname: "/login", state: { from: props.location } }}
           />
         );
       }}
