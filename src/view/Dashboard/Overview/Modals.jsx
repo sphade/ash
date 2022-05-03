@@ -81,9 +81,7 @@ export const UserMonitorModal = (props) => {
             </div>
             <div className="group">
               <h4>Activity Status</h4>
-              <h5 className="active">
-                {selectedUser.active === true ? "active" : "inactive"}
-              </h5>
+              <h5 className={selectedUser.active ? "active" : "in-active"}>{selectedUser.active ? "Active" : "InActive"}</h5>
             </div>
           </div>
         </Container>
@@ -213,10 +211,7 @@ export const DoctorInfoModal = () => {
   const dispatch = useDispatch();
   const { doctorModal } = useSelector(doctorsSelector);
   const doctor = JSON.parse(sessionStorage.getItem("selectedDoctor"));
-  console.log(
-    "🚀 ~ file: Modals.jsx ~ line 189 ~ DoctorInfoModal ~ doctor",
-    doctor
-  );
+
   return (
     <Modal
       visible={doctorModal}
@@ -540,6 +535,9 @@ const Container = styled.div`
 
       .active {
         color: #455afe;
+      }
+      .in-active {
+        color: #ff8282;
       }
       h4 {
         font-size: 1rem;
