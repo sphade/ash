@@ -158,3 +158,8 @@ p.success {
   padding: 8px 16px !important;
   overflow-wrap: break-word;
 }
+
+.ant-select-selection-placeholder{
+  color:#666666 !important;
+
+}
