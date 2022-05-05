@@ -201,6 +201,7 @@ const Doctors = () => {
         <Table
           dataSource={doctors?.doctors}
           columns={columns}
+          scroll={{ x: 130 }}
           loading={doctorsLoading}
           pagination={{
             pageSize: 10,

@@ -1,19 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import overviewA from '../../assets/images/icons/overviewA.svg';
-import overview from '../../assets/images/icons/overview.svg';
-import user from '../../assets/images/icons/user.svg';
-import userA from '../../assets/images/icons/userA.svg';
-import account from '../../assets/images/icons/account.svg';
-import accountA from '../../assets/images/icons/accountA.svg';
-import promo from '../../assets/images/icons/promo.svg';
-import promoA from '../../assets/images/icons/promoA.svg';
-import customer from '../../assets/images/icons/customer.svg';
-import customerA from '../../assets/images/icons/customerA.svg';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import overviewA from "../../assets/images/icons/overviewA.svg";
+import overview from "../../assets/images/icons/overview.svg";
+import user from "../../assets/images/icons/user.svg";
+import userA from "../../assets/images/icons/userA.svg";
+import account from "../../assets/images/icons/account.svg";
+import accountA from "../../assets/images/icons/accountA.svg";
+// import promo from "../../assets/images/icons/promo.svg";
+// import promoA from "../../assets/images/icons/promoA.svg";
+import customer from "../../assets/images/icons/customer.svg";
+import customerA from "../../assets/images/icons/customerA.svg";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const activeTab = sessionStorage.getItem('tab');
+  const activeTab = sessionStorage.getItem("tab");
   return (
     <Container>
       {sidebarTabs.map((tab) => {
@@ -22,9 +22,9 @@ const Sidebar = () => {
           <SidebarTabs
             key={id}
             onClick={() => {
-              sessionStorage.setItem('tab', name);
+              sessionStorage.setItem("tab", name);
             }}
-            className={activeTab === name ? 'active' : ''}
+            className={activeTab === name ? "active" : ""}
             to={link}
           >
             <img
@@ -100,37 +100,37 @@ const SidebarTabs = styled(Link)`
 const sidebarTabs = [
   {
     id: 1,
-    name: 'Overview',
+    name: "Overview",
     icon: overview,
     iconActive: overviewA,
-    link: '/dashboard',
+    link: "/dashboard",
   },
   {
     id: 2,
-    name: 'User Management',
+    name: "User Management",
     icon: user,
     iconActive: userA,
-    link: '/user-management',
+    link: "/user-management",
   },
   {
     id: 3,
-    name: 'Account Settings',
+    name: "Account Settings",
     icon: account,
     iconActive: accountA,
-    link: '/account-settings',
+    link: "/account-settings",
   },
-  {
-    id: 4,
-    name: 'Promotions',
-    icon: promo,
-    iconActive: promoA,
-    link: '/promo',
-  },
+  // {
+  //   id: 4,
+  //   name: 'Promotions',
+  //   icon: promo,
+  //   iconActive: promoA,
+  //   link: '/promo',
+  // },
   {
     id: 5,
-    name: 'Customer Feedback',
+    name: "Customer Feedback",
     icon: customer,
     iconActive: customerA,
-    link: '/customer-feedback',
+    link: "/customer-feedback",
   },
 ];

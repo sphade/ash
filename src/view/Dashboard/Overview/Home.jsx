@@ -47,6 +47,7 @@ import { getRevenue } from "../../../api/transactionApi";
 
 const Home = () => {
   const [filterDate, setFilterDate] = useState("");
+  const [intervalMs, ] = React.useState(3600000)
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const { isLoading: usersLoading, data: users } = useQuery("users", getUser, {
@@ -77,15 +78,25 @@ const Home = () => {
 
   const { isLoading: doctorCountLoading, data: doctorCount } = useQuery(
     "doctorCount",
-    getDoctorCount
+    getDoctorCount,
+    {
+      refetchInterval: intervalMs,
+    }
   );
   const { isLoading: patientCountLoading, data: patientCount } = useQuery(
     "patientCount",
-    getPatientCount
+    getPatientCount,
+    {
+      refetchInterval: intervalMs,
+    }
   );
   const { isLoading: appointmentCountLoading, data: appointmentCount } =
-    useQuery("appointmentCount", getAppointmentCount);
-  const { data: revenue } = useQuery("revenue", getRevenue);
+    useQuery("appointmentCount", getAppointmentCount, {
+      refetchInterval: intervalMs,
+    });
+  const { data: revenue } = useQuery("revenue", getRevenue, {
+    refetchInterval: intervalMs,
+  });
 
   const dispatch = useDispatch();
   const settings = {
@@ -262,12 +273,11 @@ const Home = () => {
           <Header>
             <div className="group">
               <>
-              
                 <SelectField
                   placeholder="Filter Dates"
                   data={[
-                    { value:  getTodayDate , name: "Today" },
-                    { value: getWeekDate , name: "Last 7 Days" },
+                    { value: getTodayDate, name: "Today" },
+                    { value: getWeekDate, name: "Last 7 Days" },
                     { value: getMonthDate, name: "One Month" },
                     { value: getYearDate, name: "One Year" },
                   ]}

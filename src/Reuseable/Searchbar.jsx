@@ -24,6 +24,8 @@ const Searchbar = ({ setSearch, setPage }) => {
           placeholder="Search for keyword"
           onChange={(e) => {
             setState(e.target.value);
+            setSearch(e.target.value);
+
           }}
         />
       </form>
