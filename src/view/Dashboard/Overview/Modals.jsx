@@ -97,15 +97,15 @@ export const PatientInfoModal = () => {
 
   const patientData = {
     fullname: patient?.firstName + " " + patient?.lastName,
-    dateOfBirth: patient?.profile.dateOfBirth,
-    sex: patient?.profile.gender,
-    height: patient?.profile.height,
-    weight: patient?.profile.weight,
-    maritalStatus: patient?.profile.maritalStatus,
-    genotype: patient?.profile.genotype,
-    bloodGroup: patient?.profile.bloodGroup,
-    allergies: patient?.profile.allergies,
-    preExistingConditions: patient?.profile.chronicIllnesses,
+    dateOfBirth: patient?.profile?.dateOfBirth,
+    sex: patient?.profile?.gender,
+    height: patient?.profile?.height,
+    weight: patient?.profile?.weight,
+    maritalStatus: patient?.profile?.maritalStatus,
+    genotype: patient?.profile?.genotype,
+    bloodGroup: patient?.profile?.bloodGroup,
+    allergies: patient?.profile?.allergies,
+    preExistingConditions: patient?.profile?.chronicIllnesses,
   };
 
   // const consultationData = {
@@ -153,7 +153,7 @@ export const PatientInfoModal = () => {
             <h4>Sign Up Date</h4>
             <h5>
               {patient &&
-                new Date(patient.profile.createdAt).toLocaleDateString()}
+                new Date(patient?.profile?.createdAt).toLocaleDateString()}
             </h5>
           </div>
           <div className="group">
@@ -165,6 +165,7 @@ export const PatientInfoModal = () => {
             {patient && (
               <h5
                 style={{
+                  width:'100px',
                   color:
                     patient?.plan === "Premium Plan"
                       ? "#FA0E9B"
@@ -175,16 +176,16 @@ export const PatientInfoModal = () => {
                       : patient.plan === "Basic Family Plan"
                       ? "#455AFE"
                       : "",
-                  background:
-                    patient.plan === "Premium Plan"
-                      ? "rgba(250, 14, 155, 0.05)"
-                      : patient.plan === "Basic Plan"
-                      ? "rgba(25, 183, 41, 0.1)"
-                      : patient.plan === "Premium Family Plan"
-                      ? "rgba(69, 90, 254, 0.05)"
-                      : patient.plan === "Basic Family Plan"
-                      ? "rgba(69, 90, 254, 0.05)"
-                      : "",
+                  // background:
+                  //   patient.plan === "Premium Plan"
+                  //     ? "rgba(250, 14, 155, 0.05)"
+                  //     : patient.plan === "Basic Plan"
+                  //     ? "rgba(25, 183, 41, 0.1)"
+                  //     : patient.plan === "Premium Family Plan"
+                  //     ? "rgba(69, 90, 254, 0.05)"
+                  //     : patient.plan === "Basic Family Plan"
+                  //     ? "rgba(69, 90, 254, 0.05)"
+                  //     : "",
                 }}
               >
                 {patient && patient.plan}
