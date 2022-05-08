@@ -9,20 +9,18 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-
-
 export default function Chart({ data }) {
-  const RedifinedData = data?.map(({ transactionDate: date, ...rest }) => ({
-    date,
-    ...rest,
-  }));
+  // const RedifinedData = data?.map(({ transactionDate: date, ...rest }) => ({
+  //   date,
+  //   ...rest,
+  // }));
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
           width={730}
           height={250}
-          data={RedifinedData}
+          data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>
@@ -35,7 +33,7 @@ export default function Chart({ data }) {
               <stop offset="95%" stopColor="#455AFE" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="date" />
+          <XAxis dataKey="transactionDate" />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />

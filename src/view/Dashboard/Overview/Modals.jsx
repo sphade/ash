@@ -165,7 +165,7 @@ export const PatientInfoModal = () => {
             {patient && (
               <h5
                 style={{
-                  width:'100px',
+                 
                   color:
                     patient?.plan === "Premium Plan"
                       ? "#FA0E9B"

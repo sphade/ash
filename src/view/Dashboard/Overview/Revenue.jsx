@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { BackArrow } from "../../../layout/DashboardLayout/Content";
 import arrow_up from "../../../assets/images/icons/arrow-up.svg";
@@ -12,8 +12,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { overviewSelector } from "../../../redux/reducers/dashboard/overview";
 // import { transactionsSelector } from "../../../redux/reducers/dashboard/transactions";
 import Skeleton from "react-loading-skeleton";
-import { getTransactionData } from "../../../api/transactionApi";
+import {
+  getTransactionData,
+  getTransactionGraphData,
+} from "../../../api/transactionApi";
 import { useQuery } from "react-query";
+import { Pagination } from "antd";
+
 import {
   getMonthDate,
   getTodayDate,
@@ -25,6 +30,8 @@ import { SelectField } from "../../../Reuseable";
 
 const Revenue = () => {
   // const [select, setSelect] = React.useState("");
+  const [page, setPage] = useState(1);
+
   const [userType, setUserType] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -33,8 +40,8 @@ const Revenue = () => {
 
     data: transactions,
   } = useQuery(
-    ["transactionData", userType],
-    () => getTransactionData(userType),
+    ["transactionData", userType, page],
+    () => getTransactionData(userType, page),
     {
       staleTime: 5000,
 
@@ -47,6 +54,14 @@ const Revenue = () => {
       },
     }
   );
+
+  const {
+    isLoading: transactionsGraphLoading,
+
+    data: transactionsGraph,
+  } = useQuery("transactionGraphData", getTransactionGraphData, {
+    staleTime: 5000,
+  });
   React.useEffect(() => {
     dispatch(getTotalRevenue());
     dispatch(getTransactions());
@@ -56,7 +71,6 @@ const Revenue = () => {
 
   // const { transactions, transactionsLoading } =
   //   useSelector(transactionsSelector);
-
   return (
     <Fragment>
       <Header>
@@ -103,7 +117,7 @@ const Revenue = () => {
           <p>Total revenue including income and expenditure</p>
         )}
       </Statistics>
-      {transactionsLoading ? (
+      {transactionsGraphLoading ? (
         <ChartWrapper>
           <header>
             <h5 className="fw-bold">Deals</h5>
@@ -127,7 +141,7 @@ const Revenue = () => {
             <h6>Show</h6>
           </header>
           <div className="chart">
-            {transactions && <Chart data={transactions} />}
+            {transactionsGraph && <Chart data={transactionsGraph} />}
           </div>
         </ChartWrapper>
       )}
@@ -136,15 +150,16 @@ const Revenue = () => {
         <header>
           <h5>Transaction History</h5>
           <SelectField
-              placeholder="Filter Dates"
-              data={[
-                { value: getTodayDate, name: "Today" },
-                { value: getWeekDate, name: "7 days" },
-                { value: getMonthDate, name: "One Month" },
-                { value: getYearDate, name: "One Year" },
-              ]}
-              setUserType={setUserType}
-            />
+            placeholder="Filter Dates"
+            data={[
+              { value: getTodayDate, name: "Today" },
+              { value: getWeekDate, name: "7 days" },
+              { value: getMonthDate, name: "One Month" },
+              { value: getYearDate, name: "One Year" },
+            ]}
+            setUserType={setUserType}
+            setPage={setPage}
+          />
         </header>
         {transactionsLoading ? (
           <center
@@ -157,13 +172,29 @@ const Revenue = () => {
           >
             <Spin size="large" />
           </center>
-        ) : (!transactions || transactions.length === 0) ? (
-         <h1> NO DATA </h1>
+        ) : !transactions || transactions?.transactions.length === 0 ? (
+          <center>
+            <h1> NO DATA </h1>
+          </center>
         ) : (
-          transactions?.map((item, index) => {
-            return <TransactionCard key={index} {...item} />;
+          transactions?.transactions?.map((item, index) => {
+            return (
+              <>
+                {" "}
+                <TransactionCard key={index} {...item} />{" "}
+              </>
+            );
           })
         )}
+        <div style={{ display: "flex", justifyContent: "right" }}>
+          <Pagination
+            total={transactions?.count}
+            current={page}
+            onChange={(page) => {
+              setPage(page);
+            }}
+          />
+        </div>
       </TransactionWrapper>
     </Fragment>
   );
@@ -252,9 +283,9 @@ const ChartWrapper = styled.div`
 const TransactionWrapper = styled.div`
   margin: 1.5rem 0;
   width: 100%;
-  height: 533px;
+  min-height: 100px;
   background: #fff;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   padding: 1.5rem 2rem;
   border-radius: 7px;
 

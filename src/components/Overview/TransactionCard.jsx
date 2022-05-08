@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import credit from "../../assets/images/icons/credit.svg";
-import debit from "../../assets/images/icons/debit.svg";
+import debit from "../../assets/images/icons/credit.svg";
+import credit from "../../assets/images/icons/debit.svg";
 
 const TransactionCard = (props, { index }) => {
   return (
@@ -10,10 +10,10 @@ const TransactionCard = (props, { index }) => {
         <img src={props.inflow ? credit : debit} alt="" />
         <div className="row">
           <h3>
-            {props.inflow ? "Credit transaction" : "Debit transaction"} -{" "}
+            {props.inflow ? "Credit from" : "Withdrawal from"} -{" "}
             {props.title}
           </h3>
-          <span>{new Date(props.transactionDate).toLocaleDateString()}</span>
+          <span>{new Date(props.createdAt).toLocaleDateString()}</span>
         </div>
       </div>
       <h2>
