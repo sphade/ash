@@ -17,8 +17,12 @@ export const getTransactionData = async (userType, page) => {
   return res;
 };
 
-export const getTransactionGraphData = async () => {
+export const getTransactionGraphData = async (chartDate) => {
   const { data } = await api.get(`/transactions/graph`, {
+    params: {
+     startDate: chartDate,
+      limit: 20000,
+    },
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       Accept: "application/json",

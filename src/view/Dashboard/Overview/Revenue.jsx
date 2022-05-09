@@ -33,6 +33,7 @@ const Revenue = () => {
   const [page, setPage] = useState(1);
 
   const [userType, setUserType] = React.useState("");
+  const [chartDate, setChartDate] = React.useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -59,9 +60,13 @@ const Revenue = () => {
     isLoading: transactionsGraphLoading,
 
     data: transactionsGraph,
-  } = useQuery("transactionGraphData", getTransactionGraphData, {
-    staleTime: 5000,
-  });
+  } = useQuery(
+    ["transactionGraphData", chartDate],
+    () => getTransactionGraphData(chartDate),
+    {
+      staleTime: 5000,
+    }
+  );
   React.useEffect(() => {
     dispatch(getTotalRevenue());
     dispatch(getTransactions());
@@ -76,8 +81,8 @@ const Revenue = () => {
       <Header>
         {revenueLoading ? (
           <>
-            <Skeleton width={120} height={40} />
-            <Skeleton width={40} height={40} />
+            <Skeleton width={120} height={20} />
+            <Skeleton width={40} height={20} />
           </>
         ) : (
           <>
@@ -88,15 +93,15 @@ const Revenue = () => {
       </Header>
       <Statistics>
         {revenueLoading ? (
-          <Skeleton width={200} height={50} />
+          <Skeleton width={200} height={20} />
         ) : (
           <h1>₦{revenue.total ? revenue.total.toLocaleString() : 0}</h1>
         )}
         <div className="group">
           {revenueLoading ? (
             <>
-              <Skeleton width={200} height={40} />
-              <Skeleton width={200} height={40} />
+              <Skeleton width={200} height={20} />
+              <Skeleton width={200} height={20} />
             </>
           ) : (
             <>
@@ -112,7 +117,7 @@ const Revenue = () => {
           )}
         </div>
         {revenueLoading ? (
-          <Skeleton width={400} height={60} />
+          <Skeleton width={400} height={30} />
         ) : (
           <p>Total revenue including income and expenditure</p>
         )}
@@ -121,7 +126,14 @@ const Revenue = () => {
         <ChartWrapper>
           <header>
             <h5 className="fw-bold">Deals</h5>
-            <h6>Show</h6>
+            <SelectField
+              placeholder="Filter Dates"
+              data={[
+                { value: getMonthDate, name: "One Month" },
+                { value: getYearDate, name: "One Year" },
+              ]}
+              s
+            />
           </header>
           <center
             style={{
@@ -138,7 +150,14 @@ const Revenue = () => {
         <ChartWrapper>
           <header>
             <h5 className="fw-bold">Deals</h5>
-            <h6>Show</h6>
+            <SelectField
+              placeholder="Filter Dates"
+              data={[
+                { value: getMonthDate, name: "One Month" },
+                { value: getYearDate, name: "One Year" },
+              ]}
+              setUserType={setChartDate}
+            />
           </header>
           <div className="chart">
             {transactionsGraph && <Chart data={transactionsGraph} />}
@@ -161,31 +180,34 @@ const Revenue = () => {
             setPage={setPage}
           />
         </header>
-        {transactionsLoading ? (
-          <center
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "90%",
-            }}
-          >
-            <Spin size="large" />
-          </center>
-        ) : !transactions || transactions?.transactions.length === 0 ? (
-          <center>
-            <h1> NO DATA </h1>
-          </center>
-        ) : (
-          transactions?.transactions?.map((item, index) => {
-            return (
-              <>
-                {" "}
-                <TransactionCard key={index} {...item} />{" "}
-              </>
-            );
-          })
-        )}
+        <div className='inner-Container'>
+          {transactionsLoading ? (
+            <center
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "90%",
+              }}
+            >
+              <Spin size="large" />
+            </center>
+          ) : !transactions || transactions?.transactions.length === 0 ? (
+            <center>
+              <h1> NO DATA </h1>
+            </center>
+          ) : (
+            transactions?.transactions?.map((item, index) => {
+              return (
+                <>
+                  {" "}
+                  <TransactionCard key={index} {...item} />{" "}
+                </>
+              );
+            })
+          )}
+        </div>
+
         <div style={{ display: "flex", justifyContent: "right" }}>
           <Pagination
             total={transactions?.count}
@@ -307,5 +329,10 @@ const TransactionWrapper = styled.div`
     font-size: 16px;
     line-height: 22px;
     color: #666666;
+  }
+  .inner-Container{
+    height: 400px;
+  background: #fff;
+  overflow-y: scroll;
   }
 `;
