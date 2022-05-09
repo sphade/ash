@@ -48,7 +48,7 @@ const Home = () => {
 
       onError: () => {
         message.error(
-          "unable to Establish a connection , check your Internet and try again"
+          "unable to Establish a connection , check your Internet connection"
         );
       },
     }

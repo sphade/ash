@@ -33,7 +33,7 @@ const Consultations = () => {
       onError: (err) => {
         message.error(
           err.message === "Network Error"
-            ? "it looks like you are offline, check your internet and try again"
+            ? "it looks like you are offline, check your internet connection"
             : err.message
         );
       },

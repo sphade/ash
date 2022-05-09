@@ -49,7 +49,7 @@ const Revenue = () => {
       onError: (err) => {
         message.error(
           err.message === "Network Error"
-            ? "it looks like you are offline, check your internet and try again"
+            ? "it looks like you are offline, check your internet connection"
             : err.message
         );
       },
@@ -180,22 +180,22 @@ const Revenue = () => {
             setPage={setPage}
           />
         </header>
-        <div className='inner-Container'>
+        <div className="inner-Container">
           {transactionsLoading ? (
             <center
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "90%",
+                height: "100%",
               }}
             >
               <Spin size="large" />
             </center>
           ) : !transactions || transactions?.transactions.length === 0 ? (
-            <center>
+            <div style={{display:'flex', alignItems:'center', justifyContent: 'center', height:'100%'}}>
               <h1> NO DATA </h1>
-            </center>
+            </div>
           ) : (
             transactions?.transactions?.map((item, index) => {
               return (
@@ -330,9 +330,9 @@ const TransactionWrapper = styled.div`
     line-height: 22px;
     color: #666666;
   }
-  .inner-Container{
+  .inner-Container {
     height: 400px;
-  background: #fff;
-  overflow-y: scroll;
+    background: #fff;
+    overflow-y: scroll;
   }
 `;
