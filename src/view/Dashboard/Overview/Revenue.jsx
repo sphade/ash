@@ -212,6 +212,8 @@ const Revenue = () => {
           <Pagination
             total={transactions?.count}
             current={page}
+            showSizeChanger={false}
+
             onChange={(page) => {
               setPage(page);
             }}
@@ -322,6 +324,8 @@ const TransactionWrapper = styled.div`
     height: 500px;
     width: 100%;
     overflow-y: scroll;
+  
+
   }
 
   h5 {
@@ -334,5 +338,7 @@ const TransactionWrapper = styled.div`
     height: 400px;
     background: #fff;
     overflow-y: scroll;
+  padding: .5rem 1rem;
+
   }
 `;
