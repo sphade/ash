@@ -117,7 +117,8 @@ const Step2 = () => {
             />
           </div>
           <Countdown date={Date.now() + 300000} renderer={renderer} />
-          {isError &&
+          {
+            isError &&
             errors &&
             errors.map((error, index) => {
               const { user, email, message, server } = error;
@@ -126,7 +127,8 @@ const Step2 = () => {
                   {user || email || message || server || 'Invalid Token'}
                 </p>
               );
-            })}
+            })
+          }
         </CodeWrapper>
         <ButtonWrapper>
           <Button

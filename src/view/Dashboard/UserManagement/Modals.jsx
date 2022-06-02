@@ -5,7 +5,11 @@ import { Button } from "../../../Reuseable";
 import successIcon from "../../../assets/images/icons/success-message-icon.png";
 // import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
-import { disableUser, resetUserPassword } from "../../../api/adminApi";
+import {
+  disableUser,
+  resetUserPassword,
+  verifyDoctor,
+} from "../../../api/adminApi";
 export const DisableAccountModal = ({ show, handleClose }) => {
   const queryClient = useQueryClient();
   const [success, setSuccess] = useState(false);
@@ -145,6 +149,83 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
             <img src={successIcon} alt="" />
             <h4>Password Reset Link Sent</h4>
             <p>A password reset link has been sent to the user</p>
+            <Button
+              outline
+              text="CLOSE"
+              onClick={() => {
+                handleClose();
+                setSuccess(false);
+              }}
+            />
+          </>
+        )}
+      </Container>
+    </Modal>
+  );
+};
+
+export const VerifyDoctorModal = ({ show, handleClose }) => {
+  const [success, setSuccess] = useState(false);
+  const user = JSON.parse(sessionStorage.getItem("selectedUser"));
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation((user) => verifyDoctor(user), {
+    onSuccess: (data) => {
+      setSuccess(true);
+
+      queryClient.invalidateQueries("users");
+    },
+    onError: (err) => {
+      handleClose();
+
+      err.request.status = 409
+        ? message.info("this doctor has already been verified")
+        : (err.request.status = 404
+            ? message.error("doctor could not be found")
+            : message.error(err.message));
+    },
+  });
+  return (
+    <Modal
+      visible={show}
+      width={565}
+      footer={null}
+      closable={false}
+      centered={true}
+    >
+      <Container>
+        {!success ? (
+          <>
+            <h4>Verify Doctor</h4>
+            <p>
+              if you click yes, the selected doctor's license would be verified
+              Click “NO” to cancel.
+            </p>
+            <div className="btn-group">
+              <Button
+                info
+                text="YES"
+                loading={isLoading}
+                onClick={() => {
+                  mutate(user);
+                }}
+              />
+
+              <Button
+                outline
+                text="NO"
+                disabled={isLoading}
+                onClick={() => {
+                  handleClose();
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <img src={successIcon} alt="" />
+            <h4>Doctor verified</h4>
+            <p>Doctor has been successfully verified</p>
             <Button
               outline
               text="CLOSE"

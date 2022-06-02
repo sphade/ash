@@ -57,3 +57,19 @@ export const resetUserPassword = async (user) => {
     }
   );
 };
+
+export const verifyDoctor = async (user) => {
+  await api.patch(
+    `/auth/doctors/${user?.id}/verify`,
+    {
+      doctorId: user?.id,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};

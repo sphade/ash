@@ -2,7 +2,11 @@ import React, { Fragment, useState } from "react";
 import { Header as Title } from "../Overview/Revenue";
 import { Header as Heading, TableWrapper } from "../Overview/Home";
 import { Searchbar, SelectField } from "../../../Reuseable";
-import { DisableAccountModal, ResetPasswordModal } from "./Modals";
+import {
+  DisableAccountModal,
+  ResetPasswordModal,
+  VerifyDoctorModal,
+} from "./Modals";
 import { message, Table } from "antd";
 import {
   columns,
@@ -15,6 +19,7 @@ import {
   overviewSelector,
   toggleShowModal,
   toggleShowResetPasswordModal,
+  toggleShowVerifyDoctorModal,
   // toggleShowModal,
 } from "../../../redux/reducers/dashboard/overview";
 import { useQuery } from "react-query";
@@ -70,7 +75,7 @@ const Home = () => {
       // console.log(selected, selectedRows, changeRows);
     },
   };
-  const { showUserModal, showResetPasswordModal } =
+  const { showUserModal, showResetPasswordModal, showVerifyDoctorModal } =
     useSelector(overviewSelector);
   // const [checkStrictly, setCheckStrictly] = React.useState(false);
   const handleClose = () => {
@@ -79,12 +84,19 @@ const Home = () => {
   const handleClosePasswordReset = () => {
     dispatch(toggleShowResetPasswordModal());
   };
+  const handleCloseVerifyDoctor = () => {
+    dispatch(toggleShowVerifyDoctorModal());
+  };
   return (
     <Fragment>
       <DisableAccountModal show={showUserModal} handleClose={handleClose} />
       <ResetPasswordModal
         show={showResetPasswordModal}
         handleClose={handleClosePasswordReset}
+      />
+      <VerifyDoctorModal
+        show={showVerifyDoctorModal}
+        handleClose={handleCloseVerifyDoctor}
       />
       <Title>
         <h6>User Management</h6>

@@ -27,6 +27,7 @@ export const overviewSlice = createSlice({
     referrals: [],
     showUserModal: false,
     showResetPasswordModal: false,
+    showVerifyDoctorModal: false,
   },
   reducers: {
     toggleActiveTab: (state, { payload }) => {
@@ -39,6 +40,10 @@ export const overviewSlice = createSlice({
     },
     toggleShowResetPasswordModal: (state) => {
       state.showResetPasswordModal = !state.showResetPasswordModal;
+      return state;
+    },
+    toggleShowVerifyDoctorModal: (state) => {
+      state.showVerifyDoctorModal = !state.showVerifyDoctorModal;
       return state;
     },
   },
@@ -105,6 +110,7 @@ export const {
   toggleActiveTab,
   toggleShowModal,
   toggleShowResetPasswordModal,
+  toggleShowVerifyDoctorModal,
 } = overviewSlice.actions;
 
 export const overviewSelector = (state) => state.overview;

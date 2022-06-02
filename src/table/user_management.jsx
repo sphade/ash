@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   toggleShowModal,
   toggleShowResetPasswordModal,
+  toggleShowVerifyDoctorModal,
 } from "../redux/reducers/dashboard/overview";
 
 const UserMenu = (data) => {
@@ -30,6 +31,16 @@ const UserMenu = (data) => {
       >
         Reset Password
       </Menu.Item>
+      {data.role === "doctor" && (
+        <Menu.Item
+          onClick={() => {
+            sessionStorage.setItem("selectedUser", JSON.stringify(data));
+            dispatch(toggleShowVerifyDoctorModal());
+          }}
+        >
+          Verify Doctor
+        </Menu.Item>
+      )}
     </Menu>
   );
 };
