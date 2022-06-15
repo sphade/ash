@@ -5,7 +5,7 @@ export const getTransactions = createAsyncThunk(
   'admin/transactions/all',
   async (thunkAPI) => {
     try {
-      const response = await fetch(`${API}transactions`, {
+      const response = await fetch(`${API}transactions/stats`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

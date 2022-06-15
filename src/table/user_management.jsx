@@ -77,20 +77,7 @@ export const columns = [
     key: "role",
     render: (text) => <div style={{ textTransform: "capitalize" }}>{text}</div>,
   },
-  {
-    title: "STATUS",
-    dataIndex: "active",
-    key: "active",
-    render: (text) => {
-      if (text === false) {
-        return <b style={{ color: "#FF8282" }}>Inactive</b>;
-      } else if (text === true) {
-        return <b style={{ color: "#455AFE" }}>Active</b>;
-      } else {
-        return "";
-      }
-    },
-  },
+
   {
     title: "Action",
     key: "action",

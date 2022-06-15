@@ -78,6 +78,7 @@ export const UserMonitorModal = (props) => {
             <div className="group">
               <h4>Location</h4>
               <h5>{selectedUser && selectedUser.location}</h5>
+              {console.log('selectedUser.location: ', selectedUser.location)}
             </div>
             <div className="group">
               <h4>Activity Status</h4>

@@ -3,7 +3,7 @@ import { message, Modal } from "antd";
 import styled from "styled-components";
 import { Button } from "../../../Reuseable";
 import successIcon from "../../../assets/images/icons/success-message-icon.png";
-// import axios from "axios";
+
 import { useMutation, useQueryClient } from "react-query";
 import {
   disableUser,
@@ -13,7 +13,6 @@ import {
 export const DisableAccountModal = ({ show, handleClose }) => {
   const queryClient = useQueryClient();
   const [success, setSuccess] = useState(false);
-  // const [visible, setVisible] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
   const { mutate, isLoading } = useMutation((data) => disableUser(data), {
     onSuccess: (data) => {
@@ -166,16 +165,19 @@ export const ResetPasswordModal = ({ show, handleClose }) => {
 
 export const VerifyDoctorModal = ({ show, handleClose }) => {
   const [success, setSuccess] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("selectedUser"));
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation((user) => verifyDoctor(user), {
+  const { mutate } = useMutation((user) => verifyDoctor(user), {
     onSuccess: (data) => {
       setSuccess(true);
-
+      setVerifyLoading(false);
       queryClient.invalidateQueries("users");
     },
     onError: (err) => {
+      setVerifyLoading(false);
+
       handleClose();
 
       err.request.status = 409
@@ -205,16 +207,17 @@ export const VerifyDoctorModal = ({ show, handleClose }) => {
               <Button
                 info
                 text="YES"
-                loading={isLoading}
+                loading={verifyLoading}
                 onClick={() => {
                   mutate(user);
+                  setVerifyLoading(true);
                 }}
               />
 
               <Button
                 outline
                 text="NO"
-                disabled={isLoading}
+                disabled={verifyLoading}
                 onClick={() => {
                   handleClose();
                 }}
